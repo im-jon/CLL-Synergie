@@ -48,6 +48,7 @@ void Console::Ecrire(QString ligne)
         } else {
             reponse = nomCommande + " : Commande inconnue";
         }
+        // TEST
         Imprimer(reponse);
     }
 }
