@@ -1,0 +1,21 @@
+== Qu'est ce que Synergie ? ==
+
+Synergie est un éditeur de code source collaboratif en temps réel utilisant Qt
+et QScintilla.
+
+
+== Support technique ==
+
+S'il y a problèmes de compilation avec un projet, s'assurer que :
+
+ 1. Le fichier [Projet].pro.user a été supprimé.
+ 2. Le dossier [Projet]-build-desktop a été supprimé.
+
+Si le projet Client_Synergie refuse de compiler ou ne trouve pas la librairie
+QScintilla, assurez-vous d'avoir déjà compilé le projet QScintilla.
+
+
+== Auteurs ==
+
+Jonathan Pouliot (pouliot.jonathan@gmail.com)
+Léon Cantin
