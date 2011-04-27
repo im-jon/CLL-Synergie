@@ -10,16 +10,7 @@ class Console : public QObject
 {
     Q_OBJECT
 public:
-    static Console* Instance()
-    {
-        static QMutex mutex;
-        if (!m_Instance) {
-            mutex.lock();
-            m_Instance = new Console;
-            mutex.unlock();
-        }
-        return m_Instance;
-    }
+    static Console* getInstance();
 
     void Ecrire(QString ligne);
     void Imprimer(QString ligne);

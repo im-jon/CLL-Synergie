@@ -10,8 +10,8 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect (Console::Instance(), SIGNAL(siSortie(QString)), this, SLOT(sl_Console_Sortie(QString)));
-    connect (Console::Instance(), SIGNAL(siVider()), this, SLOT(sl_Console_Vider()));
+    connect (Console::getInstance(), SIGNAL(siSortie(QString)), this, SLOT(sl_Console_Sortie(QString)));
+    connect (Console::getInstance(), SIGNAL(siVider()), this, SLOT(sl_Console_Vider()));
 
     ServeurSynergie::getInstance()->Demarrer();
 }
@@ -23,7 +23,7 @@ FenetrePrincipale::~FenetrePrincipale()
 
 void FenetrePrincipale::on_txtEntree_returnPressed()
 {
-    Console::Instance()->Ecrire(ui->txtEntree->text());
+    Console::getInstance()->Ecrire(ui->txtEntree->text());
     ui->txtEntree->clear();
 }
 

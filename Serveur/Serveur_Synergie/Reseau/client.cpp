@@ -10,6 +10,7 @@ Client::Client(int id, QTcpSocket* socket)
 {
     m_ID = id;
     m_Socket = socket;
+
     connect(m_Socket, SIGNAL(readyRead()),this,SLOT(slPretALire()));
     connect(m_Socket,SIGNAL(disconnected()),this,SLOT(slOnDeconnection())); // Parenthèses ???
 }
@@ -38,7 +39,7 @@ void Client::slOnDeconnection()
 void Client::setNom(QString nom)
 {
     m_Nom = nom;
-    Console::Instance()->Imprimer(m_Socket->peerAddress().toString() + " change de nom pour " + nom);
+    Console::getInstance()->Imprimer(m_Socket->peerAddress().toString() + " change de nom pour " + nom);
 }
 
 QString Client::getNom()

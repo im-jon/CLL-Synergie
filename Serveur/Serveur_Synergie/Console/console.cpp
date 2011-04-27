@@ -4,6 +4,17 @@
 
 Console* Console::m_Instance = 0;
 
+Console* Console::getInstance()
+{
+    static QMutex mutex;
+    if (!m_Instance) {
+        mutex.lock();
+        m_Instance = new Console;
+        mutex.unlock();
+    }
+    return m_Instance;
+}
+
 Console::Console(QObject *parent) :
     QObject(parent)
 {

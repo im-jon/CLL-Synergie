@@ -26,20 +26,27 @@ ServeurSynergie::ServeurSynergie(QObject *parent) :
     m_Ecouteur = new QTcpServer(this);
     m_Clients = new QMap<int, Client*>();
     m_MangePaquets = new MangePaquetsServeur(this);
+
     connect (m_Ecouteur, SIGNAL(newConnection()), this, SLOT(slNouveauClient()));
 }
 
 bool ServeurSynergie::Demarrer()
 {
-    Console::Instance()->Imprimer("Le serveur est en ligne");
-    return m_Ecouteur->listen(QHostAddress::Any, 9001);
+    if (m_Ecouteur->listen(QHostAddress::Any, 9001)) {
+        Console::getInstance()->Imprimer("Le serveur est en ligne");
+        return true;
+    }
+    Console::getInstance()->Imprimer("Le serveur est incapable de se connecter");
+    return false;
 }
 
 bool ServeurSynergie::Arreter()
 {
     if (m_Ecouteur->isListening()) {
         m_Ecouteur->close();
-        Console::Instance()->Imprimer("Le serveur est hors ligne");
+
+        Console::getInstance()->Imprimer("Le serveur est hors ligne");
+
         return true;
     }
     return false;
@@ -47,12 +54,13 @@ bool ServeurSynergie::Arreter()
 
 void ServeurSynergie::slNouveauClient()
 {
-    // pogne le nouveau client
     QTcpSocket* socket = m_Ecouteur->nextPendingConnection();
+
     Client* client = new Client(m_ID, socket);
-    Console::Instance()->Imprimer(socket->peerAddress().toString() + " est en ligne");
-    client->EnvoyerPaquet(new PaquetEnvoiCollegues());
     m_Clients->insert(m_ID, client);
+
+    Console::getInstance()->Imprimer(socket->peerAddress().toString() + " est en ligne");
+
     m_ID++;
 }
 

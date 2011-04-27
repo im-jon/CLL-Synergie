@@ -10,6 +10,6 @@ Vider::Vider()
 
 QString Vider::Executer(const QStringList& arguments)
 {
-    Console::Instance()->Vider();
+    Console::getInstance()->Vider();
     return "";
 }
