@@ -7,7 +7,7 @@ Demarrer::Demarrer()
     m_Description = "Démarre le serveur.";
 }
 
-QString Vider::Executer(const QStringList& arguments)
+QString Demarrer::Executer(const QStringList& arguments)
 {
     // Démarre le serveur
     return "Serveur démarré.";

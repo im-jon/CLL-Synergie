@@ -4,17 +4,19 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 TARGET = Client_Synergie
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        fenetreprincipale.cpp
+        fenetreprincipale.cpp \
+    Reseau/connexion.cpp
 
 HEADERS  += fenetreprincipale.h \
-         ../QScintilla/qscintilla/Qsci/qsciscintilla.h
+         ../QScintilla/qscintilla/Qsci/qsciscintilla.h \
+    Reseau/connexion.h
 
 FORMS    += fenetreprincipale.ui
 

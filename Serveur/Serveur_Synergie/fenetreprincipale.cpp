@@ -2,6 +2,7 @@
 #include "ui_fenetreprincipale.h"
 #include "Console/console.h"
 #include <QDebug>
+#include "serveursynergie.h"
 
 FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     QMainWindow(parent),
@@ -11,6 +12,8 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
 
     connect (Console::Instance(), SIGNAL(siSortie(QString)), this, SLOT(sl_Console_Sortie(QString)));
     connect (Console::Instance(), SIGNAL(siVider()), this, SLOT(sl_Console_Vider()));
+
+    ServeurSynergie::getInstance()->Demarrer();
 }
 
 FenetrePrincipale::~FenetrePrincipale()

@@ -26,10 +26,11 @@ public:
     void Vider();
 
 private:
+    static Console* m_Instance;
+
     explicit Console(QObject* parent = 0);
     void Initialiser();
     void InitialiserListeCommandes();
-    static Console* m_Instance;
     QMap<QString, BaseCommande*>* m_Commandes;
 
 signals:

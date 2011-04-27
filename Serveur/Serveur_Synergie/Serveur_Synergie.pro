@@ -16,7 +16,7 @@ SOURCES += main.cpp\
     Console/Commandes/basecommande.cpp \
     Console/Commandes/aide.cpp \
     Console/Commandes/vider.cpp \
-    Console/serveursynergie.cpp \
+    serveursynergie.cpp \
     Reseau/client.cpp \
     Console/Commandes/demarrer.cpp
 
@@ -25,7 +25,7 @@ HEADERS  += fenetreprincipale.h \
     Console/Commandes/basecommande.h \
     Console/Commandes/aide.h \
     Console/Commandes/vider.h \
-    Console/serveursynergie.h \
+    serveursynergie.h \
     Reseau/client.h \
     Console/Commandes/demarrer.h
 

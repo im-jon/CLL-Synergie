@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::FenetrePrincipale *ui;
+
+private slots:
+    void OnClicked();
 };
 
 #endif // FENETREPRINCIPALE_H
