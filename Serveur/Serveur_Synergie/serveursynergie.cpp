@@ -1,5 +1,6 @@
 #include "serveursynergie.h"
 #include "Console/console.h"
+#include "Reseau/Paquets/paquetenvoicollegues.h"
 
 ServeurSynergie* ServeurSynergie::m_Instance = 0;
 
@@ -49,11 +50,16 @@ void ServeurSynergie::slNouveauClient()
     QTcpSocket* socket = m_Ecouteur->nextPendingConnection();
     Client* client = new Client(socket);
     Console::Instance()->Imprimer(socket->peerAddress().toString() + " est en ligne");
-    m_Clients.insert(m_ID, client);
+    m_Clients->insert(m_ID, client);
     m_ID++;
 }
 
 MangePaquetsServeur* ServeurSynergie::getMangePaquets()
 {
     return m_MangePaquets;
+}
+
+QMap<int, Client*>* ServeurSynergie::getClients()
+{
+    return m_Clients;
 }

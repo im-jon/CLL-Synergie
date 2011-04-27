@@ -11,6 +11,7 @@ class Client : public QObject
 public:
     explicit Client(QTcpSocket* socket);
 
+    QString getNom();
     void setNom(QString nom);
     void EnvoyerPaquet(BasePaquetServeur* paquet);
 

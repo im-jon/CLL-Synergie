@@ -16,6 +16,7 @@ public:
     bool Demarrer();
     bool Arreter();
     MangePaquetsServeur* getMangePaquets();
+    QMap<int, Client*>* getClients();
 
 private:
     static ServeurSynergie* m_Instance;
@@ -23,7 +24,7 @@ private:
      explicit ServeurSynergie(QObject *parent = 0);
     QTcpServer* m_Ecouteur;
     MangePaquetsServeur* m_MangePaquets;
-    QMap<int, Client*> m_Clients;
+    QMap<int, Client*>* m_Clients;
     int m_ID;
 
 signals:

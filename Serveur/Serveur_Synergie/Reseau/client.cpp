@@ -39,3 +39,8 @@ void Client::setNom(QString nom)
     m_Nom = nom;
     Console::Instance()->Imprimer(m_Socket->peerAddress().toString() + " change de nom pour " + nom);
 }
+
+QString Client::getNom()
+{
+    return m_Nom;
+}
