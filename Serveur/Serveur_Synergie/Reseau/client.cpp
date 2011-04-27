@@ -2,6 +2,9 @@
 #include <QByteArray>
 #include <QDataStream>
 #include <QtCore>
+#include "serveursynergie.h"
+#include "Console/console.h"
+#include "Paquets/basepaquetserveur.h"
 
 Client::Client(QTcpSocket* socket)
 {
@@ -10,20 +13,29 @@ Client::Client(QTcpSocket* socket)
     connect(m_Socket,SIGNAL(disconnected()),this,SLOT(slOnDeconnection())); // Parenthèses ???
 }
 
-void Client:: slPretALire()
+void Client::slPretALire()
 {
     QByteArray buffer;
     buffer = m_Socket->readAll();
     QDataStream stream(&buffer, QIODevice::ReadOnly);
-    quint8 id;
-    stream >> id;
 
-    // Interpréter le paquet
+    ServeurSynergie::getInstance()->getMangePaquets()->Interpreter(this, &stream);
 
     qDebug() << buffer.length();
 }
 
-void Client:: slOnDeconnection()
+void Client::EnvoyerPaquet(BasePaquetServeur* paquet)
+{
+   m_Socket->write(paquet->getBuffer());
+}
+
+void Client::slOnDeconnection()
 {
 
+}
+
+void Client::setNom(QString nom)
+{
+    m_Nom = nom;
+    Console::Instance()->Imprimer(m_Socket->peerAddress().toString() + " change de nom pour " + nom);
 }

@@ -22,7 +22,8 @@ ServeurSynergie::ServeurSynergie(QObject *parent) :
     QObject(parent)
 {
     m_ID = 0;
-    m_Ecouteur = new QTcpServer();
+    m_Ecouteur = new QTcpServer(this);
+    m_MangePaquets = new MangePaquetsServeur(this);
     connect (m_Ecouteur, SIGNAL(newConnection()), this, SLOT(slNouveauClient()));
 }
 
@@ -50,4 +51,9 @@ void ServeurSynergie::slNouveauClient()
     Console::Instance()->Imprimer(socket->peerAddress().toString() + " est en ligne");
     m_Clients.insert(m_ID, client);
     m_ID++;
+}
+
+MangePaquetsServeur* ServeurSynergie::getMangePaquets()
+{
+    return m_MangePaquets;
 }

@@ -12,11 +12,17 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         fenetreprincipale.cpp \
-    Reseau/connexion.cpp
+    Reseau/connexion.cpp \
+    Reseau/mangepaquetclient.cpp \
+    Reseau/Paquets/basepaquet.cpp \
+    Reseau/Paquets/paquetchangernom.cpp
 
 HEADERS  += fenetreprincipale.h \
          ../QScintilla/qscintilla/Qsci/qsciscintilla.h \
-    Reseau/connexion.h
+    Reseau/connexion.h \
+    Reseau/mangepaquetclient.h \
+    Reseau/Paquets/basepaquet.h \
+    Reseau/Paquets/paquetchangernom.h
 
 FORMS    += fenetreprincipale.ui
 

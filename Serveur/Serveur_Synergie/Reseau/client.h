@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QTcpSocket>
+#include "Paquets/basepaquetserveur.h"
 
 class Client : public QObject
 {
@@ -10,7 +11,11 @@ class Client : public QObject
 public:
     explicit Client(QTcpSocket* socket);
 
+    void setNom(QString nom);
+    void EnvoyerPaquet(BasePaquetServeur* paquet);
+
 private:
+    QString m_Nom;
     QTcpSocket* m_Socket;
 
 signals:

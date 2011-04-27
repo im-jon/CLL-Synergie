@@ -18,7 +18,10 @@ SOURCES += main.cpp\
     Console/Commandes/vider.cpp \
     serveursynergie.cpp \
     Reseau/client.cpp \
-    Console/Commandes/demarrer.cpp
+    Console/Commandes/demarrer.cpp \
+    Reseau/mangepaquetsserveur.cpp \
+    Reseau/Paquets/paquetenvoicollegues.cpp \
+    Reseau/Paquets/basepaquetserveur.cpp
 
 HEADERS  += fenetreprincipale.h \
     Console/console.h \
@@ -27,6 +30,9 @@ HEADERS  += fenetreprincipale.h \
     Console/Commandes/vider.h \
     serveursynergie.h \
     Reseau/client.h \
-    Console/Commandes/demarrer.h
+    Console/Commandes/demarrer.h \
+    Reseau/mangepaquetsserveur.h \
+    Reseau/Paquets/paquetenvoicollegues.h \
+    Reseau/Paquets/basepaquetserveur.h
 
 FORMS    += fenetreprincipale.ui
