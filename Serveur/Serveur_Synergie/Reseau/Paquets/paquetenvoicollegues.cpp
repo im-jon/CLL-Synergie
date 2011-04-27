@@ -4,9 +4,10 @@
 #include "serveursynergie.h"
 
 PaquetEnvoiCollegues::PaquetEnvoiCollegues() :
-    BasePaquetServeur(1)
+    BasePaquetServeur((qint8)1)
 {
     *m_Stream << ServeurSynergie::getInstance()->getClients()->count();
+
     QMapIterator<int, Client*> iterateur(*ServeurSynergie::getInstance()->getClients());
     while (iterateur.hasNext()) {
         iterateur.next();

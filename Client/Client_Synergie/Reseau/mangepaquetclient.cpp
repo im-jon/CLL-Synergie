@@ -28,6 +28,5 @@ void MangePaquetClient::Reception_ListeCollegues(QDataStream* stream)
         QString nom;
         *stream >> nom;
         collegues->append(nom);
-        qDebug() << nom;
     }
 }
