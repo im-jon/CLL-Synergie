@@ -6,8 +6,9 @@
 #include "Console/console.h"
 #include "Paquets/basepaquetserveur.h"
 
-Client::Client(QTcpSocket* socket)
+Client::Client(int id, QTcpSocket* socket)
 {
+    m_ID = id;
     m_Socket = socket;
     connect(m_Socket, SIGNAL(readyRead()),this,SLOT(slPretALire()));
     connect(m_Socket,SIGNAL(disconnected()),this,SLOT(slOnDeconnection())); // Parenthèses ???
@@ -43,4 +44,9 @@ void Client::setNom(QString nom)
 QString Client::getNom()
 {
     return m_Nom;
+}
+
+int Client::getID()
+{
+    return m_ID;
 }

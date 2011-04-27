@@ -9,7 +9,7 @@ class Client : public QObject
 {
     Q_OBJECT
 public:
-    explicit Client(QTcpSocket* socket);
+    explicit Client(int id, QTcpSocket* socket);
 
     QString getNom();
     void setNom(QString nom);
@@ -17,6 +17,7 @@ public:
 
 private:
     QString m_Nom;
+    int m_ID;
     QTcpSocket* m_Socket;
 
 signals:
@@ -24,6 +25,7 @@ signals:
 public slots:
     void slPretALire();
     void slOnDeconnection();
+    int getID();
 };
 
 #endif // CLIENT_H
