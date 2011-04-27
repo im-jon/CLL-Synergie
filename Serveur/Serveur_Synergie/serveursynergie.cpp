@@ -51,7 +51,6 @@ void ServeurSynergie::slNouveauClient()
     QTcpSocket* socket = m_Ecouteur->nextPendingConnection();
     Client* client = new Client(socket);
     Console::Instance()->Imprimer(socket->peerAddress().toString() + " est en ligne");
-    client->EnvoyerPaquet(new PaquetEnvoiCollegues());
     m_Clients->insert(m_ID, client);
     m_ID++;
 }
