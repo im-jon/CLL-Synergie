@@ -51,3 +51,8 @@ int Client::getID()
 {
     return m_ID;
 }
+
+QString Client::getIP()
+{
+    return m_Socket->peerAddress().toString();
+}

@@ -13,6 +13,7 @@ public:
 
     QString getNom();
     void setNom(QString nom);
+    QString getIP();
     void EnvoyerPaquet(BasePaquetServeur* paquet);
 
 private:
