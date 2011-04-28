@@ -10,6 +10,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
 
     m_Editeur = new QsciScintilla(ui->tab);
     m_Editeur->setGeometry(0, 0, 500, 500);
+    m_Editeur->setMarginLineNumbers(1, true);
 
     connect(ui->btnConnection,SIGNAL(clicked()),this,SLOT(OnClicked()));
 }
