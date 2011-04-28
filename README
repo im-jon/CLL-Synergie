@@ -8,11 +8,11 @@ et QScintilla
 
 S'il y a problèmes de compilation avec un projet, s'assurer que :
 
- 1. Le fichier [Projet].pro.user a été supprimé.
- 2. Le dossier [Projet]-build-desktop a été supprimé.
+ 1. Le fichier Synergie.pro.user a été supprimé.
+ 2. Le dossier Synergie-build-desktop a été supprimé.
 
 Si le projet Client_Synergie refuse de compiler ou ne trouve pas la librairie
-QScintilla, assurez-vous d'avoir déjà compilé le projet QScintilla.
+QScintilla, assurez-vous d'avoir déjà compilé et installé le projet QScintilla.
 
 
 == Auteurs ==
