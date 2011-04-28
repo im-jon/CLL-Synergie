@@ -6,19 +6,52 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>891</width>
+    <height>753</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>FenetrePrincipale</string>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>701</width>
+      <height>611</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Tab 1</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Tab 2</string>
+     </attribute>
+    </widget>
+   </widget>
+   <widget class="QTextEdit" name="textEdit">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>10</y>
+      <width>161</width>
+      <height>611</height>
+     </rect>
+    </property>
+   </widget>
    <widget class="QPushButton" name="btnConnection">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>120</y>
+      <x>700</x>
+      <y>640</y>
       <width>93</width>
       <height>27</height>
      </rect>
@@ -33,8 +66,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
-     <height>23</height>
+     <width>891</width>
+     <height>25</height>
     </rect>
    </property>
   </widget>
@@ -45,6 +78,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="separator"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>

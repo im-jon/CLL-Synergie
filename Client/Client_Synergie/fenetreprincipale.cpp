@@ -7,6 +7,10 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     ui(new Ui::FenetrePrincipale)
 {
     ui->setupUi(this);
+
+    m_Editeur = new QsciScintilla(ui->tab);
+    m_Editeur->setGeometry(0, 0, 500, 500);
+
     connect(ui->btnConnection,SIGNAL(clicked()),this,SLOT(OnClicked()));
 }
 

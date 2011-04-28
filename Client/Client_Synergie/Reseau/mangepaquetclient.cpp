@@ -13,8 +13,11 @@ void MangePaquetClient::Interpreter(QDataStream* stream)
     quint8 id;
     *stream >> id;
 
-    if (id == 1) {
-        Reception_ListeCollegues(stream);
+    switch (id)
+    {
+    case 1:
+             Reception_ListeCollegues(stream);
+             break;
     }
 }
 
