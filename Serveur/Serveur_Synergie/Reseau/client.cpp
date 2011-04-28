@@ -53,5 +53,5 @@ QString Client::getIP()
 void Client::setNom(QString nom)
 {
     m_Nom = nom;
-    Console::getInstance()->Imprimer(m_Socket->peerAddress().toString() + " change de nom pour " + nom);
+    Console::getInstance()->Imprimer(getIP() + " change de nom pour " + nom);
 }

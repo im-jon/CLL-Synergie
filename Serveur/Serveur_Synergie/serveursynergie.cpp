@@ -63,13 +63,9 @@ bool ServeurSynergie::EnleverClient(Client *client)
 
 void ServeurSynergie::slNouveauClient()
 {
-    QTcpSocket* socket = m_Ecouteur->nextPendingConnection();
-
-    Client* client = new Client(m_GenerateurID, socket);
-    Console::getInstance()->Imprimer(socket->peerAddress().toString() + " est en ligne");
+    Client* client = new Client(m_GenerateurID, m_Ecouteur->nextPendingConnection());
+    Console::getInstance()->Imprimer(client->getIP() + " est en ligne");
     m_Clients->insert(m_GenerateurID, client);
-
-    Console::getInstance()->Imprimer(socket->peerAddress().toString() + " est en ligne");
 
     m_GenerateurID++;
 }
