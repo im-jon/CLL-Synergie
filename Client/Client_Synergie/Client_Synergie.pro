@@ -26,4 +26,4 @@ HEADERS  += fenetreprincipale.h \
 
 FORMS    += fenetreprincipale.ui
 
-LIBS += -L../QScintilla/Librairie -lqscintilla2
+LIBS += -lqscintilla2

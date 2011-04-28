@@ -32,7 +32,7 @@
 !win32:VERSION = 6.0.0
 
 TEMPLATE = lib
-TARGET = ../Librairie/qscintilla2
+TARGET = ../../Client_Synergie/qscintilla2
 CONFIG += qt warn_off release dll thread
 INCLUDEPATH = . ../include ../lexlib ../src
 DEFINES = QT MAKE_DLL SCI_LEXER

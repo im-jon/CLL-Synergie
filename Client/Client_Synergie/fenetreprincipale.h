@@ -2,7 +2,7 @@
 #define FENETREPRINCIPALE_H
 
 #include <QMainWindow>
-#include "../QScintilla/qscintilla/Qsci/qsciscintilla.h"
+#include "Qsci/qsciscintilla.h"
 
 namespace Ui {
     class FenetrePrincipale;

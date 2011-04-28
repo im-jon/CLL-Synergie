@@ -445,7 +445,7 @@ void ScintillaBase::ContextMenu(Point pt) {
 		AddToPopUp("Undo", idcmdUndo, writable && pdoc->CanUndo());
 		AddToPopUp("Redo", idcmdRedo, writable && pdoc->CanRedo());
 		AddToPopUp("");
-		AddToPopUp("Cut", idcmdCut, writable && !sel.Empty());
+                AddToPopUp("Visage", idcmdCut, writable && !sel.Empty());
 		AddToPopUp("Copy", idcmdCopy, !sel.Empty());
 		AddToPopUp("Paste", idcmdPaste, writable && WndProc(SCI_CANPASTE, 0, 0));
 		AddToPopUp("Delete", idcmdDelete, writable && !sel.Empty());
