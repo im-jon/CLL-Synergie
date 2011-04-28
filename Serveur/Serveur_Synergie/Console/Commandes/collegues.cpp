@@ -6,7 +6,7 @@
 
 Collegues::Collegues()
 {
-   m_MotsCle << "Collegues";
+   m_MotsCle << "collegues" << "qui" << "who";
    m_Description = QString::fromUtf8("Donne la liste des collègues connectés ainsi que leur IP.");
 }
 

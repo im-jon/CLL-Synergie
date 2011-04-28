@@ -2,7 +2,7 @@
 
 Demarrer::Demarrer()
 {
-    m_MotsCle << "démarrer" << "demarrer" << "start";
+    m_MotsCle << "demarrer" << "start";
     m_ArgsMin = 0;
     m_Description = "Démarre le serveur.";
 }
