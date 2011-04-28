@@ -1,6 +1,6 @@
 #include "mangepaquetsserveur.h"
 #include <QDataStream>
-#include <QDebug>
+#include "Console/console.h"
 
 MangePaquetsServeur::MangePaquetsServeur(QObject *parent) :
     QObject(parent)
@@ -12,8 +12,13 @@ void MangePaquetsServeur::Interpreter(Client* client, QDataStream* stream)
     quint8 id;
     *stream >> id;
 
-    if (id == 1) {
+    switch (id) {
+    case 1:
         Reception_ChangerNom(client, stream);
+        break;
+    default:
+        Console::getInstance()->Imprimer("Reception d'un paquet inconnu #" + QString::number(id));
+        break;
     }
 }
 

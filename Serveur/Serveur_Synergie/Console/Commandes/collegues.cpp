@@ -12,7 +12,7 @@ Collegues::Collegues()
 
 QString Collegues::Executer()
 {
-    QString retour="";
+    QString retour = "";
     QMapIterator<int, Client*> iterateur(*ServeurSynergie::getInstance()->getClients());
     while (iterateur.hasNext()) {
         iterateur.next();

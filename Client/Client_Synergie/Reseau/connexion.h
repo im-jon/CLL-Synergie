@@ -16,8 +16,10 @@ public:
     void EnvoyerPaquet(BasePaquet* paquet);
 
 private:
-    explicit Connexion(QObject *parent = 0);
     static Connexion* m_Instance;
+
+    explicit Connexion(QObject *parent = 0);
+
     QTcpSocket* m_Socket;
     MangePaquetClient* m_MangePaquets;
 

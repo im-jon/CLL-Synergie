@@ -19,6 +19,10 @@ BaseCommande::BaseCommande()
 {
 }
 
+QString BaseCommande::Executer(const QStringList &arguments)
+{
+}
+
 const QStringList& BaseCommande::getMotsCle()
 {
     return m_MotsCle;
@@ -32,8 +36,4 @@ int BaseCommande::getArgsMin()
 QString BaseCommande::getDescription()
 {
     return m_Description;
-}
-
-QString BaseCommande::Executer(const QStringList &arguments)
-{
 }

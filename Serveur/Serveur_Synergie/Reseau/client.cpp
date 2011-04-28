@@ -15,6 +15,11 @@ Client::Client(int id, QTcpSocket* socket)
     connect(m_Socket,SIGNAL(disconnected()),this,SLOT(slOnDeconnection())); // Parenthèses ???
 }
 
+void Client::EnvoyerPaquet(BasePaquetServeur* paquet)
+{
+   m_Socket->write(paquet->getBuffer());
+}
+
 void Client::slPretALire()
 {
     QByteArray buffer;
@@ -22,24 +27,12 @@ void Client::slPretALire()
     QDataStream stream(&buffer, QIODevice::ReadOnly);
 
     ServeurSynergie::getInstance()->getMangePaquets()->Interpreter(this, &stream);
-
-    qDebug() << buffer.length();
-}
-
-void Client::EnvoyerPaquet(BasePaquetServeur* paquet)
-{
-   m_Socket->write(paquet->getBuffer());
 }
 
 void Client::slOnDeconnection()
 {
-
-}
-
-void Client::setNom(QString nom)
-{
-    m_Nom = nom;
-    Console::getInstance()->Imprimer(m_Socket->peerAddress().toString() + " change de nom pour " + nom);
+    m_Socket->close();
+    ServeurSynergie::getInstance()->EnleverClient(this);
 }
 
 QString Client::getNom()
@@ -55,4 +48,10 @@ int Client::getID()
 QString Client::getIP()
 {
     return m_Socket->peerAddress().toString();
+}
+
+void Client::setNom(QString nom)
+{
+    m_Nom = nom;
+    Console::getInstance()->Imprimer(m_Socket->peerAddress().toString() + " change de nom pour " + nom);
 }

@@ -13,8 +13,9 @@ private:
     QByteArray m_Buffer;
 
 protected:
-    QDataStream* m_Stream;
     BasePaquet(qint8 id);
+
+    QDataStream* m_Stream;
 };
 
 #endif // BASEPAQUET_H

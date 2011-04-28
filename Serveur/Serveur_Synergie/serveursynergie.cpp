@@ -4,6 +4,7 @@
 
 ServeurSynergie* ServeurSynergie::m_Instance = 0;
 
+// Fonction pour obtenir le Singleton du Serveur.
 ServeurSynergie* ServeurSynergie::getInstance()
 {
     static QMutex mutex;
@@ -22,7 +23,7 @@ ServeurSynergie* ServeurSynergie::getInstance()
 ServeurSynergie::ServeurSynergie(QObject *parent) :
     QObject(parent)
 {
-    m_ID = 0;
+    m_GenerateurID = 0;
     m_Ecouteur = new QTcpServer(this);
     m_Clients = new QMap<int, Client*>();
     m_MangePaquets = new MangePaquetsServeur(this);
@@ -52,17 +53,25 @@ bool ServeurSynergie::Arreter()
     return false;
 }
 
+bool ServeurSynergie::EnleverClient(Client *client)
+{
+    if (m_Clients->remove(client->getID()) >= 1) {
+        return true;
+    }
+    return false;
+}
+
 void ServeurSynergie::slNouveauClient()
 {
     QTcpSocket* socket = m_Ecouteur->nextPendingConnection();
 
-    Client* client = new Client(m_ID, socket);
+    Client* client = new Client(m_GenerateurID, socket);
     Console::getInstance()->Imprimer(socket->peerAddress().toString() + " est en ligne");
-    m_Clients->insert(m_ID, client);
+    m_Clients->insert(m_GenerateurID, client);
 
     Console::getInstance()->Imprimer(socket->peerAddress().toString() + " est en ligne");
 
-    m_ID++;
+    m_GenerateurID++;
 }
 
 MangePaquetsServeur* ServeurSynergie::getMangePaquets()

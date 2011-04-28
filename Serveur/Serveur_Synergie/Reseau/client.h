@@ -11,14 +11,16 @@ class Client : public QObject
 public:
     explicit Client(int id, QTcpSocket* socket);
 
-    QString getNom();
-    void setNom(QString nom);
-    QString getIP();
     void EnvoyerPaquet(BasePaquetServeur* paquet);
 
+    QString getNom();
+    QString getIP();
+
+    void setNom(QString nom);
+
 private:
-    QString m_Nom;
     int m_ID;
+    QString m_Nom;
     QTcpSocket* m_Socket;
 
 signals:
