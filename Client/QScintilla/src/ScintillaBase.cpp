@@ -442,15 +442,15 @@ void ScintillaBase::ContextMenu(Point pt) {
 	if (displayPopupMenu) {
 		bool writable = !WndProc(SCI_GETREADONLY, 0, 0);
 		popup.CreatePopUp();
-		AddToPopUp("Undo", idcmdUndo, writable && pdoc->CanUndo());
-		AddToPopUp("Redo", idcmdRedo, writable && pdoc->CanRedo());
+                AddToPopUp("Annuler", idcmdUndo, writable && pdoc->CanUndo());
+                AddToPopUp("Refaire", idcmdRedo, writable && pdoc->CanRedo());
 		AddToPopUp("");
-                AddToPopUp("Visage", idcmdCut, writable && !sel.Empty());
-		AddToPopUp("Copy", idcmdCopy, !sel.Empty());
-		AddToPopUp("Paste", idcmdPaste, writable && WndProc(SCI_CANPASTE, 0, 0));
-		AddToPopUp("Delete", idcmdDelete, writable && !sel.Empty());
+                AddToPopUp("Couper", idcmdCut, writable && !sel.Empty());
+                AddToPopUp("Copier", idcmdCopy, !sel.Empty());
+                AddToPopUp("Coller", idcmdPaste, writable && WndProc(SCI_CANPASTE, 0, 0));
+                AddToPopUp("Supprimer", idcmdDelete, writable && !sel.Empty());
 		AddToPopUp("");
-		AddToPopUp("Select All", idcmdSelectAll);
+                AddToPopUp("Sélectionner tout", idcmdSelectAll);
 		popup.Show(pt, wMain);
 	}
 }
