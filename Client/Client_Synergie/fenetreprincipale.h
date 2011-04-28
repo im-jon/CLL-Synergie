@@ -2,6 +2,7 @@
 #define FENETREPRINCIPALE_H
 
 #include <QMainWindow>
+#include "Qsci/qsciscintilla.h"
 
 namespace Ui {
     class FenetrePrincipale;
@@ -17,6 +18,7 @@ public:
 
 private:
     Ui::FenetrePrincipale *ui;
+    QsciScintilla* m_Editeur;
 
 private slots:
     void OnClicked();
