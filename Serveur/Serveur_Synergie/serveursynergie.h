@@ -3,9 +3,9 @@
 
 #include <QObject>
 #include <QTcpServer>
+#include <QMap>
 #include "Reseau/client.h"
 #include "Reseau/mangepaquetsserveur.h"
-#include <QMap>
 
 class ServeurSynergie : public QObject
 {
@@ -17,6 +17,7 @@ public:
     bool Arreter();
     bool EnleverClient(Client* client);
     MangePaquetsServeur* getMangePaquets();
+
     QMap<int, Client*>* getClients();
 
 private:
@@ -27,7 +28,7 @@ private:
     QTcpServer* m_Ecouteur;
     MangePaquetsServeur* m_MangePaquets;
     QMap<int, Client*>* m_Clients;
-    int m_GenerateurID;
+    int m_GenerateurID; // Sert à attribuer des nombres d'identification aux clients.
 
 signals:
 

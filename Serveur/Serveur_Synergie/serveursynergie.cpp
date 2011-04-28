@@ -4,7 +4,7 @@
 
 ServeurSynergie* ServeurSynergie::m_Instance = 0;
 
-// Fonction pour obtenir le Singleton du Serveur.
+// Fonction pour le Singleton.
 ServeurSynergie* ServeurSynergie::getInstance()
 {
     static QMutex mutex;
@@ -23,7 +23,6 @@ ServeurSynergie* ServeurSynergie::getInstance()
 ServeurSynergie::ServeurSynergie(QObject *parent) :
     QObject(parent)
 {
-    m_GenerateurID = 0;
     m_Ecouteur = new QTcpServer(this);
     m_Clients = new QMap<int, Client*>();
     m_MangePaquets = new MangePaquetsServeur(this);
@@ -45,11 +44,10 @@ bool ServeurSynergie::Arreter()
 {
     if (m_Ecouteur->isListening()) {
         m_Ecouteur->close();
-
         Console::getInstance()->Imprimer("Le serveur est hors ligne");
-
         return true;
     }
+    Console::getInstance()->Imprimer("Le serveur est incapable de se déconnecter");
     return false;
 }
 
@@ -64,8 +62,8 @@ bool ServeurSynergie::EnleverClient(Client *client)
 void ServeurSynergie::slNouveauClient()
 {
     Client* client = new Client(m_GenerateurID, m_Ecouteur->nextPendingConnection());
-    Console::getInstance()->Imprimer(client->getIP() + " est en ligne");
     m_Clients->insert(m_GenerateurID, client);
+    Console::getInstance()->Imprimer(client->getIP() + " est en ligne");
 
     m_GenerateurID++;
 }
