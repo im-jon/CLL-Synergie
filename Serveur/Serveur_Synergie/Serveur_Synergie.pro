@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     Console/Commandes/demarrer.cpp \
     Reseau/mangepaquetsserveur.cpp \
     Reseau/Paquets/paquetenvoicollegues.cpp \
-    Reseau/Paquets/basepaquetserveur.cpp
+    Reseau/Paquets/basepaquetserveur.cpp \
+    Console/Commandes/collegues.cpp
 
 HEADERS  += fenetreprincipale.h \
     Console/console.h \
@@ -33,6 +34,7 @@ HEADERS  += fenetreprincipale.h \
     Console/Commandes/demarrer.h \
     Reseau/mangepaquetsserveur.h \
     Reseau/Paquets/paquetenvoicollegues.h \
-    Reseau/Paquets/basepaquetserveur.h
+    Reseau/Paquets/basepaquetserveur.h \
+    Console/Commandes/collegues.h
 
 FORMS    += fenetreprincipale.ui
