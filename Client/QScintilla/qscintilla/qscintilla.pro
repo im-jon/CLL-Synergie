@@ -33,9 +33,9 @@
 
 TEMPLATE = lib
 TARGET = ../Librairie/qscintilla2
-CONFIG += qt warn_off release staticlib thread
+CONFIG += qt warn_off release dll thread
 INCLUDEPATH = . ../include ../lexlib ../src
-DEFINES = QT SCI_LEXER
+DEFINES = QT MAKE_DLL SCI_LEXER
 
 # Handle both Qt v4 and v3.
 target.path = $$[QT_INSTALL_LIBS]
