@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 class QsciScintilla;
+class QsciLexer;
 
 namespace Ui {
     class FenetrePrincipale;

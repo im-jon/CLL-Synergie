@@ -3,6 +3,7 @@
 #include "Reseau/connexion.h"
 #include <QBoxLayout>
 #include <../QScintilla/qscintilla/Qsci/qsciscintilla.h>
+#include <../QScintilla/qscintilla/Qsci/qscilexercpp.h>
 #include <QStringList>
 
 FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
@@ -14,9 +15,10 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     connect (Connexion::getInstance()->getMangePaquets(), SIGNAL(siNouvelleListeCollegues(QStringList*)), this, SLOT(slMiseAJourListeCollegues(QStringList*)));
 
     m_Editeur = new QsciScintilla;
-    m_Editeur->setFont(QFont("Monospace", 10));
     ui->tab->layout()->addWidget(m_Editeur);
     m_Editeur->setMarginLineNumbers(1, true);
+    m_Editeur->setLexer(new QsciLexerCPP());
+    m_Editeur->setFont(QFont("Monospace", 10));
 }
 
 FenetrePrincipale::~FenetrePrincipale()

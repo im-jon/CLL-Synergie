@@ -41,7 +41,7 @@ extern "C++" {
 #include <qobject.h>
 #include <qstring.h>
 
-#include <Qsci/qsciglobal.h>
+#include "qsciglobal.h"
 
 
 QT_BEGIN_NAMESPACE
