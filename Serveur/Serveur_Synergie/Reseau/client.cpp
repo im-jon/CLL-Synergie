@@ -33,6 +33,7 @@ void Client::slOnDeconnection()
 {
     m_Socket->close();
     ServeurSynergie::getInstance()->EnleverClient(this);
+    Console::getInstance()->Imprimer(m_Nom + " est déconnecté");
 }
 
 QString Client::getNom()

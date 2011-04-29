@@ -6,7 +6,7 @@ Aide::Aide()
 {
     m_MotsCle << "aide" << "help" << "commandes" << "?";
     m_ArgsMin = 0;
-    m_Description = QString::fromUtf8("Donne la liste complète des commandes.");
+    m_Description = "Donne la liste complète des commandes.";
 }
 
 QString Aide::Executer(const QStringList& arguments)

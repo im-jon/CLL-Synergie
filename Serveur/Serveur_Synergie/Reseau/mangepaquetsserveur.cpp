@@ -17,7 +17,7 @@ void MangePaquetsServeur::Interpreter(Client* client, QDataStream* stream)
         Reception_ChangerNom(client, stream);
         break;
     default:
-        Console::getInstance()->Imprimer("Reception d'un paquet inconnu #" + QString::number(id));
+        Console::getInstance()->Imprimer("Réception d'un paquet inconnu #" + QString::number(id));
         break;
     }
 }

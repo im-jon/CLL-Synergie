@@ -11,6 +11,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     ui->setupUi(this);
 
     m_Editeur = new QsciScintilla;
+    m_Editeur->setFont(QFont("Monospace", 10));
     ui->tab->layout()->addWidget(m_Editeur);
     m_Editeur->setMarginLineNumbers(1, true);
 }

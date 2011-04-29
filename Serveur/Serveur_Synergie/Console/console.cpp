@@ -65,7 +65,7 @@ void Console::Ecrire(QString ligne)
 
 void Console::Imprimer(QString ligne)
 {
-    emit (siSortie(ligne));
+    emit (siSortie(QString::fromUtf8(ligne.toAscii())));
 }
 
 void Console::Vider()
