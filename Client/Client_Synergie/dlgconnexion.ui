@@ -62,7 +62,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>9001</string>
+    <string/>
    </property>
   </widget>
   <widget class="QLabel" name="label">

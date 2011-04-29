@@ -2,6 +2,7 @@
 #define DLGCONNEXION_H
 
 #include <QDialog>
+#include <QSettings>
 
 namespace Ui {
     class dlgConnexion;
