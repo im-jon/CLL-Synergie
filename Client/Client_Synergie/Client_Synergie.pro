@@ -19,7 +19,6 @@ SOURCES += main.cpp\
     dlgconnexion.cpp
 
 HEADERS  += fenetreprincipale.h \
-         ../QScintilla/qscintilla/Qsci/qsciscintilla.h \
     Reseau/connexion.h \
     Reseau/mangepaquetclient.h \
     Reseau/Paquets/basepaquet.h \
@@ -29,4 +28,4 @@ HEADERS  += fenetreprincipale.h \
 FORMS    += fenetreprincipale.ui \
     dlgconnexion.ui
 
-LIBS += -lqscintilla2
+LIBS += "../QScintilla/Librairie/libqscintilla2.a"

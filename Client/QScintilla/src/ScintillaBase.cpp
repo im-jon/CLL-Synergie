@@ -450,7 +450,7 @@ void ScintillaBase::ContextMenu(Point pt) {
                 AddToPopUp("Coller", idcmdPaste, writable && WndProc(SCI_CANPASTE, 0, 0));
                 AddToPopUp("Supprimer", idcmdDelete, writable && !sel.Empty());
 		AddToPopUp("");
-                AddToPopUp("Sélectionner tout", idcmdSelectAll);
+                AddToPopUp("Selectionner tout", idcmdSelectAll);
 		popup.Show(pt, wMain);
 	}
 }

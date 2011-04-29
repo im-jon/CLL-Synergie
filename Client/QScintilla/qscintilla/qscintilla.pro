@@ -32,10 +32,10 @@
 !win32:VERSION = 6.0.0
 
 TEMPLATE = lib
-TARGET = ../../Client_Synergie/qscintilla2
-CONFIG += qt warn_off release dll thread
+TARGET = ../Librairie/qscintilla2
+CONFIG += qt warn_off release staticlib thread
 INCLUDEPATH = . ../include ../lexlib ../src
-DEFINES = QT MAKE_DLL SCI_LEXER
+DEFINES = QT SCI_LEXER
 
 # Handle both Qt v4 and v3.
 target.path = $$[QT_INSTALL_LIBS]
