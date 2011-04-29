@@ -39,6 +39,7 @@ void dlgConnexion::on_buttonBox_accepted()
         parametres.endGroup();
 
     } else {
-        QMessageBox::warning(this, "Erreur de connexion", "Incapable de rejoindre l'hôte.");
+        QMessageBox::warning(this, "Erreur de connexion", QString::fromUtf8("Incapable de rejoindre l'hôte."));
+        this->show();
     }
 }

@@ -46,8 +46,8 @@
     <item row="0" column="1">
      <widget class="QTextEdit" name="textEdit">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>3</horstretch>
+       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+        <horstretch>2</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
@@ -61,7 +61,7 @@
      <x>0</x>
      <y>0</y>
      <width>820</width>
-     <height>25</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

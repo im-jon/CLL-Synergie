@@ -31,7 +31,7 @@ Connexion::Connexion(QObject *parent) :
 bool Connexion::Connecter(QString addr, int port)
 {
     m_Socket->connectToHost(addr, port);
-    return m_Socket->isValid();
+    return m_Socket->waitForConnected(1000);
 }
 
 void Connexion::ChangerNom(QString nom)
