@@ -23,6 +23,7 @@ ServeurSynergie* ServeurSynergie::getInstance()
 ServeurSynergie::ServeurSynergie(QObject *parent) :
     QObject(parent)
 {
+    m_GenerateurID = 1;
     m_Ecouteur = new QTcpServer(this);
     m_Clients = new QMap<int, Client*>();
     m_MangePaquets = new MangePaquetsServeur(this);
