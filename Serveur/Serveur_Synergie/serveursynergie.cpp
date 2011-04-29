@@ -1,6 +1,7 @@
 #include "serveursynergie.h"
 #include "Console/console.h"
 #include "Reseau/Paquets/paquetenvoicollegues.h"
+#include <QDir>
 
 ServeurSynergie* ServeurSynergie::m_Instance = 0;
 
@@ -29,6 +30,15 @@ ServeurSynergie::ServeurSynergie(QObject *parent) :
     m_MangePaquets = new MangePaquetsServeur(this);
 
     connect (m_Ecouteur, SIGNAL(newConnection()), this, SLOT(slNouveauClient()));
+
+    QDir dossierProjets("Projets");
+    if (dossierProjets.exists()) {
+        if (dossierProjets.entryList(QDir::AllDirs).count() == 2) {
+            Console::getInstance()->Imprimer("Le répertoire de projets est vide");
+        }
+    } else {
+        QDir().mkdir("Projets");
+    }
 }
 
 bool ServeurSynergie::Demarrer()
@@ -77,4 +87,15 @@ MangePaquetsServeur* ServeurSynergie::getMangePaquets()
 QMap<int, Client*>* ServeurSynergie::getClients()
 {
     return m_Clients;
+}
+
+bool ServeurSynergie::NouveauProjet(QString nom)
+{
+    QDir dossierProjets("Projets");
+    if (!dossierProjets.exists()) {
+        if (!QDir().mkdir("Projets")) {
+            return false;
+        }
+    }
+    return dossierProjets.mkdir(nom);
 }

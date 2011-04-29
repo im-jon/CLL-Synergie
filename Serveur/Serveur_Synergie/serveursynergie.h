@@ -17,14 +17,15 @@ public:
     bool Arreter();
     bool EnleverClient(Client* client);
     MangePaquetsServeur* getMangePaquets();
-
     QMap<int, Client*>* getClients();
+    void NouveauProjet(QString nom);
 
 private:
     static ServeurSynergie* m_Instance;
 
     explicit ServeurSynergie(QObject *parent = 0);
 
+    QString m_Projet;
     QTcpServer* m_Ecouteur;
     MangePaquetsServeur* m_MangePaquets;
     QMap<int, Client*>* m_Clients;
