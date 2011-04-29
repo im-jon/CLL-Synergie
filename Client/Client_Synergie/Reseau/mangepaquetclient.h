@@ -15,9 +15,9 @@ private:
     void Reception_ListeCollegues(QDataStream* stream);
 
 signals:
+    void siNouvelleListeCollegues(QStringList* noms);
 
 public slots:
-
 };
 
 #endif // MANGEPAQUETCLIENT_H

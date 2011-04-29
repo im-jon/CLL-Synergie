@@ -23,6 +23,9 @@ private:
 
 private slots:
 
+public slots:
+    void slMiseAJourListeCollegues(QStringList* noms);
+
 };
 
 #endif // FENETREPRINCIPALE_H

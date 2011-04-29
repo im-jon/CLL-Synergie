@@ -15,6 +15,7 @@ public:
     bool Connecter(QString, int);
     void EnvoyerPaquet(BasePaquet* paquet);
     void ChangerNom(QString nom);
+    MangePaquetClient* getMangePaquets();
 
 private:
     static Connexion* m_Instance;

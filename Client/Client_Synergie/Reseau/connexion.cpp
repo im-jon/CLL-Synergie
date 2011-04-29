@@ -55,4 +55,9 @@ void Connexion::EnvoyerPaquet(BasePaquet* paquet)
     m_Socket->write(paquet->getBuffer());
 }
 
+MangePaquetClient* Connexion::getMangePaquets()
+{
+    return m_MangePaquets;
+}
+
 

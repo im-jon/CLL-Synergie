@@ -36,4 +36,6 @@ void MangePaquetClient::Reception_ListeCollegues(QDataStream* stream)
         *stream >> nom;
         collegues->append(nom);
     }
+
+    emit (siNouvelleListeCollegues(collegues));
 }

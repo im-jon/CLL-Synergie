@@ -2,6 +2,7 @@
 #include <QMapIterator>
 #include "Reseau/client.h"
 #include "serveursynergie.h"
+#include <QDebug>
 
 PaquetEnvoiCollegues::PaquetEnvoiCollegues() :
     BasePaquetServeur((qint8)1)

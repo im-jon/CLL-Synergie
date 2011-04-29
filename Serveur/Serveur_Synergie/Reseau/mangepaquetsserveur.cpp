@@ -1,6 +1,7 @@
 #include "mangepaquetsserveur.h"
 #include <QDataStream>
 #include "Console/console.h"
+#include "Paquets/paquetenvoicollegues.h"
 
 MangePaquetsServeur::MangePaquetsServeur(QObject *parent) :
     QObject(parent)
@@ -29,4 +30,6 @@ void MangePaquetsServeur::Reception_ChangerNom(Client* client, QDataStream* stre
     *stream >> nom;
 
     client->setNom(nom);
+
+    client->EnvoyerPaquet(new PaquetEnvoiCollegues());
 }

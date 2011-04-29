@@ -18,7 +18,7 @@ public:
     bool EnleverClient(Client* client);
     MangePaquetsServeur* getMangePaquets();
     QMap<int, Client*>* getClients();
-    void NouveauProjet(QString nom);
+    bool NouveauProjet(QString nom);
 
 private:
     static ServeurSynergie* m_Instance;
