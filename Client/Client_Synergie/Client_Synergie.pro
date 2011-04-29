@@ -15,15 +15,18 @@ SOURCES += main.cpp\
     Reseau/connexion.cpp \
     Reseau/mangepaquetclient.cpp \
     Reseau/Paquets/basepaquet.cpp \
-    Reseau/Paquets/paquetchangernom.cpp
+    Reseau/Paquets/paquetchangernom.cpp \
+    dlgconnexion.cpp
 
 HEADERS  += fenetreprincipale.h \
          ../QScintilla/qscintilla/Qsci/qsciscintilla.h \
     Reseau/connexion.h \
     Reseau/mangepaquetclient.h \
     Reseau/Paquets/basepaquet.h \
-    Reseau/Paquets/paquetchangernom.h
+    Reseau/Paquets/paquetchangernom.h \
+    dlgconnexion.h
 
-FORMS    += fenetreprincipale.ui
+FORMS    += fenetreprincipale.ui \
+    dlgconnexion.ui
 
 LIBS += -lqscintilla2

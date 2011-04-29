@@ -21,7 +21,7 @@ private:
     QsciScintilla* m_Editeur;
 
 private slots:
-    void OnClicked();
+
 };
 
 #endif // FENETREPRINCIPALE_H

@@ -31,7 +31,12 @@ Connexion::Connexion(QObject *parent) :
 bool Connexion::Connecter(QString addr, int port)
 {
     m_Socket->connectToHost(addr, port);
-    EnvoyerPaquet(new PaquetChangerNom("GILLES"));
+    return m_Socket->isValid();
+}
+
+void Connexion::ChangerNom(QString nom)
+{
+    EnvoyerPaquet(new PaquetChangerNom(nom));
 }
 
 void Connexion::slPretALire()

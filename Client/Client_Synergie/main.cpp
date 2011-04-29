@@ -1,10 +1,10 @@
 #include <QtGui/QApplication>
-#include "fenetreprincipale.h"
+#include "dlgconnexion.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    FenetrePrincipale w;
+    dlgConnexion w;
     w.show();
 
     return a.exec();
