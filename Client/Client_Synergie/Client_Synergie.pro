@@ -29,3 +29,6 @@ FORMS    += fenetreprincipale.ui \
     dlgconnexion.ui
 
 LIBS += "../QScintilla/Librairie/libqscintilla2.a"
+
+RESOURCES += \
+    Ressources.qrc
