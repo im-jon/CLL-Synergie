@@ -1,4 +1,4 @@
 TEMPLATE = subdirs
-SUBDIRS = Serveur/Serveur_Synergie \
+SUBDIRS = Client/QScintilla/qscintilla \
           Client/Client_Synergie \
-          Client/QScintilla/qscintilla
+          Serveur/Serveur_Synergie
