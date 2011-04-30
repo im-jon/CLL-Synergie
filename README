@@ -12,7 +12,7 @@ S'il y a problèmes de compilation avec un projet, s'assurer que :
  2. Le dossier Synergie-build-desktop a été supprimé.
 
 Si le projet Client_Synergie refuse de compiler ou ne trouve pas la librairie
-QScintilla, assurez-vous d'avoir déjà compilé et installé le projet QScintilla.
+QScintilla, assurez-vous d'avoir déjà compilé la librairie QScintilla.
 
 
 == Auteurs ==
