@@ -8,6 +8,7 @@
 #include <QListWidgetItem>
 #include <QTreeWidgetItem>
 #include <QFileInfo>
+#include <../QScintilla/qscintilla/Qsci/qscilexer.h>
 
 FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     QMainWindow(parent),
@@ -45,7 +46,7 @@ void FenetrePrincipale::on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, i
     if (item->childCount() == 0) {
 
         QString extension = QFileInfo(item->text(column)).suffix();
-
+        QsciLexer::apis()
         QsciScintilla* editeur = new QsciScintilla();
         QsciLexerCPP* lexer = new QsciLexerCPP(this);
         lexer->setFont(QFont("Monospace", 9));

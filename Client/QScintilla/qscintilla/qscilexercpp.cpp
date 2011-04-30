@@ -64,15 +64,6 @@ const char *QsciLexerCPP::lexer() const
     return (nocase ? "cppnocase" : "cpp");
 }
 
-QStringList QsciLexerCPP::extensions() const
-{
-    QStringList ext;
-
-    ext << "h" << "hh" << "hpp" << "hxx" << "h++" << "cc" << "cpp" << "cxx" << "c++";
-
-    return ext;
-}
-
 
 // Return the set of character sequences that can separate auto-completion
 // words.
