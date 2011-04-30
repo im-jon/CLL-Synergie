@@ -2,6 +2,7 @@
 #define FENETREPRINCIPALE_H
 
 #include <QMainWindow>
+#include <QTreeWidgetItem>
 
 class QsciScintilla;
 class QsciLexer;
@@ -21,9 +22,14 @@ public:
 
 private:
     Ui::FenetrePrincipale *ui;
-    QsciScintilla* m_Editeur;
 
 private slots:
+
+    void on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, int column);
+
+    void on_tabFeuilles_currentChanged(int index);
+
+    void on_tabFeuilles_tabCloseRequested(int index);
 
 public slots:
     void slMiseAJourListeCollegues(QStringList* noms);

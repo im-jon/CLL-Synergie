@@ -239,7 +239,7 @@ public:
 	void ModifiedAt(int pos);
 	void CheckReadOnly();
 	bool DeleteChars(int pos, int len);
-	bool InsertString(int position, const char *s, int insertLength);
+        bool InsertString(int position, const char *s, int insertLength, bool mechanic = false);
 	int Undo();
 	int Redo();
 	bool CanUndo() { return cb.CanUndo(); }

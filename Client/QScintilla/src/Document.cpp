@@ -665,7 +665,7 @@ bool Document::DeleteChars(int pos, int len) {
 /**
  * Insert a string with a length.
  */
-bool Document::InsertString(int position, const char *s, int insertLength) {
+bool Document::InsertString(int position, const char *s, int insertLength, bool mechanic) {
 	if (insertLength <= 0) {
 		return false;
 	}
@@ -675,25 +675,31 @@ bool Document::InsertString(int position, const char *s, int insertLength) {
 	} else {
 		enteredModification++;
 		if (!cb.IsReadOnly()) {
+                    if (!mechanic)
+                    {
 			NotifyModified(
 			    DocModification(
 			        SC_MOD_BEFOREINSERT | SC_PERFORMED_USER,
 			        position, insertLength,
 			        0, s));
-			int prevLinesTotal = LinesTotal();
-			bool startSavePoint = cb.IsSavePoint();
-			bool startSequence = false;
-			const char *text = cb.InsertString(position, s, insertLength, startSequence);
-			if (startSavePoint && cb.IsCollectingUndo())
-				NotifySavePoint(!startSavePoint);
-			ModifiedAt(position);
-			NotifyModified(
-			    DocModification(
-			        SC_MOD_INSERTTEXT | SC_PERFORMED_USER | (startSequence?SC_STARTACTION:0),
-			        position, insertLength,
-			        LinesTotal() - prevLinesTotal, text));
+                    }
+                    int prevLinesTotal = LinesTotal();
+                    bool startSavePoint = cb.IsSavePoint();
+                    bool startSequence = false;
+                    const char *text = cb.InsertString(position, s, insertLength, startSequence);
+                    if (!mechanic)
+                    {
+                        if (startSavePoint && cb.IsCollectingUndo())
+                                NotifySavePoint(!startSavePoint);
+                        ModifiedAt(position);
+                        NotifyModified(
+                            DocModification(
+                                SC_MOD_INSERTTEXT | SC_PERFORMED_USER | (startSequence?SC_STARTACTION:0),
+                                position, insertLength,
+                                LinesTotal() - prevLinesTotal, text));
+                    }
 		}
-		enteredModification--;
+                enteredModification--;
 	}
 	return !cb.IsReadOnly();
 }
