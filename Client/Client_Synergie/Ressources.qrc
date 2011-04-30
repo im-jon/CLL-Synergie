@@ -2,5 +2,8 @@
     <qresource prefix="/Icones">
         <file alias="utilisateur.png">Ressources/Icones/user.png</file>
         <file alias="utilisatrice.png">Ressources/Icones/user-female.png</file>
+        <file alias="utilisateurs.png">Ressources/Icones/users.png</file>
+        <file alias="dossiers.png">Ressources/Icones/folders-stack.png</file>
+        <file alias="feuille.png">Ressources/Icones/document-code.png</file>
     </qresource>
 </RCC>

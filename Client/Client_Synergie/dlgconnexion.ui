@@ -40,6 +40,9 @@
    <property name="standardButtons">
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
+   <property name="centerButtons">
+    <bool>false</bool>
+   </property>
   </widget>
   <widget class="QLineEdit" name="txtAdresse">
    <property name="geometry">

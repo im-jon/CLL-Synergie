@@ -43,7 +43,7 @@
          </property>
          <widget class="QWidget" name="tabFeuille1">
           <attribute name="title">
-           <string>Feuille</string>
+           <string>Feuille.cpp</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_2">
            <property name="margin">
@@ -66,7 +66,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>170</width>
+           <width>190</width>
            <height>16777215</height>
           </size>
          </property>
@@ -77,9 +77,13 @@
           </size>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="tabCollegues">
+          <attribute name="icon">
+           <iconset resource="Ressources.qrc">
+            <normaloff>:/Icones/utilisateurs.png</normaloff>:/Icones/utilisateurs.png</iconset>
+          </attribute>
           <attribute name="title">
            <string>Collègues</string>
           </attribute>
@@ -100,12 +104,16 @@
           </layout>
          </widget>
          <widget class="QWidget" name="tabProjet">
+          <attribute name="icon">
+           <iconset resource="Ressources.qrc">
+            <normaloff>:/Icones/dossiers.png</normaloff>:/Icones/dossiers.png</iconset>
+          </attribute>
           <attribute name="title">
            <string>Projet</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_4">
            <property name="margin">
-            <number>0</number>
+            <number>2</number>
            </property>
            <item row="0" column="0">
             <widget class="QTreeWidget" name="treeWidget">
@@ -321,6 +329,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="Ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>
