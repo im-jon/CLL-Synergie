@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>FenetrePrincipale</string>
+   <string>Synergie</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_3">
@@ -100,6 +100,36 @@
            <property name="margin">
             <number>0</number>
            </property>
+           <item row="0" column="0">
+            <widget class="QTreeWidget" name="treeWidget">
+             <property name="headerHidden">
+              <bool>true</bool>
+             </property>
+             <attribute name="headerVisible">
+              <bool>false</bool>
+             </attribute>
+             <column>
+              <property name="text">
+               <string>Feuille</string>
+              </property>
+             </column>
+             <item>
+              <property name="text">
+               <string>Feuille 1</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Dossier 1</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>Feuille 2</string>
+               </property>
+              </item>
+             </item>
+            </widget>
+           </item>
           </layout>
          </widget>
         </widget>
@@ -184,6 +214,38 @@
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFichier">
+    <property name="title">
+     <string>Fichier</string>
+    </property>
+    <addaction name="actionSe_d_connecter"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuitter"/>
+   </widget>
+   <widget class="QMenu" name="menu_dition">
+    <property name="title">
+     <string>Édition</string>
+    </property>
+    <addaction name="actionAnnuler"/>
+    <addaction name="actionRevenir"/>
+    <addaction name="separator"/>
+    <addaction name="actionCouper"/>
+    <addaction name="actionCopier"/>
+    <addaction name="actionColler"/>
+    <addaction name="actionEffacer"/>
+    <addaction name="separator"/>
+    <addaction name="actionS_lectionner_tout"/>
+   </widget>
+   <widget class="QMenu" name="menuAide">
+    <property name="title">
+     <string>Aide</string>
+    </property>
+    <addaction name="actionPanique"/>
+    <addaction name="action_propos"/>
+   </widget>
+   <addaction name="menuFichier"/>
+   <addaction name="menu_dition"/>
+   <addaction name="menuAide"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -195,6 +257,61 @@
    <addaction name="separator"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="action_propos">
+   <property name="text">
+    <string>À propos</string>
+   </property>
+  </action>
+  <action name="actionCopier">
+   <property name="text">
+    <string>Copier</string>
+   </property>
+  </action>
+  <action name="actionColler">
+   <property name="text">
+    <string>Coller</string>
+   </property>
+  </action>
+  <action name="actionEffacer">
+   <property name="text">
+    <string>Effacer</string>
+   </property>
+  </action>
+  <action name="actionS_lectionner_tout">
+   <property name="text">
+    <string>Sélectionner tout</string>
+   </property>
+  </action>
+  <action name="actionCouper">
+   <property name="text">
+    <string>Couper</string>
+   </property>
+  </action>
+  <action name="actionAnnuler">
+   <property name="text">
+    <string>Annuler</string>
+   </property>
+  </action>
+  <action name="actionRevenir">
+   <property name="text">
+    <string>Refaire</string>
+   </property>
+  </action>
+  <action name="actionPanique">
+   <property name="text">
+    <string>Panique!</string>
+   </property>
+  </action>
+  <action name="actionQuitter">
+   <property name="text">
+    <string>Quitter</string>
+   </property>
+  </action>
+  <action name="actionSe_d_connecter">
+   <property name="text">
+    <string>Déconnecter</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

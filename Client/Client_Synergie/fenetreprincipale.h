@@ -23,6 +23,7 @@ private:
     QsciScintilla* m_Editeur;
 
 private slots:
+    void slCurseurBouger(int, int);
 
 public slots:
     void slMiseAJourListeCollegues(QStringList* noms);
