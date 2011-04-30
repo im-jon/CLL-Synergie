@@ -155,6 +155,8 @@ public:
     //! languages.
     const char *lexer() const;
 
+    QStringList extensions() const;
+
     //! \internal Returns the character sequences that can separate
     //! auto-completion words.
     QStringList autoCompletionWordSeparators() const;

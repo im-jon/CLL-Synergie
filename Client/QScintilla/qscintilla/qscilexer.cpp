@@ -88,6 +88,10 @@ const char *QsciLexer::lexer() const
     return 0;
 }
 
+QStringList QsciLexer::extensions() const
+{
+    return QStringList();
+}
 
 // Return the lexer identifier.
 int QsciLexer::lexerId() const

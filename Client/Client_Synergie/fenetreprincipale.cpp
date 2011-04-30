@@ -7,6 +7,7 @@
 #include <QStringList>
 #include <QListWidgetItem>
 #include <QTreeWidgetItem>
+#include <QFileInfo>
 
 FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     QMainWindow(parent),
@@ -42,6 +43,9 @@ void FenetrePrincipale::on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, i
     // Si la feuille n'est pas déjà ouverte.
 
     if (item->childCount() == 0) {
+
+        QString extension = QFileInfo(item->text(column)).suffix();
+
         QsciScintilla* editeur = new QsciScintilla();
         QsciLexerCPP* lexer = new QsciLexerCPP(this);
         lexer->setFont(QFont("Monospace", 9));

@@ -42,6 +42,7 @@ extern "C++" {
 #include <qstring.h>
 
 #include "qsciglobal.h"
+#include "qstringlist.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -94,6 +95,8 @@ public:
     //!
     //! \sa lexerId()
     virtual const char *lexer() const;
+
+    virtual QStringList extensions() const;
 
     //! Returns the identifier (i.e. a QsciScintillaBase::SCLEX_* value) of the
     //! lexer.  This is only used if lexer() returns 0.  The default
