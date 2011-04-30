@@ -50,12 +50,15 @@ void FenetrePrincipale::on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, i
         editeur->setLexer(Utils::TrouverLexer(extension));
         editeur->setAutoIndent(true);
 
-        ui->tabFeuilles->addTab(editeur, item->text(column));
+        int index = ui->tabFeuilles->addTab(editeur, item->text(column));
+        ui->tabFeuilles->setCurrentIndex(index);
     }
 }
 
 void FenetrePrincipale::on_tabFeuilles_currentChanged(int index)
 {
+    ui->statusBar->showMessage(((QsciScintilla*)ui->tabFeuilles->currentWidget())->lexer()->language());
+
     // Envoyer le paquet pour changer la feuille active.
 }
 
