@@ -17,6 +17,7 @@ class FenetrePrincipale : public QMainWindow
 public:
     explicit FenetrePrincipale(QWidget *parent = 0);
     ~FenetrePrincipale();
+    void AjouterCollegueListe(QString nom);
 
 private:
     Ui::FenetrePrincipale *ui;

@@ -5,6 +5,7 @@
 #include <../QScintilla/qscintilla/Qsci/qsciscintilla.h>
 #include <../QScintilla/qscintilla/Qsci/qscilexercpp.h>
 #include <QStringList>
+#include <QListWidgetItem>
 
 FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     QMainWindow(parent),
@@ -33,5 +34,14 @@ FenetrePrincipale::~FenetrePrincipale()
 void FenetrePrincipale::slMiseAJourListeCollegues(QStringList* noms)
 {
     ui->lstCollegues->clear();
-    ui->lstCollegues->addItems(*noms);
+
+    for (int i = 0; i < noms->length(); i++) {
+        AjouterCollegueListe(noms->at(i));
+    }
+}
+
+void FenetrePrincipale::AjouterCollegueListe(QString nom)
+{
+    QListWidgetItem* item = new QListWidgetItem(QIcon(":/Icones/utilisateur.png"), nom);
+    ui->lstCollegues->addItem(item);
 }

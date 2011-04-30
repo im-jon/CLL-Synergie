@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/Icones">
-        <file>Ressources/Icones/user.png</file>
+        <file alias="utilisateur.png">Ressources/Icones/user.png</file>
+        <file alias="utilisatrice.png">Ressources/Icones/user-female.png</file>
     </qresource>
 </RCC>
