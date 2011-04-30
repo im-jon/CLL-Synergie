@@ -15,7 +15,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     connect (Connexion::getInstance()->getMangePaquets(), SIGNAL(siNouvelleListeCollegues(QStringList*)), this, SLOT(slMiseAJourListeCollegues(QStringList*)));
 
     m_Editeur = new QsciScintilla;
-    ui->tab->layout()->addWidget(m_Editeur);
+    ui->tabFeuille1->layout()->addWidget(m_Editeur);
     m_Editeur->setMarginLineNumbers(1, true);
     m_Editeur->setLexer(new QsciLexerCPP());
     m_Editeur->setFont(QFont("Monospace", 10));

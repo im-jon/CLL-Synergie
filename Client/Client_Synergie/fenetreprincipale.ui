@@ -16,22 +16,22 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_3">
     <item row="0" column="0">
-     <widget class="QFrame" name="frame">
+     <widget class="QFrame" name="frmDessus">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>9</horstretch>
         <verstretch>9</verstretch>
        </sizepolicy>
       </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout_6">
+       <property name="margin">
+        <number>0</number>
+       </property>
        <item row="0" column="0">
-        <widget class="QTabWidget" name="tabWidget">
+        <widget class="QTabWidget" name="tabFeuilles">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>10</horstretch>
@@ -41,21 +41,18 @@
          <property name="currentIndex">
           <number>0</number>
          </property>
-         <widget class="QWidget" name="tab">
+         <widget class="QWidget" name="tabFeuille1">
           <attribute name="title">
-           <string>Tab 1</string>
+           <string>Feuille</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_2">
+           <property name="margin">
+            <number>0</number>
+           </property>
            <item row="0" column="0">
             <layout class="QGridLayout" name="gridLayout"/>
            </item>
           </layout>
-         </widget>
-         <widget class="QWidget" name="tab_2">
-          <attribute name="title">
-           <string>Tab 2</string>
-          </attribute>
-          <zorder>tabObjets</zorder>
          </widget>
         </widget>
        </item>
@@ -63,9 +60,21 @@
         <widget class="QTabWidget" name="tabObjets">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>3</horstretch>
-           <verstretch>0</verstretch>
+           <horstretch>5</horstretch>
+           <verstretch>5</verstretch>
           </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>170</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
          </property>
          <property name="currentIndex">
           <number>0</number>
@@ -75,6 +84,9 @@
            <string>Collègues</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_5">
+           <property name="margin">
+            <number>2</number>
+           </property>
            <item row="0" column="0">
             <widget class="QListWidget" name="lstCollegues"/>
            </item>
@@ -84,7 +96,11 @@
           <attribute name="title">
            <string>Projet</string>
           </attribute>
-          <layout class="QGridLayout" name="gridLayout_4"/>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <property name="margin">
+            <number>0</number>
+           </property>
+          </layout>
          </widget>
         </widget>
        </item>
@@ -92,52 +108,66 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QFrame" name="frame_2">
+     <widget class="QFrame" name="frmBas">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>3</verstretch>
        </sizepolicy>
       </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>130</height>
+       </size>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout_7">
+       <property name="margin">
+        <number>0</number>
+       </property>
        <item row="0" column="0">
-        <widget class="QTabWidget" name="tabWidget_3">
+        <widget class="QTabWidget" name="tabInfos">
+         <property name="currentIndex">
+          <number>1</number>
+         </property>
          <widget class="QWidget" name="tab_5">
           <attribute name="title">
-           <string>Tab 1</string>
+           <string>?</string>
           </attribute>
          </widget>
          <widget class="QWidget" name="tab_6">
           <attribute name="title">
-           <string>Tab 2</string>
+           <string>?</string>
           </attribute>
          </widget>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QTabWidget" name="tabWidget_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>3</verstretch>
-          </sizepolicy>
+        <widget class="QFrame" name="frmConversation">
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
          </property>
-         <widget class="QWidget" name="tab_3">
-          <attribute name="title">
-           <string>Tab 1</string>
-          </attribute>
-         </widget>
-         <widget class="QWidget" name="tab_4">
-          <attribute name="title">
-           <string>Tab 2</string>
-          </attribute>
-         </widget>
+         <property name="lineWidth">
+          <number>0</number>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="margin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QTextEdit" name="txtConversation">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="txtLigneConv"/>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -151,7 +181,7 @@
      <x>0</x>
      <y>0</y>
      <width>967</width>
-     <height>23</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
