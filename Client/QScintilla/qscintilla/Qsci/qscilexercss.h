@@ -37,8 +37,8 @@ extern "C++" {
 
 #include <qobject.h>
 
-#include <Qsci/qsciglobal.h>
-#include <Qsci/qscilexer.h>
+#include "qsciglobal.h"
+#include "qscilexer.h"
 
 
 //! \brief The QsciLexerCSS class encapsulates the Scintilla CSS lexer.

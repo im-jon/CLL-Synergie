@@ -3,12 +3,11 @@
 #include "Reseau/connexion.h"
 #include <QBoxLayout>
 #include <../QScintilla/qscintilla/Qsci/qsciscintilla.h>
-#include <../QScintilla/qscintilla/Qsci/qscilexercpp.h>
 #include <QStringList>
 #include <QListWidgetItem>
 #include <QTreeWidgetItem>
 #include <QFileInfo>
-#include <../QScintilla/qscintilla/Qsci/qscilexer.h>
+#include "utils.h"
 
 FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     QMainWindow(parent),
@@ -44,15 +43,11 @@ void FenetrePrincipale::on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, i
     // Si la feuille n'est pas déjà ouverte.
 
     if (item->childCount() == 0) {
-
         QString extension = QFileInfo(item->text(column)).suffix();
-        QsciLexer::apis()
         QsciScintilla* editeur = new QsciScintilla();
-        QsciLexerCPP* lexer = new QsciLexerCPP(this);
-        lexer->setFont(QFont("Monospace", 9));
         editeur->setMarginLineNumbers(1, true);
         editeur->setMarginWidth(1, 30);
-        editeur->setLexer(lexer);
+        editeur->setLexer(Utils::TrouverLexer(extension));
         editeur->setAutoIndent(true);
 
         ui->tabFeuilles->addTab(editeur, item->text(column));

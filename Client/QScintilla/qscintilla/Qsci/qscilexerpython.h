@@ -37,9 +37,9 @@ extern "C++" {
 
 #include <qobject.h>
 
-#include <Qsci/qsciglobal.h>
-#include <Qsci/qscilexer.h>
-#include "Qsci/qsciscintillabase.h"
+#include "qsciglobal.h"
+#include "qscilexer.h"
+#include "qsciscintillabase.h"
 
 
 //! \brief The QsciLexerPython class encapsulates the Scintilla Python lexer.

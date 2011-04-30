@@ -37,8 +37,8 @@ extern "C++" {
 
 #include <qobject.h>
 
-#include <Qsci/qsciglobal.h>
-#include <Qsci/qscilexercpp.h>
+#include "qsciglobal.h"
+#include "qscilexercpp.h"
 
 
 //! \brief The QsciLexerJavaScript class encapsulates the Scintilla JavaScript

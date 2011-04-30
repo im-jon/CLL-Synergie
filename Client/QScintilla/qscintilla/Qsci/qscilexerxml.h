@@ -37,8 +37,8 @@ extern "C++" {
 
 #include <qobject.h>
 
-#include <Qsci/qsciglobal.h>
-#include <Qsci/qscilexerhtml.h>
+#include "qsciglobal.h"
+#include "qscilexerhtml.h"
 
 
 //! \brief The QsciLexerXML class encapsulates the Scintilla XML lexer.

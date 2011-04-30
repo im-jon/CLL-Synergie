@@ -16,14 +16,16 @@ SOURCES += main.cpp\
     Reseau/mangepaquetclient.cpp \
     Reseau/Paquets/basepaquet.cpp \
     Reseau/Paquets/paquetchangernom.cpp \
-    dlgconnexion.cpp
+    dlgconnexion.cpp \
+    utils.cpp
 
 HEADERS  += fenetreprincipale.h \
     Reseau/connexion.h \
     Reseau/mangepaquetclient.h \
     Reseau/Paquets/basepaquet.h \
     Reseau/Paquets/paquetchangernom.h \
-    dlgconnexion.h
+    dlgconnexion.h \
+    utils.h
 
 FORMS    += fenetreprincipale.ui \
     dlgconnexion.ui
