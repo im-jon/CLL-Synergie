@@ -756,6 +756,8 @@ public:
     //! \sa setIndicatorDrawUnder()
     bool indicatorDrawUnder(int indicatorNumber) const;
 
+    void insertAtPos(const QString &text, int pos);
+
     //! Returns true if a call tip is currently active.
     bool isCallTipActive() const;
 
@@ -1312,7 +1314,6 @@ public slots:
     //!
     //! \sa copyAvailable(), cut(), paste()
     virtual void copy();
-
     //! Copies any selected text to the clipboard and then deletes the text.
     //!
     //! \sa copy(), paste()
@@ -1775,6 +1776,8 @@ signals:
 
     //! This signal is emitted whenever the text in the text edit changes.
     void textChanged();
+    void textInserted(int pos, QString text);
+    void textDeleted(int pos, int len);
 
     //! This signal is emitted when an item in a user defined list is activated
     //! (selected).  \a id is the list identifier.  \a string is the text of
@@ -1858,7 +1861,6 @@ private:
     bool isStartChar(char ch) const;
 
     bool ensureRW();
-    void insertAtPos(const QString &text, int pos);
     static int mapModifiers(int modifiers);
 
     ScintillaString styleText(const QList<QsciStyledText> &styled_text,

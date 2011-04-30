@@ -1577,6 +1577,15 @@ void QsciScintilla::handleModified(int pos, int mtype, const char *text,
     {
         emit textChanged();
 
+        if (mtype & SC_MOD_INSERTTEXT)
+        {
+            emit textInserted(pos, convertTextS2Q(text));
+        }
+        else
+        {
+            emit textDeleted(pos, len);
+        }
+
         if (added != 0)
             emit linesChanged();
     }
