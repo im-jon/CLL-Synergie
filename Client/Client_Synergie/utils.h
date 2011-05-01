@@ -11,7 +11,7 @@ public:
 
 private:
     static void InitialiserExtensions();
-    static QMap<int, QStringList>* m_Extensions;
+    static QMap<QsciLexer*, QStringList>* m_Extensions;
 };
 
 #endif // UTILS_H
