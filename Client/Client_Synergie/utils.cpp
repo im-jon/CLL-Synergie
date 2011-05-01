@@ -16,6 +16,28 @@
 
 QMap<QsciLexer*, QStringList>* Utils::m_Extensions = 0;
 
+QsciLexer* Utils::TrouverLexer(QString extension)
+{
+    if (!m_Extensions) {
+        InitialiserExtensions();
+    }
+
+    extension = extension.toLower();
+    QMapIterator<QsciLexer*, QStringList> iterateur(*m_Extensions);
+    bool trouver = false;
+    while (iterateur.hasNext() && !trouver) {
+        iterateur.next();
+        if (iterateur.value().contains(extension)) {
+            trouver = true;
+        }
+    }
+
+    if (trouver) {
+        return iterateur.key();
+    }
+    return 0;
+}
+
 void Utils::InitialiserExtensions()
 {
     m_Extensions = new QMap<QsciLexer*, QStringList>();
@@ -34,24 +56,3 @@ void Utils::InitialiserExtensions()
     m_Extensions->insert(new QsciLexerXML, QStringList() << "xml");
 }
 
-QsciLexer* Utils::TrouverLexer(QString extension)
-{
-    if (!m_Extensions) {
-        InitialiserExtensions();
-    }
-
-    QMapIterator<QsciLexer*, QStringList> iterateur(*m_Extensions);
-    bool trouver = false;
-    while (iterateur.hasNext() && !trouver) {
-        iterateur.next();
-        if (iterateur.value().contains(extension)) {
-            trouver = true;
-        }
-    }
-
-    if (trouver) {
-        return iterateur.key();
-    } else {
-        return 0;
-    }
-}
