@@ -31,7 +31,7 @@ color: rgb(224, 226, 228);</string>
      <widget class="QLineEdit" name="txtEntree">
       <property name="styleSheet">
        <string notr="true">background-color : rgb(41, 49, 52);
-font: 11pt &quot;Monospace&quot;;
+font: 9pt &quot;Monospace&quot;;
 color: rgb(224, 226, 228);</string>
       </property>
      </widget>
