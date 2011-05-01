@@ -48,6 +48,7 @@ void FenetrePrincipale::on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, i
         editeur->setMarginLineNumbers(1, true);
         editeur->setMarginWidth(1, 30);
         editeur->setLexer(Utils::TrouverLexer(extension));
+        editeur->lexer()->setFont(QFont("Monospace", 9));
         editeur->setAutoIndent(true);
 
         int index = ui->tabFeuilles->addTab(editeur, item->text(column));
@@ -57,7 +58,7 @@ void FenetrePrincipale::on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, i
 
 void FenetrePrincipale::on_tabFeuilles_currentChanged(int index)
 {
-    ui->statusBar->showMessage(((QsciScintilla*)ui->tabFeuilles->currentWidget())->lexer()->language());
+    ui->lblLangage->setText(((QsciScintilla*)ui->tabFeuilles->currentWidget())->lexer()->language());
 
     // Envoyer le paquet pour changer la feuille active.
 }

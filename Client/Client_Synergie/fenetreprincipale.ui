@@ -200,17 +200,28 @@
        <item row="0" column="0">
         <widget class="QTabWidget" name="tabInfos">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
-         <widget class="QWidget" name="tab_5">
+         <widget class="QWidget" name="tabInfo1">
           <attribute name="title">
-           <string>?</string>
+           <string>Informations</string>
           </attribute>
-         </widget>
-         <widget class="QWidget" name="tab_6">
-          <attribute name="title">
-           <string>?</string>
-          </attribute>
+          <layout class="QFormLayout" name="formLayout">
+           <item row="0" column="0">
+            <widget class="QLabel" name="lblLangageStatic">
+             <property name="text">
+              <string>Langage :</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="lblLangage">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </widget>
        </item>
