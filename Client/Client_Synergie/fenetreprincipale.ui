@@ -224,6 +224,13 @@
              </property>
             </widget>
            </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="lblNbLignesStatic">
+             <property name="text">
+              <string>Nombre de lignes :</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
         </widget>
