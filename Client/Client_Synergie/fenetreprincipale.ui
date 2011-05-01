@@ -70,6 +70,9 @@
            </property>
            <item row="0" column="0">
             <widget class="QListWidget" name="lstCollegues">
+             <property name="contextMenuPolicy">
+              <enum>Qt::ActionsContextMenu</enum>
+             </property>
              <property name="iconSize">
               <size>
                <width>16</width>
