@@ -13,6 +13,7 @@ public:
 
 private:
     void Reception_ChangerNom(Client *client, QDataStream* stream);
+    void Reception_OuvrirFichier(Client *client, QDataStream* stream);
 
 signals:
 
