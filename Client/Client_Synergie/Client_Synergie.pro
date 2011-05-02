@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     Reseau/Paquets/basepaquet.cpp \
     Reseau/Paquets/paquetchangernom.cpp \
     dlgconnexion.cpp \
-    utils.cpp
+    utils.cpp \
+    Reseau/Paquets/paquetouvrirfichier.cpp
 
 HEADERS  += fenetreprincipale.h \
     Reseau/connexion.h \
@@ -25,7 +26,8 @@ HEADERS  += fenetreprincipale.h \
     Reseau/Paquets/basepaquet.h \
     Reseau/Paquets/paquetchangernom.h \
     dlgconnexion.h \
-    utils.h
+    utils.h \
+    Reseau/Paquets/paquetouvrirfichier.h
 
 FORMS    += fenetreprincipale.ui \
     dlgconnexion.ui

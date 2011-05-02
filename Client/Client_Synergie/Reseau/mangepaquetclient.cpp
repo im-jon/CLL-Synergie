@@ -14,10 +14,9 @@ void MangePaquetClient::Interpreter(QDataStream* stream)
     quint8 id;
 
     *stream >> id;
-
+    qDebug() << id;
     switch (id) {
     case 1:
-        qDebug();
         Reception_ListeCollegues(stream);
         break;
     case 2:
@@ -55,8 +54,7 @@ void MangePaquetClient::Reception_ListeDesFichiers(QDataStream* stream)
 
     *stream >> nombre;
 
-    for(int i = 0; i < nombre; i++)
-    {
+    for(int i = 0; i < nombre; i++) {
         int id;
         *stream >> id;
         QString nom;
@@ -73,6 +71,5 @@ void MangePaquetClient::Reception_OuvertureFichier(QDataStream *stream)
     *stream >> id;
     QString texte;
     *stream >> texte;
-
     emit(siOuvrirFichier(id, texte));
 }
