@@ -108,46 +108,6 @@
                <string>Feuille</string>
               </property>
              </column>
-             <item>
-              <property name="text">
-               <string>code.cpp</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>code.cs</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>code.py</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>code.sh</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>code.java</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Dossier 1</string>
-              </property>
-              <item>
-               <property name="text">
-                <string>code.rb</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>code.h</string>
-               </property>
-              </item>
-             </item>
             </widget>
            </item>
           </layout>
@@ -271,7 +231,7 @@
      <x>0</x>
      <y>0</y>
      <width>967</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">
