@@ -19,6 +19,8 @@ void MangePaquetsServeur::Interpreter(Client* client, QDataStream* stream)
     case 1:
         Reception_ChangerNom(client, stream);
         break;
+    case 7:
+        Reception_OuvrirFichier(client, stream);
     default:
         Console::getInstance()->Imprimer("Réception d'un paquet inconnu #" + QString::number(id));
         break;
@@ -35,5 +37,13 @@ void MangePaquetsServeur::Reception_ChangerNom(Client* client, QDataStream* stre
 
     client->EnvoyerPaquet(new PaquetEnvoiCollegues());
     client->EnvoyerPaquet(new PaquetListeFichiers());
-    client->EnvoyerPaquet(new PaquetOuvertureFichier(0));
+}
+
+void MangePaquetsServeur::Reception_OuvrirFichier(Client *client, QDataStream *stream)
+{
+    int id;
+
+    *stream >> id;
+
+    client->EnvoyerPaquet(new PaquetOuvertureFichier(id));
 }
