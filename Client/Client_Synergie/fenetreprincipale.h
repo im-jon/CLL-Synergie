@@ -33,6 +33,7 @@ private slots:
 
 public slots:
     void slMiseAJourListeCollegues(QStringList* noms);
+    void slMiseAJourListeFichiers(QStringList* fichiers);
 
 };
 

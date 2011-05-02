@@ -21,6 +21,7 @@ private:
     static Connexion* m_Instance;
 
     explicit Connexion(QObject *parent = 0);
+    void LirePaquet();
 
     QTcpSocket* m_Socket;
     MangePaquetClient* m_MangePaquets;

@@ -16,6 +16,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     ui->setupUi(this);
 
     connect (Connexion::getInstance()->getMangePaquets(), SIGNAL(siNouvelleListeCollegues(QStringList*)), this, SLOT(slMiseAJourListeCollegues(QStringList*)));
+    connect (Connexion::getInstance()->getMangePaquets(),SIGNAL(NouvelleListeFichiers(QStringList*)),this,SLOT(slMiseAJourListeFichiers(QStringList*)));
 }
 
 FenetrePrincipale::~FenetrePrincipale()
@@ -29,6 +30,17 @@ void FenetrePrincipale::slMiseAJourListeCollegues(QStringList* noms)
 
     for (int i = 0; i < noms->length(); i++) {
         AjouterCollegueListe(noms->at(i));
+    }
+}
+
+void FenetrePrincipale::slMiseAJourListeFichiers(QStringList* fichiers)
+{
+    ui->treeProjet->clear();
+
+    for (int i = 0; i < fichiers->length(); i++) {
+        QTreeWidgetItem* item = new QTreeWidgetItem();
+        item->setText(0, fichiers->at(i));
+        ui->treeProjet->addTopLevelItem(item);
     }
 }
 

@@ -41,13 +41,28 @@ void Connexion::ChangerNom(QString nom)
 
 void Connexion::slPretALire()
 {
+    LirePaquet();
+}
+
+void Connexion::LirePaquet()
+{
+    QByteArray bufferTaille;
+    QDataStream streamTaille(&bufferTaille, QIODevice::ReadOnly);
+
+    int taille = 0;
+    bufferTaille = m_Socket->read(4);
+    streamTaille >> taille;
+
     QByteArray buffer;
-    buffer = m_Socket->readAll();
     QDataStream stream(&buffer, QIODevice::ReadOnly);
+
+    buffer = m_Socket->read(taille);
 
     m_MangePaquets->Interpreter(&stream);
 
-    qDebug() << buffer.length();
+    if (m_Socket->bytesAvailable() > 0) {
+        LirePaquet();
+    }
 }
 
 void Connexion::EnvoyerPaquet(BasePaquet* paquet)

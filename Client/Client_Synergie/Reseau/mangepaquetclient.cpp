@@ -16,9 +16,11 @@ void MangePaquetClient::Interpreter(QDataStream* stream)
 
     switch (id) {
     case 1:
+        qDebug();
         Reception_ListeCollegues(stream);
         break;
     case 2:
+        qDebug("Paquet 2");
         Reception_ListeDesFichiers(stream);
         break;
     default:
@@ -52,10 +54,12 @@ void MangePaquetClient::Reception_ListeDesFichiers(QDataStream* stream)
 
     for(int i = 0; i<nombre; i++)
     {
+        int id;
+        *stream >> id;
         QString nom;
         *stream >> nom;
         fichiers->append(nom);
     }
-
+    qDebug() << fichiers->count();
     emit(NouvelleListeFichiers(fichiers));
 }
