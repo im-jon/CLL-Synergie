@@ -21,6 +21,7 @@ void MangePaquetsServeur::Interpreter(Client* client, QDataStream* stream)
         break;
     case 7:
         Reception_OuvrirFichier(client, stream);
+        break;
     default:
         Console::getInstance()->Imprimer("Réception d'un paquet inconnu #" + QString::number(id));
         break;
