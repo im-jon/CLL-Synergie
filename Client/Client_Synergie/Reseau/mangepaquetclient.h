@@ -15,11 +15,13 @@ private:
     void Reception_ListeCollegues(QDataStream* stream);
     void Reception_ListeDesFichiers(QDataStream* stream);
     void Reception_OuvertureFichier(QDataStream* stream);
+    void Reception_Donnees(QDataStream* stream);
 
 signals:
     void siNouvelleListeCollegues(QStringList* noms);
     void NouvelleListeFichiers(QStringList* noms);
-    void siOuvrirFichier(int id, QString contenu);
+    void siOuvrirFichier(int id);
+    void siNouvelleDonnees(int id, QString donnees);
 
 public slots:
 };

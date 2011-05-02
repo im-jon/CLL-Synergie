@@ -14,7 +14,7 @@ public:
 private:
     void Reception_ChangerNom(Client *client, QDataStream* stream);
     void Reception_OuvrirFichier(Client *client, QDataStream* stream);
-
+    void Reception_DonneesRecues(Client *client, QDataStream* stream);
 signals:
 
 public slots:

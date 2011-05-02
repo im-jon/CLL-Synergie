@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QStringList>
 #include "connexion.h"
+#include "Paquets/paquetreceptiondonnees.h"
 
 MangePaquetClient::MangePaquetClient(QObject *parent) :
     QObject(parent)
@@ -24,6 +25,9 @@ void MangePaquetClient::Interpreter(QDataStream* stream)
         break;
     case 10:
         Reception_OuvertureFichier(stream);
+        break;
+    case 15:
+        Reception_Donnees(stream);
         break;
     default:
         qDebug() << "Réception d'un paquet inconnu #" << id;
@@ -69,7 +73,16 @@ void MangePaquetClient::Reception_OuvertureFichier(QDataStream *stream)
 {
     int id;
     *stream >> id;
-    QString texte;
-    *stream >> texte;
-    emit(siOuvrirFichier(id, texte));
+
+    emit(siOuvrirFichier(id));
+}
+
+void MangePaquetClient::Reception_Donnees(QDataStream *stream)
+{
+    int id;
+    *stream >> id;
+    QString donnees;
+    *stream >> donnees;
+    Connexion::getInstance()->EnvoyerPaquet(new PaquetReceptionDonnees());
+    emit(siNouvelleDonnees(id, donnees));
 }

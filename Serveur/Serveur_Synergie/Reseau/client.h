@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTcpSocket>
 #include "Paquets/basepaquetserveur.h"
+#include "transfer.h"
 
 class Client : public QObject
 {
@@ -12,9 +13,11 @@ public:
     explicit Client(int id, QTcpSocket* socket);
 
     void EnvoyerPaquet(BasePaquetServeur* paquet);
+    void EnvoyerFeuille(int id);
 
     QString getNom();
     QString getIP();
+    Transfer* getTransfer();
 
     void setNom(QString nom);
 
@@ -24,6 +27,7 @@ private:
     int m_ID;
     QString m_Nom;
     QTcpSocket* m_Socket;
+    Transfer* m_Transfer;
 
 signals:
 

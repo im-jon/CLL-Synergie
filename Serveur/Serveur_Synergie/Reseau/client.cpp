@@ -4,7 +4,9 @@
 #include <QtCore>
 #include "serveursynergie.h"
 #include "Console/console.h"
+#include "Paquets/paquetouverturefichier.h"
 #include "Paquets/basepaquetserveur.h"
+#include "Paquets/paquetdonnees.h"
 
 Client::Client(int id, QTcpSocket* socket)
 {
@@ -69,8 +71,20 @@ QString Client::getIP()
     return m_Socket->peerAddress().toString();
 }
 
+Transfer* Client::getTransfer()
+{
+    return m_Transfer;
+}
+
 void Client::setNom(QString nom)
 {
     m_Nom = nom;
     Console::getInstance()->Imprimer(getIP() + " change de nom pour " + nom);
+}
+
+void Client::EnvoyerFeuille(int id)
+{
+    EnvoyerPaquet(new PaquetOuvertureFichier(id));
+    m_Transfer = new Transfer(id);
+    EnvoyerPaquet(new PaquetDonnees(id, m_Transfer->LireBloc()));
 }

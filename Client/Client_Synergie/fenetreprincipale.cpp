@@ -16,11 +16,12 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    m_Onglets = new QMap<int, int>();
+    m_FeuillesOuvertes = new QMap<int, QsciScintilla*>();
 
     connect (Connexion::getInstance()->getMangePaquets(), SIGNAL(siNouvelleListeCollegues(QStringList*)), this, SLOT(slMiseAJourListeCollegues(QStringList*)));
     connect (Connexion::getInstance()->getMangePaquets(),SIGNAL(NouvelleListeFichiers(QStringList*)),this,SLOT(slMiseAJourListeFichiers(QStringList*)));
-    connect (Connexion::getInstance()->getMangePaquets(), SIGNAL(siOuvrirFichier(int,QString)), this, SLOT(slOuvrirFichier(int,QString)));
+    connect (Connexion::getInstance()->getMangePaquets(), SIGNAL(siOuvrirFichier(int)), this, SLOT(slOuvrirFichier(int)));
+    connect (Connexion::getInstance()->getMangePaquets(), SIGNAL(siNouvelleDonnees(int, QString)), this, SLOT(slNouvelleDonnees(int, QString)));
 }
 
 FenetrePrincipale::~FenetrePrincipale()
@@ -58,10 +59,11 @@ void FenetrePrincipale::on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, i
 {
     if (item->childCount() == 0) {
         int id = Connexion::getInstance()->getFichiers()->value(item->text(column));
-        if (!m_Onglets->contains(id)) {
+        if (!m_FeuillesOuvertes->contains(id)) {
             Connexion::getInstance()->EnvoyerPaquet(new PaquetOuvrirFichier(id));
         } else {
-            ui->tabFeuilles->setCurrentIndex(m_Onglets->value(id));
+            int index = ui->tabFeuilles->indexOf(m_FeuillesOuvertes->value(id));
+            ui->tabFeuilles->setCurrentIndex(index);
         }
     }
 }
@@ -79,12 +81,12 @@ void FenetrePrincipale::on_tabFeuilles_currentChanged(int index)
 void FenetrePrincipale::on_tabFeuilles_tabCloseRequested(int index)
 {
     if (ui->tabFeuilles->count() > 1) {
+        m_FeuillesOuvertes->remove(m_FeuillesOuvertes->key((QsciScintilla*)ui->tabFeuilles->widget(index)));
         ui->tabFeuilles->removeTab(index);
-        m_Onglets->remove(m_Onglets->key(index));
     }
 }
 
-void FenetrePrincipale::slOuvrirFichier(int id, QString contenu)
+void FenetrePrincipale::slOuvrirFichier(int id)
 {
     QString fichier = Connexion::getInstance()->getFichiers()->key(id);
     QString extension = QFileInfo(fichier).suffix();
@@ -99,9 +101,13 @@ void FenetrePrincipale::slOuvrirFichier(int id, QString contenu)
         editeur->lexer()->setFont(QFont("Monospace", 9));
     }
     editeur->setAutoIndent(true);
-    editeur->setText(contenu);
 
     int index = ui->tabFeuilles->addTab(editeur, fichier);
     ui->tabFeuilles->setCurrentIndex(index);
-    m_Onglets->insert(id, index);
+    m_FeuillesOuvertes->insert(id, editeur);
+}
+
+void FenetrePrincipale::slNouvelleDonnees(int id, QString contenu)
+{
+    m_FeuillesOuvertes->value(id)->append(contenu);
 }

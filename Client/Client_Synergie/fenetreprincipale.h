@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTreeWidgetItem>
 #include <QMap>
+#include <QList>
 #include <qtabbar.h>
 
 class QsciScintilla;
@@ -24,7 +25,7 @@ public:
 
 private:
     Ui::FenetrePrincipale *ui;
-    QMap<int, int>* m_Onglets;
+    QMap<int, QsciScintilla*>* m_FeuillesOuvertes;
 
 
 private slots:
@@ -38,7 +39,8 @@ private slots:
 public slots:
     void slMiseAJourListeCollegues(QStringList* noms);
     void slMiseAJourListeFichiers(QStringList* fichiers);
-    void slOuvrirFichier(int id, QString contenu);
+    void slOuvrirFichier(int id);
+    void slNouvelleDonnees(int id, QString contenu);
 
 };
 

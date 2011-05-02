@@ -4,6 +4,7 @@
 #include "Paquets/paquetenvoicollegues.h"
 #include "Paquets/paquetlistefichiers.h"
 #include "Paquets/paquetouverturefichier.h"
+#include "Paquets/paquetdonnees.h"
 
 MangePaquetsServeur::MangePaquetsServeur(QObject *parent) :
     QObject(parent)
@@ -21,6 +22,9 @@ void MangePaquetsServeur::Interpreter(Client* client, QDataStream* stream)
         break;
     case 7:
         Reception_OuvrirFichier(client, stream);
+        break;
+    case 10:
+        Reception_DonneesRecues(client, stream);
         break;
     default:
         Console::getInstance()->Imprimer("Réception d'un paquet inconnu #" + QString::number(id));
@@ -46,5 +50,13 @@ void MangePaquetsServeur::Reception_OuvrirFichier(Client *client, QDataStream *s
 
     *stream >> id;
 
-    client->EnvoyerPaquet(new PaquetOuvertureFichier(id));
+    client->EnvoyerFeuille(id);
+}
+
+void MangePaquetsServeur::Reception_DonneesRecues(Client *client, QDataStream *stream)
+{
+    if (!client->getTransfer()->getFini()) {
+        QString donnees = client->getTransfer()->LireBloc();
+        client->EnvoyerPaquet(new PaquetDonnees(client->getTransfer()->getFeuilleID(), donnees));
+    }
 }
