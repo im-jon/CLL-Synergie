@@ -3,6 +3,7 @@
 #include "Reseau/connexion.h"
 #include <QBoxLayout>
 #include <../QScintilla/qscintilla/Qsci/qsciscintilla.h>
+#include "Reseau/Paquets/paquetouvrirfichier.h"
 #include <QStringList>
 #include <QListWidgetItem>
 #include <QTreeWidgetItem>
@@ -55,9 +56,13 @@ void FenetrePrincipale::AjouterCollegueListe(QString nom)
 
 void FenetrePrincipale::on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, int column)
 {
-    // Si la feuille n'est pas déjà ouverte.
     if (item->childCount() == 0) {
-
+        int id = Connexion::getInstance()->getFichiers()->value(item->text(column));
+        if (!m_Onglets->contains(id)) {
+            Connexion::getInstance()->EnvoyerPaquet(new PaquetOuvrirFichier(id));
+        } else {
+            ui->tabFeuilles->setCurrentIndex(m_Onglets->value(id));
+        }
     }
 }
 
@@ -73,7 +78,10 @@ void FenetrePrincipale::on_tabFeuilles_currentChanged(int index)
 
 void FenetrePrincipale::on_tabFeuilles_tabCloseRequested(int index)
 {
-    ui->tabFeuilles->removeTab(index);
+    if (ui->tabFeuilles->count() > 1) {
+        ui->tabFeuilles->removeTab(index);
+        m_Onglets->remove(m_Onglets->key(index));
+    }
 }
 
 void FenetrePrincipale::slOuvrirFichier(int id, QString contenu)
@@ -93,7 +101,7 @@ void FenetrePrincipale::slOuvrirFichier(int id, QString contenu)
     editeur->setAutoIndent(true);
     editeur->setText(contenu);
 
-    int index = ui->tabFeuilles->addTab(ui->tabFeuilles, fichier);
+    int index = ui->tabFeuilles->addTab(editeur, fichier);
     ui->tabFeuilles->setCurrentIndex(index);
     m_Onglets->insert(id, index);
 }

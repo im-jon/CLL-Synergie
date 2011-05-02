@@ -24,6 +24,7 @@ Connexion::Connexion(QObject *parent) :
 {
     m_Socket = new QTcpSocket(this);
     m_MangePaquets = new MangePaquetClient(this);
+    m_Fichiers = new QMap<QString, int>();
 
     connect (m_Socket, SIGNAL(readyRead()), this, SLOT(slPretALire()));
 }
