@@ -1,7 +1,6 @@
 #ifndef PAQUETOUVERTUREFICHIER_H
 #define PAQUETOUVERTUREFICHIER_H
 
-#include <QtCore>
 #include "basepaquetserveur.h"
 
 class PaquetOuvertureFichier : public BasePaquetServeur

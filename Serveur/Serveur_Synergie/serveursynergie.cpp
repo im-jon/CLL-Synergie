@@ -118,7 +118,7 @@ void ServeurSynergie::InitialiserFichiers()
     m_Fichiers = new QMap<int, QString>();
     QString fichier;
     int i = 0;
-    foreach (fichier, QDir(m_Projet).entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
+    foreach (fichier, QDir("Projets/" + m_Projet).entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
         m_Fichiers->insert(i, fichier);
         qDebug() << fichier;
         i++;
