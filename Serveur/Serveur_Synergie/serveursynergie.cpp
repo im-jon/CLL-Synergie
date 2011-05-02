@@ -39,6 +39,9 @@ ServeurSynergie::ServeurSynergie(QObject *parent) :
     } else {
         QDir().mkdir("Projets");
     }
+
+    m_Projet = "Projets/Projet1";
+    InitialiserFichiers();
 }
 
 bool ServeurSynergie::Demarrer()
@@ -89,6 +92,11 @@ QMap<int, Client*>* ServeurSynergie::getClients()
     return m_Clients;
 }
 
+QMap<int, QString>* ServeurSynergie::getFichiers()
+{
+    return m_Fichiers;
+}
+
 bool ServeurSynergie::NouveauProjet(QString nom)
 {
     QDir dossierProjets("Projets");
@@ -98,4 +106,16 @@ bool ServeurSynergie::NouveauProjet(QString nom)
         }
     }
     return dossierProjets.mkdir(nom);
+}
+
+void ServeurSynergie::InitialiserFichiers()
+{
+    m_Fichiers = new QMap<int, QString>();
+    QString fichier;
+    int i = 0;
+    foreach (fichier, QDir(m_Projet).entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
+        m_Fichiers->insert(i, fichier);
+        qDebug() << fichier;
+        i++;
+    }
 }
