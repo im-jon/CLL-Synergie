@@ -18,15 +18,33 @@ Client::Client(int id, QTcpSocket* socket)
 void Client::EnvoyerPaquet(BasePaquetServeur* paquet)
 {
    m_Socket->write(paquet->getBuffer());
+   m_Socket->waitForBytesWritten();
 }
 
 void Client::slPretALire()
 {
+    LirePaquet();
+}
+
+void Client::LirePaquet()
+{
+    QByteArray bufferTaille;
+    QDataStream streamTaille(&bufferTaille, QIODevice::ReadOnly);
+
+    int taille = 0;
+    bufferTaille = m_Socket->read(4);
+    streamTaille >> taille;
+
     QByteArray buffer;
-    buffer = m_Socket->readAll();
     QDataStream stream(&buffer, QIODevice::ReadOnly);
 
+    buffer = m_Socket->read(taille);
+
     ServeurSynergie::getInstance()->getMangePaquets()->Interpreter(this, &stream);
+
+    if (m_Socket->bytesAvailable() > 0) {
+        LirePaquet();
+    }
 }
 
 void Client::slOnDeconnection()

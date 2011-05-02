@@ -19,6 +19,8 @@ public:
     void setNom(QString nom);
 
 private:
+    void LirePaquet();
+
     int m_ID;
     QString m_Nom;
     QTcpSocket* m_Socket;

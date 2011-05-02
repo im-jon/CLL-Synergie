@@ -24,7 +24,9 @@ SOURCES += main.cpp\
     Reseau/Paquets/basepaquetserveur.cpp \
     Console/Commandes/collegues.cpp \
     Reseau/Paquets/paquetlistefichiers.cpp \
-    Console/Commandes/fichiers.cpp
+    Console/Commandes/fichiers.cpp \
+    Reseau/Paquets/paquetconnexioncollegue.cpp \
+    Reseau/Paquets/paquetdeconnexioncollegue.cpp
 
 HEADERS  += fenetreprincipale.h \
     Console/console.h \
@@ -39,6 +41,8 @@ HEADERS  += fenetreprincipale.h \
     Reseau/Paquets/basepaquetserveur.h \
     Console/Commandes/collegues.h \
     Reseau/Paquets/paquetlistefichiers.h \
-    Console/Commandes/fichiers.h
+    Console/Commandes/fichiers.h \
+    Reseau/Paquets/paquetconnexioncollegue.h \
+    Reseau/Paquets/paquetdeconnexioncollegue.h
 
 FORMS    += fenetreprincipale.ui
