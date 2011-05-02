@@ -19,7 +19,7 @@ QString Fichiers::Executer(const QStringList& arguments)
         retour = "Liste des fichiers du projet :";
         while (iterateur.hasNext()) {
             iterateur.next();
-            retour = retour % "\n" % iterateur.value();
+            retour = retour % "\n" % iterateur.value() % "(" % QString::number(iterateur.key()) % ")";
         }
     } else {
         retour = "Il n'y à aucun fichiers dans le projet actuel";

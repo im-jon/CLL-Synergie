@@ -3,6 +3,7 @@
 #include "Console/console.h"
 #include "Paquets/paquetenvoicollegues.h"
 #include "Paquets/paquetlistefichiers.h"
+#include "Paquets/paquetouverturefichier.h"
 
 MangePaquetsServeur::MangePaquetsServeur(QObject *parent) :
     QObject(parent)
@@ -34,4 +35,5 @@ void MangePaquetsServeur::Reception_ChangerNom(Client* client, QDataStream* stre
 
     client->EnvoyerPaquet(new PaquetEnvoiCollegues());
     client->EnvoyerPaquet(new PaquetListeFichiers());
+    client->EnvoyerPaquet(new PaquetOuvertureFichier(0));
 }

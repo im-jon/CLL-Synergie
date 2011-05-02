@@ -7,7 +7,7 @@
 class PaquetOuvertureFichier : public BasePaquetServeur
 {
 public:
-    PaquetOuvertureFichier(QString fichier);
+    PaquetOuvertureFichier(int id);
 };
 
 #endif // PAQUETOUVERTUREFICHIER_H

@@ -40,7 +40,7 @@ ServeurSynergie::ServeurSynergie(QObject *parent) :
         QDir().mkdir("Projets");
     }
 
-    m_Projet = "Projets/Projet1";
+    m_Projet = "Projet1";
     InitialiserFichiers();
 }
 
@@ -99,7 +99,7 @@ QMap<int, QString>* ServeurSynergie::getFichiers()
 
 QString ServeurSynergie::getProjet()
 {
-    return m_Projet;
+    return m_Projet + "/";
 }
 
 bool ServeurSynergie::NouveauProjet(QString nom)
