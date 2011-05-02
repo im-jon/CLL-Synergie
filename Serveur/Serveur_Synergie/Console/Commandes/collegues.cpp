@@ -13,7 +13,6 @@ Collegues::Collegues()
 
 QString Collegues::Executer(const QStringList& arguments)
 {
-
     QString retour;
     if (ServeurSynergie::getInstance()->getClients()->count() > 0) {
         QMapIterator<int, Client*> iterateur(*ServeurSynergie::getInstance()->getClients());
