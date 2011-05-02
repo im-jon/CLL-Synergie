@@ -97,6 +97,11 @@ QMap<int, QString>* ServeurSynergie::getFichiers()
     return m_Fichiers;
 }
 
+QString ServeurSynergie::getProjet()
+{
+    return m_Projet;
+}
+
 bool ServeurSynergie::NouveauProjet(QString nom)
 {
     QDir dossierProjets("Projets");

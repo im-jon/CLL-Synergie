@@ -19,6 +19,7 @@ public:
     MangePaquetsServeur* getMangePaquets();
     QMap<int, Client*>* getClients();
     QMap<int, QString>* getFichiers();
+    QString getProjet();
     bool NouveauProjet(QString nom);
 
 private:

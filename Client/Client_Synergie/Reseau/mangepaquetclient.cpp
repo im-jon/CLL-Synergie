@@ -2,6 +2,7 @@
 #include <QDataStream>
 #include <QDebug>
 #include <QStringList>
+#include "connexion.h"
 
 MangePaquetClient::MangePaquetClient(QObject *parent) :
     QObject(parent)
@@ -20,8 +21,10 @@ void MangePaquetClient::Interpreter(QDataStream* stream)
         Reception_ListeCollegues(stream);
         break;
     case 2:
-        qDebug("Paquet 2");
         Reception_ListeDesFichiers(stream);
+        break;
+    case 10:
+        Reception_OuvertureFichier(stream);
         break;
     default:
         qDebug() << "Réception d'un paquet inconnu #" << id;
@@ -50,16 +53,26 @@ void MangePaquetClient::Reception_ListeDesFichiers(QDataStream* stream)
     QStringList* fichiers = new QStringList();
     int nombre;
 
-    *stream>>nombre;
+    *stream >> nombre;
 
-    for(int i = 0; i<nombre; i++)
+    for(int i = 0; i < nombre; i++)
     {
         int id;
         *stream >> id;
         QString nom;
         *stream >> nom;
         fichiers->append(nom);
+        Connexion::getInstance()->getFichiers()->insert(nom, id);
     }
-    qDebug() << fichiers->count();
     emit(NouvelleListeFichiers(fichiers));
+}
+
+void MangePaquetClient::Reception_OuvertureFichier(QDataStream *stream)
+{
+    int id;
+    *stream >> id;
+    QString texte;
+    *stream >> texte;
+
+    emit(siOuvrirFichier(id, texte));
 }

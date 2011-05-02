@@ -75,4 +75,9 @@ MangePaquetClient* Connexion::getMangePaquets()
     return m_MangePaquets;
 }
 
+QMap<QString, int>* Connexion::getFichiers()
+{
+    return m_Fichiers;
+}
+
 

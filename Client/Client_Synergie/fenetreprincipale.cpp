@@ -15,8 +15,11 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    m_Onglets = new QMap<int, int>();
+
     connect (Connexion::getInstance()->getMangePaquets(), SIGNAL(siNouvelleListeCollegues(QStringList*)), this, SLOT(slMiseAJourListeCollegues(QStringList*)));
     connect (Connexion::getInstance()->getMangePaquets(),SIGNAL(NouvelleListeFichiers(QStringList*)),this,SLOT(slMiseAJourListeFichiers(QStringList*)));
+    connect (Connexion::getInstance()->getMangePaquets(), SIGNAL(siOuvrirFichier(int,QString)), this, SLOT(slOuvrirFichier(int,QString)));
 }
 
 FenetrePrincipale::~FenetrePrincipale()
@@ -53,22 +56,8 @@ void FenetrePrincipale::AjouterCollegueListe(QString nom)
 void FenetrePrincipale::on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, int column)
 {
     // Si la feuille n'est pas déjà ouverte.
-
     if (item->childCount() == 0) {
-        QString extension = QFileInfo(item->text(column)).suffix();
-        QsciScintilla* editeur = new QsciScintilla();
-        editeur->setMarginLineNumbers(1, true);
-        editeur->setMarginWidth(1, 30);
 
-        QsciLexer* lexer = Utils::TrouverLexer(extension);
-        if (lexer) {
-            editeur->setLexer(lexer);
-            editeur->lexer()->setFont(QFont("Monospace", 9));
-        }
-        editeur->setAutoIndent(true);
-
-        int index = ui->tabFeuilles->addTab(editeur, item->text(column));
-        ui->tabFeuilles->setCurrentIndex(index);
     }
 }
 
@@ -85,4 +74,26 @@ void FenetrePrincipale::on_tabFeuilles_currentChanged(int index)
 void FenetrePrincipale::on_tabFeuilles_tabCloseRequested(int index)
 {
     ui->tabFeuilles->removeTab(index);
+}
+
+void FenetrePrincipale::slOuvrirFichier(int id, QString contenu)
+{
+    QString fichier = Connexion::getInstance()->getFichiers()->key(id);
+    QString extension = QFileInfo(fichier).suffix();
+
+    QsciScintilla* editeur = new QsciScintilla();
+    editeur->setMarginLineNumbers(1, true);
+    editeur->setMarginWidth(1, 30);
+
+    QsciLexer* lexer = Utils::TrouverLexer(extension);
+    if (lexer) {
+        editeur->setLexer(lexer);
+        editeur->lexer()->setFont(QFont("Monospace", 9));
+    }
+    editeur->setAutoIndent(true);
+    editeur->setText(contenu);
+
+    int index = ui->tabFeuilles->addTab(ui->tabFeuilles, fichier);
+    ui->tabFeuilles->setCurrentIndex(index);
+    m_Onglets->insert(id, index);
 }

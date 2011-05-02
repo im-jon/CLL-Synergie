@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QTreeWidgetItem>
+#include <QMap>
+#include <qtabbar.h>
 
 class QsciScintilla;
 class QsciLexer;
@@ -22,6 +24,8 @@ public:
 
 private:
     Ui::FenetrePrincipale *ui;
+    QMap<int, int>* m_Onglets;
+
 
 private slots:
 
@@ -34,6 +38,7 @@ private slots:
 public slots:
     void slMiseAJourListeCollegues(QStringList* noms);
     void slMiseAJourListeFichiers(QStringList* fichiers);
+    void slOuvrirFichier(int id, QString contenu);
 
 };
 

@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QTcpSocket>
+#include <QMap>
 #include "Paquets/basepaquet.h"
 #include "mangepaquetclient.h"
 
@@ -15,6 +16,7 @@ public:
     bool Connecter(QString, int);
     void EnvoyerPaquet(BasePaquet* paquet);
     void ChangerNom(QString nom);
+    QMap<QString, int>* getFichiers();
     MangePaquetClient* getMangePaquets();
 
 private:
@@ -23,6 +25,7 @@ private:
     explicit Connexion(QObject *parent = 0);
     void LirePaquet();
 
+    QMap<QString, int>* m_Fichiers;
     QTcpSocket* m_Socket;
     MangePaquetClient* m_MangePaquets;
 
