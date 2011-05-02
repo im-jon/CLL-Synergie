@@ -13,9 +13,11 @@ public:
 
 private:
     void Reception_ListeCollegues(QDataStream* stream);
+    void Reception_ListeDesFichiers(QDataStream* stream);
 
 signals:
     void siNouvelleListeCollegues(QStringList* noms);
+    void NouvelleListeFichiers(QStringList* noms);
 
 public slots:
 };
