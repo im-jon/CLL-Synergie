@@ -2,29 +2,11 @@
 #include <QMutex>
 #include "Paquets/paquetchangernom.h"
 
-Connexion* Connexion::m_Instance = 0;
-
-Connexion* Connexion::getInstance()
-{
-    static QMutex mutex;
-    if (!m_Instance)
-    {
-        mutex.lock();
-
-        if (!m_Instance)
-            m_Instance = new Connexion;
-        mutex.unlock();
-    }
-
-    return m_Instance;
-}
-
 Connexion::Connexion(QObject *parent) :
     QObject(parent)
 {
     m_Socket = new QTcpSocket(this);
     m_MangePaquets = new MangePaquetClient(this);
-    m_Fichiers = new QMap<QString, int>();
 
     connect (m_Socket, SIGNAL(readyRead()), this, SLOT(slPretALire()));
 }
@@ -33,11 +15,6 @@ bool Connexion::Connecter(QString addr, int port)
 {
     m_Socket->connectToHost(addr, port);
     return m_Socket->waitForConnected(1000);
-}
-
-void Connexion::ChangerNom(QString nom)
-{
-    EnvoyerPaquet(new PaquetChangerNom(nom));
 }
 
 void Connexion::slPretALire()
@@ -74,11 +51,6 @@ void Connexion::EnvoyerPaquet(BasePaquet* paquet)
 MangePaquetClient* Connexion::getMangePaquets()
 {
     return m_MangePaquets;
-}
-
-QMap<QString, int>* Connexion::getFichiers()
-{
-    return m_Fichiers;
 }
 
 

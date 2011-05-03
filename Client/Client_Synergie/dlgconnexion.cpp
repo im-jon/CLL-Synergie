@@ -3,6 +3,7 @@
 #include "fenetreprincipale.h"
 #include "Reseau/connexion.h"
 #include <QMessageBox>
+#include "clientsynergie.h"
 
 dlgConnexion::dlgConnexion(QWidget *parent) :
     QDialog(parent),
@@ -25,8 +26,8 @@ dlgConnexion::~dlgConnexion()
 
 void dlgConnexion::on_buttonBox_accepted()
 {
-    if (Connexion::getInstance()->Connecter(ui->txtAdresse->text(), ui->txtPort->text().toInt())) {
-        Connexion::getInstance()->ChangerNom(ui->txtNom->text())
+    if (ClientSynergie::getInstance()->Connecter(ui->txtAdresse->text(), ui->txtPort->text().toInt())) {
+        ClientSynergie::getInstance()->ChangerNom(ui->txtNom->text())
                 ;
         FenetrePrincipale* w = new FenetrePrincipale(this);
         w->show();

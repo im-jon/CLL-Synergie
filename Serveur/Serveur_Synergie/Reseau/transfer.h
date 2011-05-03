@@ -9,7 +9,7 @@ class Transfer
 public:
     Transfer(int id);
     QString LireBloc();
-    bool getFini();
+    bool estFini();
     int getFeuilleID();
 
 private:

@@ -3,11 +3,12 @@
 
 #include "basepaquetserveur.h"
 #include <QByteArray>
+#include "Reseau/transfer.h"
 
 class PaquetDonnees : public BasePaquetServeur
 {
 public:
-    PaquetDonnees(int id, QString donnees);
+    PaquetDonnees(Transfer* transfer);
 };
 
 #endif // PAQUETDONNEES_H

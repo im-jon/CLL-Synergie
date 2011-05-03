@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QStringList>
 #include "connexion.h"
+#include "clientsynergie.h"
 #include "Paquets/paquetreceptiondonnees.h"
 
 MangePaquetClient::MangePaquetClient(QObject *parent) :
@@ -64,7 +65,7 @@ void MangePaquetClient::Reception_ListeDesFichiers(QDataStream* stream)
         QString nom;
         *stream >> nom;
         fichiers->append(nom);
-        Connexion::getInstance()->getFichiers()->insert(nom, id);
+        ClientSynergie::getInstance()->AjouterFichier(nom, id);
     }
     emit(NouvelleListeFichiers(fichiers));
 }
@@ -84,6 +85,6 @@ void MangePaquetClient::Reception_Donnees(QDataStream *stream)
 
     QString donnees;
     *stream >> donnees;
-    Connexion::getInstance()->EnvoyerPaquet(new PaquetReceptionDonnees(id));
+    ClientSynergie::getInstance()->getConnexion()->EnvoyerPaquet(new PaquetReceptionDonnees(id));
     emit(siNouvelleDonnees(id, donnees));
 }

@@ -15,6 +15,7 @@ public:
 
     void EnvoyerPaquet(BasePaquetServeur* paquet);
     void EnvoyerFeuille(int id);
+    void FinTransfer(int id);
 
     QString getNom();
     QString getIP();

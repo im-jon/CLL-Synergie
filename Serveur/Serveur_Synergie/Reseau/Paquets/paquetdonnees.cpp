@@ -1,8 +1,8 @@
 #include "paquetdonnees.h"
 
-PaquetDonnees::PaquetDonnees(int id, QString donnees)
+PaquetDonnees::PaquetDonnees(Transfer* transfer)
     : BasePaquetServeur((qint8)15)
 {
-    *m_Stream << id;
-    *m_Stream << donnees;
+    *m_Stream << transfer->getFeuilleID();
+    *m_Stream << transfer->LireBloc();
 }

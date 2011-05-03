@@ -9,6 +9,7 @@
 #include <QTreeWidgetItem>
 #include <QFileInfo>
 #include "utils.h"
+#include "clientsynergie.h"
 
 FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     QMainWindow(parent),
@@ -18,10 +19,10 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
 
     m_FeuillesOuvertes = new QMap<int, QsciScintilla*>();
 
-    connect (Connexion::getInstance()->getMangePaquets(), SIGNAL(siNouvelleListeCollegues(QStringList*)), this, SLOT(slMiseAJourListeCollegues(QStringList*)));
-    connect (Connexion::getInstance()->getMangePaquets(),SIGNAL(NouvelleListeFichiers(QStringList*)),this,SLOT(slMiseAJourListeFichiers(QStringList*)));
-    connect (Connexion::getInstance()->getMangePaquets(), SIGNAL(siOuvrirFichier(int)), this, SLOT(slOuvrirFichier(int)));
-    connect (Connexion::getInstance()->getMangePaquets(), SIGNAL(siNouvelleDonnees(int, QString)), this, SLOT(slNouvelleDonnees(int, QString)));
+    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siNouvelleListeCollegues(QStringList*)), this, SLOT(slMiseAJourListeCollegues(QStringList*)));
+    connect (ClientSynergie::getInstance()->getMangePaquets(),SIGNAL(NouvelleListeFichiers(QStringList*)),this,SLOT(slMiseAJourListeFichiers(QStringList*)));
+    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siOuvrirFichier(int)), this, SLOT(slOuvrirFichier(int)));
+    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siNouvelleDonnees(int, QString)), this, SLOT(slNouvelleDonnees(int, QString)));
 }
 
 FenetrePrincipale::~FenetrePrincipale()
@@ -58,9 +59,9 @@ void FenetrePrincipale::AjouterCollegueListe(QString nom)
 void FenetrePrincipale::on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, int column)
 {
     if (item->childCount() == 0) {
-        int id = Connexion::getInstance()->getFichiers()->value(item->text(column));
+        int id = ClientSynergie::getInstance()->TrouverFichierParNom(item->text(column));
         if (!m_FeuillesOuvertes->contains(id)) {
-            Connexion::getInstance()->EnvoyerPaquet(new PaquetOuvrirFichier(id));
+            ClientSynergie::getInstance()->getConnexion()->EnvoyerPaquet(new PaquetOuvrirFichier(id));
         } else {
             int index = ui->tabFeuilles->indexOf(m_FeuillesOuvertes->value(id));
             ui->tabFeuilles->setCurrentIndex(index);
@@ -88,7 +89,7 @@ void FenetrePrincipale::on_tabFeuilles_tabCloseRequested(int index)
 
 void FenetrePrincipale::slOuvrirFichier(int id)
 {
-    QString fichier = Connexion::getInstance()->getFichiers()->key(id);
+    QString fichier = ClientSynergie::getInstance()->TrouverFichierParID(id);
     QString extension = QFileInfo(fichier).suffix();
 
     QsciScintilla* editeur = new QsciScintilla();
