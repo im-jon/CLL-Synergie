@@ -6,7 +6,7 @@
 class PaquetReceptionDonnees : public BasePaquet
 {
 public:
-    PaquetReceptionDonnees();
+    PaquetReceptionDonnees(int id);
 };
 
 #endif // PAQUETRECEPTIONDONNEES_H

@@ -81,8 +81,9 @@ void MangePaquetClient::Reception_Donnees(QDataStream *stream)
 {
     int id;
     *stream >> id;
+
     QString donnees;
     *stream >> donnees;
-    Connexion::getInstance()->EnvoyerPaquet(new PaquetReceptionDonnees());
+    Connexion::getInstance()->EnvoyerPaquet(new PaquetReceptionDonnees(id));
     emit(siNouvelleDonnees(id, donnees));
 }

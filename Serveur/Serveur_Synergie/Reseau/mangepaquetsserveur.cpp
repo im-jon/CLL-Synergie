@@ -55,8 +55,11 @@ void MangePaquetsServeur::Reception_OuvrirFichier(Client *client, QDataStream *s
 
 void MangePaquetsServeur::Reception_DonneesRecues(Client *client, QDataStream *stream)
 {
-    if (!client->getTransfer()->getFini()) {
-        QString donnees = client->getTransfer()->LireBloc();
-        client->EnvoyerPaquet(new PaquetDonnees(client->getTransfer()->getFeuilleID(), donnees));
+    int id;
+    *stream >> id;
+
+    Transfer* transfer = client->getTransfer(id);
+    if (!transfer->getFini()) {
+        client->EnvoyerPaquet(new PaquetDonnees(id, transfer->LireBloc()));
     }
 }

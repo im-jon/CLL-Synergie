@@ -12,7 +12,7 @@ Client::Client(int id, QTcpSocket* socket)
 {
     m_ID = id;
     m_Socket = socket;
-
+    m_Transfers = new QMap<int, Transfer*>();
     connect(m_Socket, SIGNAL(readyRead()),this,SLOT(slPretALire()));
     connect(m_Socket,SIGNAL(disconnected()),this,SLOT(slOnDeconnection())); // Parenthèses ???
 }
@@ -71,9 +71,9 @@ QString Client::getIP()
     return m_Socket->peerAddress().toString();
 }
 
-Transfer* Client::getTransfer()
+Transfer* Client::getTransfer(int id)
 {
-    return m_Transfer;
+    return m_Transfers->value(id);
 }
 
 void Client::setNom(QString nom)
@@ -85,6 +85,7 @@ void Client::setNom(QString nom)
 void Client::EnvoyerFeuille(int id)
 {
     EnvoyerPaquet(new PaquetOuvertureFichier(id));
-    m_Transfer = new Transfer(id);
-    EnvoyerPaquet(new PaquetDonnees(id, m_Transfer->LireBloc()));
+    Transfer* transfer = new Transfer(id);
+    m_Transfers->insert(id, transfer);
+    EnvoyerPaquet(new PaquetDonnees(id, transfer->LireBloc()));
 }
