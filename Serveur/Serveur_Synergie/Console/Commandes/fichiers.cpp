@@ -3,6 +3,7 @@
 #include <QMapIterator>
 #include <QStringBuilder>
 #include <QStringList>
+#include "fichier.h"
 
 Fichiers::Fichiers()
 {
@@ -15,11 +16,11 @@ QString Fichiers::Executer(const QStringList& arguments)
 {
     QString retour;
     if (ServeurSynergie::getInstance()->getFichiers()->count() > 0) {
-        QMapIterator<int, QString> iterateur(*ServeurSynergie::getInstance()->getFichiers());
+        QMapIterator<int, Fichier*> iterateur(*ServeurSynergie::getInstance()->getFichiers());
         retour = "Liste des fichiers du projet :";
         while (iterateur.hasNext()) {
             iterateur.next();
-            retour = retour % "\n" % iterateur.value() % "(" % QString::number(iterateur.key()) % ")";
+            retour = retour % "\n" % iterateur.value()->getChemin() % "(" % QString::number(iterateur.key()) % ")";
         }
     } else {
         retour = "Il n'y à aucun fichiers dans le projet actuel";

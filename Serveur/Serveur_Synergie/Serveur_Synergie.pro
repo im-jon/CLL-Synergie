@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     Reseau/Paquets/paquetdeconnexioncollegue.cpp \
     Reseau/Paquets/paquetouverturefichier.cpp \
     Reseau/Paquets/paquetdonnees.cpp \
-    Reseau/transfer.cpp
+    Reseau/transfer.cpp \
+    fichier.cpp
 
 HEADERS  += fenetreprincipale.h \
     Console/console.h \
@@ -49,6 +50,7 @@ HEADERS  += fenetreprincipale.h \
     Reseau/Paquets/paquetdeconnexioncollegue.h \
     Reseau/Paquets/paquetouverturefichier.h \
     Reseau/Paquets/paquetdonnees.h \
-    Reseau/transfer.h
+    Reseau/transfer.h \
+    fichier.h
 
 FORMS    += fenetreprincipale.ui

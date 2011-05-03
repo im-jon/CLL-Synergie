@@ -3,20 +3,20 @@
 
 #include <QFile>
 #include <QTextStream>
+#include "fichier.h"
 
 class Transfer
 {
 public:
-    Transfer(int id);
+    Transfer(Fichier* fichier);
     QString LireBloc();
+    Fichier* getFichier();
     bool estFini();
-    int getFeuilleID();
 
 private:
     QTextStream* m_Stream;
-    QFile* m_Fichier;
+    Fichier* m_Fichier;
     bool m_Fini;
-    int m_FeuilleID;
 };
 
 #endif // TRANSFER_H

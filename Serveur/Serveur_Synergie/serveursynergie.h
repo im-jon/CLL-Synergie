@@ -6,6 +6,7 @@
 #include <QMap>
 #include "Reseau/client.h"
 #include "Reseau/mangepaquetsserveur.h"
+#include "fichier.h"
 
 class ServeurSynergie : public QObject
 {
@@ -16,9 +17,10 @@ public:
     bool Demarrer();
     bool Arreter();
     bool EnleverClient(Client* client);
+    Fichier* ChercherFichierParID(int id);
     MangePaquetsServeur* getMangePaquets();
     QMap<int, Client*>* getClients();
-    QMap<int, QString>* getFichiers();
+    QMap<int, Fichier*>* getFichiers();
     QString getProjet();
     bool NouveauProjet(QString nom);
 
@@ -32,7 +34,7 @@ private:
     QTcpServer* m_Ecouteur;
     MangePaquetsServeur* m_MangePaquets;
     QMap<int, Client*>* m_Clients;
-    QMap<int, QString>* m_Fichiers;
+    QMap<int, Fichier*>* m_Fichiers;
     int m_GenerateurID; // Sert à attribuer des nombres d'identification aux clients.
 
 signals:

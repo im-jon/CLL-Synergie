@@ -3,17 +3,17 @@
 #include "serveursynergie.h"
 
 
-Transfer::Transfer(int id)
+Transfer::Transfer(Fichier* fichier)
 {
     m_Fini = false;
-    m_FeuilleID = id;
+    m_Fichier = fichier;
 
-    QString fichier = ServeurSynergie::getInstance()->getFichiers()->value(id);
-    fichier = "Projets/" + ServeurSynergie::getInstance()->getProjet() + fichier;
-    m_Fichier = new QFile(fichier);
-    m_Fichier->open(QIODevice::ReadOnly);
+    QString chemin = "Projets/" + ServeurSynergie::getInstance()->getProjet() + fichier->getChemin();
 
-    QTextStream* stream = new QTextStream(m_Fichier);
+    QFile* qfichier = new QFile(chemin);
+    qfichier->open(QIODevice::ReadOnly);
+
+    QTextStream* stream = new QTextStream(qfichier);
     m_Stream = stream;
 }
 
@@ -31,7 +31,7 @@ bool Transfer::estFini()
     return m_Fini;
 }
 
-int Transfer::getFeuilleID()
+Fichier* Transfer::getFichier()
 {
-    return m_FeuilleID;
+    return m_Fichier;
 }

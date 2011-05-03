@@ -92,11 +92,6 @@ QMap<int, Client*>* ServeurSynergie::getClients()
     return m_Clients;
 }
 
-QMap<int, QString>* ServeurSynergie::getFichiers()
-{
-    return m_Fichiers;
-}
-
 QString ServeurSynergie::getProjet()
 {
     return m_Projet + "/";
@@ -115,12 +110,22 @@ bool ServeurSynergie::NouveauProjet(QString nom)
 
 void ServeurSynergie::InitialiserFichiers()
 {
-    m_Fichiers = new QMap<int, QString>();
+    m_Fichiers = new QMap<int, Fichier*>();
     QString fichier;
     int i = 0;
     foreach (fichier, QDir("Projets/" + m_Projet).entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
-        m_Fichiers->insert(i, fichier);
+        m_Fichiers->insert(i, new Fichier(i, fichier, this));
         qDebug() << fichier;
         i++;
     }
+}
+
+Fichier* ServeurSynergie::ChercherFichierParID(int id)
+{
+    return m_Fichiers->value(id);
+}
+
+QMap<int, Fichier*>* ServeurSynergie::getFichiers()
+{
+    return m_Fichiers;
 }

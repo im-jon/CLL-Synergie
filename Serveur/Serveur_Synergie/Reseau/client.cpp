@@ -54,14 +54,16 @@ void Client::slOnDeconnection()
 {
     m_Socket->close();
     ServeurSynergie::getInstance()->EnleverClient(this);
+
     Console::getInstance()->Imprimer(m_Nom + " est déconnecté");
 }
 
 void Client::EnvoyerFeuille(int id)
 {
-    EnvoyerPaquet(new PaquetOuvertureFichier(id));
-    Transfer* transfer = new Transfer(id);
+    Transfer* transfer = new Transfer(ServeurSynergie::getInstance()->ChercherFichierParID(id));
     m_Transfers->insert(id, transfer);
+
+    EnvoyerPaquet(new PaquetOuvertureFichier(id));
     EnvoyerPaquet(new PaquetDonnees(transfer));
 }
 
