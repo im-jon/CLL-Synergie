@@ -17,6 +17,7 @@ private:
     void Reception_OuvertureFichier(QDataStream* stream);
     void Reception_Donnees(QDataStream* stream);
     void Reception_Texte(QDataStream* stream);
+    void Reception_EffacementTexte(QDataStream* stream);
 
 signals:
     void siNouvelleListeCollegues(QStringList* noms);
@@ -24,6 +25,7 @@ signals:
     void siOuvrirFichier(int id);
     void siNouvelleDonnees(int id, QString donnees);
     void siNouveauTexte(int id, int position, QString Texte);
+    void siEffacementTexte(int id, int position, int longeur);
 
 public slots:
 };

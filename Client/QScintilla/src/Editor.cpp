@@ -7003,6 +7003,19 @@ sptr_t Editor::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam) {
 		}
 		break;
 
+        case SCI_REPLACESELMECHA: {
+                        if (lParam == 0)
+                                return 0;
+                        UndoGroup ug(pdoc);
+                        ClearSelection();
+                        char *replacement = CharPtrFromSPtr(lParam);
+                        pdoc->InsertCStringMecha(sel.MainCaret(), replacement);
+                        SetEmptySelection(sel.MainCaret() + istrlen(replacement));
+                        EnsureCaretVisible();
+                }
+                break;
+
+
 	case SCI_SETTARGETSTART:
 		targetStart = wParam;
 		break;

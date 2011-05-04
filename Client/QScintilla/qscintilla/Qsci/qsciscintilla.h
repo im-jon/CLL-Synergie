@@ -1371,6 +1371,8 @@ public slots:
     //! \sa replaceSelectedText()
     virtual void removeSelectedText();
 
+    virtual void removeSelectedTextMecha();
+
     //! Replaces any selected text with \a text.
     //!
     //! \sa removeSelectedText()

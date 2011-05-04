@@ -2117,6 +2117,11 @@ void QsciScintilla::removeSelectedText()
     SendScintilla(SCI_REPLACESEL, "");
 }
 
+void QsciScintilla::removeSelectedTextMecha()
+{
+    SendScintilla(SCI_REPLACESELMECHA, "");
+}
+
 
 // Replace any selected text.
 void QsciScintilla::replaceSelectedText(const QString &text)

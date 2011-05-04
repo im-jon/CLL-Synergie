@@ -89,6 +89,7 @@ void MangePaquetClient::Reception_Donnees(QDataStream *stream)
     QString donnees;
     *stream >> donnees;
     ClientSynergie::getInstance()->getConnexion()->EnvoyerPaquet(new PaquetReceptionDonnees(id));
+
     emit(siNouvelleDonnees(id, donnees));
 }
 
@@ -97,10 +98,22 @@ void MangePaquetClient::Reception_Texte(QDataStream *stream)
     int id;
     *stream >>id;
     int position;
-    *stream >>position;
+    *stream >> position;
     QString Texte;
-    *stream >>Texte;
+    *stream >> Texte;
 
-    emit(siNouveauTexte(id,position,Texte));
+    emit (siNouveauTexte(id,position,Texte));
 
+}
+
+void MangePaquetClient::Reception_EffacementTexte(QDataStream *stream)
+{
+    int id;
+    *stream >> id;
+    int position;
+    *stream >> position;
+    int longeur;
+    *stream >> longeur;
+
+    emit (siEffacementTexte(id, position, longeur));
 }
