@@ -77,7 +77,7 @@ void Fichier::InsererTexte(QString texte, int position, Client* auteur)
 
 void Fichier::EffacerTexte(int position, int longeur, Client *auteur)
 {
-    m_Contenu.remove(position, longeur);
+    m_Contenu = m_Contenu.remove(position, longeur);
 
     Client* client;
     foreach (client, *m_Clients) {

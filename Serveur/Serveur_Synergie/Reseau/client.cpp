@@ -7,6 +7,7 @@
 #include "Paquets/paquetouverturefichier.h"
 #include "Paquets/basepaquetserveur.h"
 #include "Paquets/paquetdonnees.h"
+#include "Paquets/paquetdeconnexioncollegue.h"
 
 Client::Client(int id, QTcpSocket* socket)
 {
@@ -66,6 +67,8 @@ void Client::Deconnecter()
     }
 
     ServeurSynergie::getInstance()->EnleverClient(this);
+
+    ServeurSynergie::getInstance()->EnvoyerPaquetATous(new PaquetDeconnexionCollegue(this));
 
     Console::getInstance()->Imprimer(m_Nom + " est déconnecté");
 }

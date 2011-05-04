@@ -6,6 +6,7 @@
 #include <QMap>
 #include "Reseau/client.h"
 #include "Reseau/mangepaquetsserveur.h"
+#include "Reseau/Paquets/basepaquetserveur.h"
 #include "fichier.h"
 
 class ServeurSynergie : public QObject
@@ -18,6 +19,7 @@ public:
     bool Arreter();
     bool EnleverClient(Client* client);
     bool AjouterClient(Client* client);
+    void EnvoyerPaquetATous(BasePaquetServeur* paquet, Client* exception = 0);
     Fichier* ChercherFichierParID(int id);
     MangePaquetsServeur* getMangePaquets();
     QMap<int, Client*>* getClients();

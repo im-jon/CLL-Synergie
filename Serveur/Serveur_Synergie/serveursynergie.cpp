@@ -133,3 +133,13 @@ QString ServeurSynergie::getProjet()
 {
     return m_Projet + "/";
 }
+
+void ServeurSynergie::EnvoyerPaquetATous(BasePaquetServeur *paquet, Client *exception)
+{
+    QMapIterator<int, Client*> iterateur(*m_Clients);
+    while (iterateur.hasNext()) {
+        if (iterateur.value() != exception) {
+            iterateur.value()->EnvoyerPaquet(paquet);
+        }
+    }
+}
