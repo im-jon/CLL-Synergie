@@ -32,6 +32,7 @@ void MangePaquetClient::Interpreter(QDataStream* stream)
         break;
     case 5:
         Reception_Texte(stream);
+        break;
     default:
         qDebug() << "Réception d'un paquet inconnu #" << id;
         break;
