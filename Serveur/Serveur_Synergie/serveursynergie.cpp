@@ -2,6 +2,7 @@
 #include "Console/console.h"
 #include "Reseau/Paquets/paquetenvoicollegues.h"
 #include <QDir>
+#include <QMapIterator>
 
 ServeurSynergie* ServeurSynergie::m_Instance = 0;
 
@@ -26,7 +27,7 @@ ServeurSynergie::ServeurSynergie(QObject *parent) :
 {
     m_GenerateurID = 1;
     m_Ecouteur = new QTcpServer(this);
-    m_Clients = new QMap<int, Client*>();
+    m_Clients = new QMap<int, Client*>;
     m_MangePaquets = new MangePaquetsServeur(this);
 
     connect (m_Ecouteur, SIGNAL(newConnection()), this, SLOT(slNouveauClient()));
@@ -80,7 +81,8 @@ bool ServeurSynergie::AjouterClient(Client *client)
 
 bool ServeurSynergie::EnleverClient(Client *client)
 {
-    if (m_Clients->remove(client->getID()) >= 1) {
+    int nb = m_Clients->remove(client->getID());
+    if (nb >= 1) {
         return true;
     }
     return false;
@@ -99,7 +101,7 @@ bool ServeurSynergie::NouveauProjet(QString nom)
 
 void ServeurSynergie::InitialiserFichiers()
 {
-    m_Fichiers = new QMap<int, Fichier*>();
+    m_Fichiers = new QMap<int, Fichier*>;
     QString fichier;
 
     int i = 0;
@@ -134,10 +136,11 @@ QString ServeurSynergie::getProjet()
     return m_Projet + "/";
 }
 
-void ServeurSynergie::EnvoyerPaquetATous(BasePaquetServeur *paquet, Client *exception)
+void ServeurSynergie::EnvoyerPaquetATous(BasePaquetServeur *paquet, Client* exception)
 {
     QMapIterator<int, Client*> iterateur(*m_Clients);
     while (iterateur.hasNext()) {
+        iterateur.next();
         if (iterateur.value() != exception) {
             iterateur.value()->EnvoyerPaquet(paquet);
         }

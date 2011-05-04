@@ -66,9 +66,9 @@ void Client::Deconnecter()
         FermerFichier(fichier);
     }
 
-    ServeurSynergie::getInstance()->EnleverClient(this);
-
-    ServeurSynergie::getInstance()->EnvoyerPaquetATous(new PaquetDeconnexionCollegue(this));
+    if (ServeurSynergie::getInstance()->EnleverClient(this)) {
+        ServeurSynergie::getInstance()->EnvoyerPaquetATous(new PaquetDeconnexionCollegue(this));
+    }
 
     Console::getInstance()->Imprimer(m_Nom + " est déconnecté");
 }

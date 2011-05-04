@@ -12,6 +12,7 @@ PaquetEnvoiCollegues::PaquetEnvoiCollegues() :
     QMapIterator<int, Client*> iterateur(*ServeurSynergie::getInstance()->getClients());
     while (iterateur.hasNext()) {
         iterateur.next();
+        *m_Stream << iterateur.value()->getID();
         *m_Stream << iterateur.value()->getNom();
     }
 }
