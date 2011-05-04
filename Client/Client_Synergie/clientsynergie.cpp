@@ -25,6 +25,7 @@ ClientSynergie::ClientSynergie(QObject *parent) :
 {
     m_Connexion = new Connexion(this);
     m_Fichiers = new QMap<QString, int>;
+    m_Collegues = new QMap<int, Collegue*>;
 }
 
 bool ClientSynergie::Connecter(QString adresse, int port)
@@ -73,3 +74,18 @@ void ClientSynergie::slEffacementTexte(int id, int pos, int longeur)
 {
     m_Connexion->EnvoyerPaquet(new PaquetEffacementTexte(id, pos, longeur));
 }
+
+void ClientSynergie::ConnexionCollegue(Collegue *collegue)
+{
+    m_Collegues->insert(collegue->getID(), collegue);
+    emit (siConnexionCollegue(collegue));
+}
+
+void ClientSynergie::DeconnexionCollegue(int id)
+{
+    Collegue* collegue = m_Collegues->value(id);
+    m_Collegues->remove(id);
+    emit (siDeconnexionCollegue(collegue));
+}
+
+

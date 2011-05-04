@@ -6,6 +6,7 @@
 #include <QMap>
 #include "Reseau/connexion.h"
 #include "Reseau/mangepaquetclient.h"
+#include "collegue.h"
 
 class ClientSynergie : public QObject
 {
@@ -20,7 +21,8 @@ public:
     void AjouterFichier(QString nom, int id);
     int TrouverFichierParNom(QString nom);
     QString TrouverFichierParID(int id);
-
+    void ConnexionCollegue(Collegue* collegue);
+    void DeconnexionCollegue(int id);
 
 private:
     explicit ClientSynergie(QObject *parent = 0);
@@ -30,8 +32,11 @@ private:
     QString m_Nom;
     Connexion* m_Connexion;
     QMap<QString, int>* m_Fichiers;
+    QMap<int, Collegue*>* m_Collegues;
 
 signals:
+    void siConnexionCollegue(Collegue* collegue);
+    void siDeconnexionCollegue(Collegue* collegue);
 
 public slots:
     void slOnInsertionTexte(int,int,QString);

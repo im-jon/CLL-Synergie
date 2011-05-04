@@ -17,14 +17,16 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    m_FeuillesOuvertes = new QMap<int, QsciScintilla*>();
+    m_FeuillesOuvertes = new QMap<int, QsciScintilla*>;
+    m_Collegues = new QMap<Collegue*, QListWidgetItem*>;
 
-    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siNouvelleListeCollegues(QStringList*)), this, SLOT(slMiseAJourListeCollegues(QStringList*)));
     connect (ClientSynergie::getInstance()->getMangePaquets(),SIGNAL(NouvelleListeFichiers(QStringList*)),this,SLOT(slMiseAJourListeFichiers(QStringList*)));
     connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siOuvrirFichier(int)), this, SLOT(slOuvrirFichier(int)));
     connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siNouvelleDonnees(int, QString)), this, SLOT(slNouvelleDonnees(int, QString)));
     connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siNouveauTexte(int,int,QString)), this, SLOT(slNouveauTexte(int,int,QString)));
     connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siEffacementTexte(int,int,int)), this, SLOT(slEffacementTexteServeur(int,int,int)));
+    connect (ClientSynergie::getInstance(), SIGNAL(siConnexionCollegue(Collegue*)), this, SLOT(slConnexionCollegues(Collegue*)));
+    connect (ClientSynergie::getInstance(), SIGNAL(siDeconnexionCollegue(Collegue*)), this, SLOT(slDeconnexionCollegues(Collegue*)));
 
     connect (this, SIGNAL(InsertionTexte(int,int,QString)), ClientSynergie::getInstance(), SLOT(slOnInsertionTexte(int,int,QString)));
     connect (this, SIGNAL(EffacementTexte(int,int,int)), ClientSynergie::getInstance(), SLOT(slEffacementTexte(int,int,int)));
@@ -35,13 +37,9 @@ FenetrePrincipale::~FenetrePrincipale()
     delete ui;
 }
 
-void FenetrePrincipale::slMiseAJourListeCollegues(QStringList* noms)
+void FenetrePrincipale::slConnexionCollegues(Collegue *collegue)
 {
-    ui->lstCollegues->clear();
-
-    for (int i = 0; i < noms->length(); i++) {
-        AjouterCollegueListe(noms->at(i));
-    }
+    AjouterCollegueListe(collegue);
 }
 
 void FenetrePrincipale::slMiseAJourListeFichiers(QStringList* fichiers)
@@ -55,10 +53,11 @@ void FenetrePrincipale::slMiseAJourListeFichiers(QStringList* fichiers)
     }
 }
 
-void FenetrePrincipale::AjouterCollegueListe(QString nom)
+void FenetrePrincipale::AjouterCollegueListe(Collegue* collegue)
 {
-    QListWidgetItem* item = new QListWidgetItem(QIcon(":/Icones/utilisateur.png"), nom);
+    QListWidgetItem* item = new QListWidgetItem(QIcon(":/Icones/utilisateur.png"), collegue->getNom());
     ui->lstCollegues->addItem(item);
+    m_Collegues->insert(collegue, item);
 }
 
 void FenetrePrincipale::on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, int column)
@@ -159,4 +158,10 @@ void FenetrePrincipale::slEffacementTexteServeur(int id, int position, int longe
 
     editeur->setSelection(ligneDebut, indexDebut, ligneFin, indexFin);
     editeur->removeSelectedTextMecha();
+}
+
+void FenetrePrincipale::slDeconnexionCollegues(Collegue *collegue)
+{
+    ui->lstCollegues->removeItemWidget(m_Collegues->value(collegue));
+    m_Collegues->remove(collegue);
 }

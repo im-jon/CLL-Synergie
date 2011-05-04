@@ -4,6 +4,7 @@
 #include <QStringList>
 #include "connexion.h"
 #include "clientsynergie.h"
+#include "collegue.h"
 #include "Paquets/paquetreceptiondonnees.h"
 
 MangePaquetClient::MangePaquetClient(QObject *parent) :
@@ -23,6 +24,9 @@ void MangePaquetClient::Interpreter(QDataStream* stream)
         break;
     case 2:
         Reception_ListeDesFichiers(stream);
+        break;
+    case 4:
+        Reception_DeconnexionCollegue(stream);
         break;
     case 5:
         Reception_Texte(stream);
@@ -44,18 +48,21 @@ void MangePaquetClient::Interpreter(QDataStream* stream)
 
 void MangePaquetClient::Reception_ListeCollegues(QDataStream* stream)
 {
-    QStringList* collegues = new QStringList();
     int nombre;
 
     *stream >> nombre;
 
     for(int i = 0; i < nombre; i++) {
+        int id;
         QString nom;
+
+        *stream >> id;
         *stream >> nom;
-        collegues->append(nom);
+
+        ClientSynergie::getInstance()->ConnexionCollegue(new Collegue(id, nom));
     }
 
-    emit (siNouvelleListeCollegues(collegues));
+
 }
 
 void MangePaquetClient::Reception_ListeDesFichiers(QDataStream* stream)
@@ -74,6 +81,14 @@ void MangePaquetClient::Reception_ListeDesFichiers(QDataStream* stream)
         ClientSynergie::getInstance()->AjouterFichier(nom, id);
     }
     emit(NouvelleListeFichiers(fichiers));
+}
+
+void MangePaquetClient::Reception_DeconnexionCollegue(QDataStream *stream)
+{
+    int id;
+    *stream >> id;
+
+    ClientSynergie::getInstance()->DeconnexionCollegue(id);
 }
 
 void MangePaquetClient::Reception_OuvertureFichier(QDataStream *stream)
