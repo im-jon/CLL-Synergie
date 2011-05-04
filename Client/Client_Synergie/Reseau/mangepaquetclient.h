@@ -14,6 +14,7 @@ public:
 private:
     void Reception_ListeCollegues(QDataStream* stream);
     void Reception_ListeDesFichiers(QDataStream* stream);
+    void Reception_DeconnexionCollegue(QDataStream* stream);
     void Reception_OuvertureFichier(QDataStream* stream);
     void Reception_Donnees(QDataStream* stream);
     void Reception_Texte(QDataStream* stream);
