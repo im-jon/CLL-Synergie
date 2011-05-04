@@ -129,5 +129,6 @@ QsciScintilla* FenetrePrincipale::ChercherEditeurParID(int id)
 
 void FenetrePrincipale::slNouveauTexte(int id,int position, QString texte)
 {
+    qDebug() << "ID: " << id << " Texte: " << texte;
     ChercherEditeurParID(id)->insertAtPos(texte, position, true);
 }
