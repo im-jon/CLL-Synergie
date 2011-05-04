@@ -2010,14 +2010,23 @@ void QsciScintilla::insertAt(const QString &text, int line, int index)
 
 
 // Insert the given text at the given position.
-void QsciScintilla::insertAtPos(const QString &text, int pos)
+void QsciScintilla::insertAtPos(const QString &text, int pos, bool mechanic)
 {
     bool ro = ensureRW();
 
-    SendScintilla(SCI_BEGINUNDOACTION);
-    SendScintilla(SCI_INSERTTEXT, pos,
+    if (mechanic)
+    {
+        SendScintilla(SCI_INSERTMECHA, pos,
             ScintillaStringData(convertTextQ2S(text)));
-    SendScintilla(SCI_ENDUNDOACTION);
+    }
+    else
+    {
+        SendScintilla(SCI_BEGINUNDOACTION);
+
+        SendScintilla(SCI_INSERTTEXT, pos,
+            ScintillaStringData(convertTextQ2S(text)));
+        SendScintilla(SCI_ENDUNDOACTION);
+    }
 
     setReadOnly(ro);
 }

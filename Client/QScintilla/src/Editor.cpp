@@ -7176,6 +7176,21 @@ sptr_t Editor::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam) {
 			return 0;
 		}
 
+        case SCI_INSERTMECHA: {
+                        if (lParam == 0)
+                                return 0;
+                        int insertPos = wParam;
+                        if (static_cast<int>(wParam) == -1)
+                                insertPos = CurrentPosition();
+                        int newCurrent = CurrentPosition();
+                        char *sz = CharPtrFromSPtr(lParam);
+                        pdoc->InsertCString(insertPos, sz, true);
+                        if (newCurrent > insertPos)
+                                newCurrent += istrlen(sz);
+                        SetEmptySelection(newCurrent);
+                        return 0;
+                }
+
 	case SCI_APPENDTEXT:
 		pdoc->InsertString(pdoc->Length(), CharPtrFromSPtr(lParam), wParam);
 		return 0;

@@ -30,6 +30,8 @@ void MangePaquetClient::Interpreter(QDataStream* stream)
     case 15:
         Reception_Donnees(stream);
         break;
+    case 5:
+        Reception_Texte(stream);
     default:
         qDebug() << "Réception d'un paquet inconnu #" << id;
         break;
@@ -87,4 +89,17 @@ void MangePaquetClient::Reception_Donnees(QDataStream *stream)
     *stream >> donnees;
     ClientSynergie::getInstance()->getConnexion()->EnvoyerPaquet(new PaquetReceptionDonnees(id));
     emit(siNouvelleDonnees(id, donnees));
+}
+
+void MangePaquetClient::Reception_Texte(QDataStream *stream)
+{
+    int id;
+    *stream >>id;
+    int position;
+    *stream >>position;
+    QString Texte;
+    *stream >>Texte;
+
+    emit(siNouveauTexte(id,position,Texte));
+
 }

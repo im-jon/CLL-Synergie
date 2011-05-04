@@ -1010,6 +1010,8 @@ public:
         //!
         SCI_APPENDMECHA = 2292,
 
+        SCI_INSERTMECHA = 2293,
+
         //!
         SCI_LINEDOWN = 2300,
 

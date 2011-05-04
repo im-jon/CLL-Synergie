@@ -23,6 +23,8 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     connect (ClientSynergie::getInstance()->getMangePaquets(),SIGNAL(NouvelleListeFichiers(QStringList*)),this,SLOT(slMiseAJourListeFichiers(QStringList*)));
     connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siOuvrirFichier(int)), this, SLOT(slOuvrirFichier(int)));
     connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siNouvelleDonnees(int, QString)), this, SLOT(slNouvelleDonnees(int, QString)));
+    connect (this, SIGNAL(InsertionTexte(int,int,QString)), ClientSynergie::getInstance(), SLOT(slOnInsertionTexte(int,int,QString)));
+    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siNouveauTexte(int,int,QString)), this, SLOT(slNouveauTexte(int,int,QString)));
 }
 
 FenetrePrincipale::~FenetrePrincipale()
@@ -118,4 +120,14 @@ void FenetrePrincipale::slInsertionTexte(int Position,QString Texte)
 {
     int id = m_FeuillesOuvertes->key((QsciScintilla*)ui->tabFeuilles->currentWidget());
     emit(InsertionTexte(id,Position,Texte));
+}
+
+QsciScintilla* FenetrePrincipale::ChercherEditeurParID(int id)
+{
+    return m_FeuillesOuvertes->value(id);
+}
+
+void FenetrePrincipale::slNouveauTexte(int id,int position, QString texte)
+{
+    ChercherEditeurParID(id)->insertAtPos(texte, position, true);
 }

@@ -268,7 +268,7 @@ public:
 	bool IsReadOnly() { return cb.IsReadOnly(); }
 
 	bool InsertChar(int pos, char ch);
-	bool InsertCString(int position, const char *s);
+        bool InsertCString(int position, const char *s, bool mechanic = false);
 	void ChangeChar(int pos, char ch);
 	void DelChar(int pos);
 	void DelCharBack(int pos);

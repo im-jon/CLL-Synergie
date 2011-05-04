@@ -22,6 +22,7 @@ public:
     explicit FenetrePrincipale(QWidget *parent = 0);
     ~FenetrePrincipale();
     void AjouterCollegueListe(QString nom);
+    QsciScintilla* ChercherEditeurParID(int id);
 
 private:
     Ui::FenetrePrincipale *ui;
@@ -42,6 +43,7 @@ public slots:
     void slOuvrirFichier(int id);
     void slNouvelleDonnees(int id, QString contenu);
     void slInsertionTexte(int,QString);
+    void slNouveauTexte(int,int,QString);
 
 signals :
     void InsertionTexte(int,int,QString);
