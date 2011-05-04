@@ -17,6 +17,7 @@ public:
     void Sauvegarder();
     void AjouterClient(Client* client);
     void EnleverClient(Client* client);
+    void InsererTexte(QString texte, int position, Client* auteur = 0);
     QString getChemin();
     QString* getContenu();
     QList<Client*>* getClients();

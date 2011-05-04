@@ -17,6 +17,7 @@ public:
     bool Demarrer();
     bool Arreter();
     bool EnleverClient(Client* client);
+    bool AjouterClient(Client* client);
     Fichier* ChercherFichierParID(int id);
     MangePaquetsServeur* getMangePaquets();
     QMap<int, Client*>* getClients();
