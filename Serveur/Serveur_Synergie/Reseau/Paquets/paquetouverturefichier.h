@@ -2,11 +2,12 @@
 #define PAQUETOUVERTUREFICHIER_H
 
 #include "basepaquetserveur.h"
+#include "fichier.h"
 
 class PaquetOuvertureFichier : public BasePaquetServeur
 {
 public:
-    PaquetOuvertureFichier(int id);
+    PaquetOuvertureFichier(Fichier* fichier);
 };
 
 #endif // PAQUETOUVERTUREFICHIER_H

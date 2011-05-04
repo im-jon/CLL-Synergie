@@ -7,19 +7,14 @@ Transfer::Transfer(Fichier* fichier)
 {
     m_Fini = false;
     m_Fichier = fichier;
-
-    QString chemin = "Projets/" + ServeurSynergie::getInstance()->getProjet() + fichier->getChemin();
-
-    QFile* qfichier = new QFile(chemin);
-    qfichier->open(QIODevice::ReadOnly);
-
-    QTextStream* stream = new QTextStream(qfichier);
+    QTextStream* stream = new QTextStream(fichier->getContenu());
     m_Stream = stream;
 }
 
 QString Transfer::LireBloc()
 {
     QString donnees = m_Stream->read(1024);
+
     if (donnees.length() < 1024) {
         m_Fini = true;
     }

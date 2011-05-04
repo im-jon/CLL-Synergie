@@ -5,6 +5,7 @@
 #include "Paquets/paquetlistefichiers.h"
 #include "Paquets/paquetouverturefichier.h"
 #include "Paquets/paquetdonnees.h"
+#include "serveursynergie.h"
 
 MangePaquetsServeur::MangePaquetsServeur(QObject *parent) :
     QObject(parent)
@@ -50,7 +51,7 @@ void MangePaquetsServeur::Reception_OuvrirFichier(Client *client, QDataStream *s
 
     *stream >> id;
 
-    client->EnvoyerFeuille(id);
+    client->OuvrirFichier(ServeurSynergie::getInstance()->ChercherFichierParID(id));
 }
 
 void MangePaquetsServeur::Reception_DonneesRecues(Client *client, QDataStream *stream)

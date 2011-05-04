@@ -4,8 +4,8 @@
 #include <QFile>
 #include <QTextStream>
 
-PaquetOuvertureFichier::PaquetOuvertureFichier(int id)
+PaquetOuvertureFichier::PaquetOuvertureFichier(Fichier* fichier)
     : BasePaquetServeur((qint8)10)
 {
-    *m_Stream << id;
+    *m_Stream << fichier->getID();
 }

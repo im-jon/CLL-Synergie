@@ -13,6 +13,7 @@ Client::Client(int id, QTcpSocket* socket)
     m_ID = id;
     m_Socket = socket;
     m_Transfers = new QMap<int, Transfer*>;
+    m_FichiersOuverts = new QList<Fichier*>();
 
     connect(m_Socket, SIGNAL(readyRead()),this,SLOT(slPretALire()));
     connect(m_Socket,SIGNAL(disconnected()),this,SLOT(slOnDeconnection()));
@@ -52,18 +53,42 @@ void Client::LirePaquet()
 
 void Client::slOnDeconnection()
 {
+    Deconnecter();
+}
+
+void Client::Deconnecter()
+{
     m_Socket->close();
+
+    Fichier* fichier;
+    foreach (fichier, *m_FichiersOuverts) {
+        FermerFichier(fichier);
+    }
+
     ServeurSynergie::getInstance()->EnleverClient(this);
 
     Console::getInstance()->Imprimer(m_Nom + " est déconnecté");
 }
 
-void Client::EnvoyerFeuille(int id)
+void Client::OuvrirFichier(Fichier* fichier)
 {
-    Transfer* transfer = new Transfer(ServeurSynergie::getInstance()->ChercherFichierParID(id));
-    m_Transfers->insert(id, transfer);
+    fichier->AjouterClient(this);
+    m_FichiersOuverts->append(fichier);
+    EnvoyerFichier(fichier);
+}
 
-    EnvoyerPaquet(new PaquetOuvertureFichier(id));
+void Client::FermerFichier(Fichier *fichier)
+{
+    fichier->EnleverClient(this);
+    m_FichiersOuverts->removeOne(fichier);
+}
+
+void Client::EnvoyerFichier(Fichier* fichier)
+{
+    Transfer* transfer = new Transfer(fichier);
+    m_Transfers->insert(fichier->getID(), transfer);
+
+    EnvoyerPaquet(new PaquetOuvertureFichier(fichier));
     EnvoyerPaquet(new PaquetDonnees(transfer));
 }
 
@@ -96,4 +121,9 @@ void Client::setNom(QString nom)
 {
     m_Nom = nom;
     Console::getInstance()->Imprimer(getIP() + " change de nom pour " + nom);
+}
+
+QList<Fichier*>* Client::getFichiers()
+{
+    return m_FichiersOuverts;
 }

@@ -5,6 +5,8 @@
 #include <QTextStream>
 #include "fichier.h"
 
+class Fichier;
+
 class Transfer
 {
 public:
