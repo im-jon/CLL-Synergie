@@ -65,36 +65,25 @@ bool ServeurSynergie::Arreter()
     return false;
 }
 
+void ServeurSynergie::slNouveauClient()
+{
+    Client* client = new Client(m_GenerateurID, m_Ecouteur->nextPendingConnection());
+    AjouterClient(client);
+    Console::getInstance()->Imprimer(client->getIP() + " est en ligne");
+}
+
+bool ServeurSynergie::AjouterClient(Client *client)
+{
+    m_Clients->insert(m_GenerateurID, client);
+    m_GenerateurID++;
+}
+
 bool ServeurSynergie::EnleverClient(Client *client)
 {
     if (m_Clients->remove(client->getID()) >= 1) {
         return true;
     }
     return false;
-}
-
-void ServeurSynergie::slNouveauClient()
-{
-    Client* client = new Client(m_GenerateurID, m_Ecouteur->nextPendingConnection());
-    m_Clients->insert(m_GenerateurID, client);
-    Console::getInstance()->Imprimer(client->getIP() + " est en ligne");
-
-    m_GenerateurID++;
-}
-
-MangePaquetsServeur* ServeurSynergie::getMangePaquets()
-{
-    return m_MangePaquets;
-}
-
-QMap<int, Client*>* ServeurSynergie::getClients()
-{
-    return m_Clients;
-}
-
-QString ServeurSynergie::getProjet()
-{
-    return m_Projet + "/";
 }
 
 bool ServeurSynergie::NouveauProjet(QString nom)
@@ -112,10 +101,10 @@ void ServeurSynergie::InitialiserFichiers()
 {
     m_Fichiers = new QMap<int, Fichier*>();
     QString fichier;
+
     int i = 0;
     foreach (fichier, QDir("Projets/" + m_Projet).entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
         m_Fichiers->insert(i, new Fichier(i, fichier, this));
-        qDebug() << fichier;
         i++;
     }
 }
@@ -128,4 +117,19 @@ Fichier* ServeurSynergie::ChercherFichierParID(int id)
 QMap<int, Fichier*>* ServeurSynergie::getFichiers()
 {
     return m_Fichiers;
+}
+
+MangePaquetsServeur* ServeurSynergie::getMangePaquets()
+{
+    return m_MangePaquets;
+}
+
+QMap<int, Client*>* ServeurSynergie::getClients()
+{
+    return m_Clients;
+}
+
+QString ServeurSynergie::getProjet()
+{
+    return m_Projet + "/";
 }
