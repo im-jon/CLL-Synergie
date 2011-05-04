@@ -5,7 +5,9 @@
 #include "Paquets/paquetlistefichiers.h"
 #include "Paquets/paquetouverturefichier.h"
 #include "Paquets/paquetdonnees.h"
+#include "Paquets/paquetinsertiontexte.h"
 #include "serveursynergie.h"
+#include "fichier.h"
 
 MangePaquetsServeur::MangePaquetsServeur(QObject *parent) :
     QObject(parent)
@@ -20,6 +22,9 @@ void MangePaquetsServeur::Interpreter(Client* client, QDataStream* stream)
     switch (id) {
     case 1:
         Reception_ChangerNom(client, stream);
+        break;
+    case 2:
+        Reception_InsertionTexte(client, stream);
         break;
     case 7:
         Reception_OuvrirFichier(client, stream);
@@ -43,6 +48,21 @@ void MangePaquetsServeur::Reception_ChangerNom(Client* client, QDataStream* stre
 
     client->EnvoyerPaquet(new PaquetEnvoiCollegues());
     client->EnvoyerPaquet(new PaquetListeFichiers());
+}
+
+void MangePaquetsServeur::Reception_InsertionTexte(Client *client, QDataStream *stream)
+{
+    int id;
+    int position;
+    QString texte;
+
+    *stream >> id;
+    *stream >> position;
+    *stream >> texte;
+
+    Fichier* fichier = ServeurSynergie::getInstance()->ChercherFichierParID(id);
+    fichier->InsererTexte(texte, position, client);
+
 }
 
 void MangePaquetsServeur::Reception_OuvrirFichier(Client *client, QDataStream *stream)

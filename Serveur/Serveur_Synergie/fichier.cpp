@@ -2,6 +2,7 @@
 #include "serveursynergie.h"
 #include <QTextOStream>
 #include "Console/console.h"
+#include "Reseau/Paquets/paquetinsertiontexte.h"
 
 Fichier::Fichier(int id, QString chemin, QObject *parent) :
     QObject(parent)
@@ -58,6 +59,18 @@ void Fichier::EnleverClient(Client *client)
 
     if (m_Clients->count() == 0) {
         DechargerContenu();
+    }
+}
+
+void Fichier::InsererTexte(QString texte, int position, Client* auteur)
+{
+    m_Contenu.insert(position, texte);
+
+    Client* client;
+    foreach (client, *m_Clients) {
+        if (client != auteur) {
+            client->EnvoyerPaquet(new PaquetInsertionTexte(this, texte, position));
+        }
     }
 }
 

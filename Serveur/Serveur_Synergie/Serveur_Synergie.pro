@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     Reseau/Paquets/paquetouverturefichier.cpp \
     Reseau/Paquets/paquetdonnees.cpp \
     Reseau/transfer.cpp \
-    fichier.cpp
+    fichier.cpp \
+    Reseau/Paquets/paquetinsertiontexte.cpp
 
 HEADERS  += fenetreprincipale.h \
     Console/console.h \
@@ -51,6 +52,7 @@ HEADERS  += fenetreprincipale.h \
     Reseau/Paquets/paquetouverturefichier.h \
     Reseau/Paquets/paquetdonnees.h \
     Reseau/transfer.h \
-    fichier.h
+    fichier.h \
+    Reseau/Paquets/paquetinsertiontexte.h
 
 FORMS    += fenetreprincipale.ui
