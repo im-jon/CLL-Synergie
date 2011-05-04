@@ -1577,13 +1577,17 @@ void QsciScintilla::handleModified(int pos, int mtype, const char *text,
     {
         emit textChanged();
 
-        if (mtype & SC_MOD_INSERTTEXT)
+        if (mtype & SC_PERFORMED_USER)
         {
-            emit textInserted(pos, convertTextS2Q(text));
-        }
-        else
-        {
-            emit textDeleted(pos, len);
+
+            if (mtype & SC_MOD_INSERTTEXT)
+            {
+                emit textInserted(pos, convertTextS2Q(text));
+            }
+            else
+            {
+                emit textDeleted(pos, len);
+            }
         }
 
         if (added != 0)
@@ -2010,27 +2014,24 @@ void QsciScintilla::insertAt(const QString &text, int line, int index)
 
 
 // Insert the given text at the given position.
-void QsciScintilla::insertAtPos(const QString &text, int pos, bool mechanic)
+void QsciScintilla::insertAtPos(const QString &text, int pos)
 {
     bool ro = ensureRW();
 
-    if (mechanic)
-    {
-        SendScintilla(SCI_INSERTMECHA, pos,
-            ScintillaStringData(convertTextQ2S(text)));
-    }
-    else
-    {
-        SendScintilla(SCI_BEGINUNDOACTION);
+    SendScintilla(SCI_BEGINUNDOACTION);
 
-        SendScintilla(SCI_INSERTTEXT, pos,
-            ScintillaStringData(convertTextQ2S(text)));
-        SendScintilla(SCI_ENDUNDOACTION);
-    }
+    SendScintilla(SCI_INSERTTEXT, pos,
+        ScintillaStringData(convertTextQ2S(text)));
+    SendScintilla(SCI_ENDUNDOACTION);
 
     setReadOnly(ro);
 }
 
+void QsciScintilla::insertAtPosMecha(const QString &text, int pos)
+{
+    SendScintilla(SCI_INSERTMECHA, pos,
+        ScintillaStringData(convertTextQ2S(text)));
+}
 
 // Begin a sequence of undoable actions.
 void QsciScintilla::beginUndoAction()
@@ -2114,6 +2115,11 @@ int QsciScintilla::length() const
 void QsciScintilla::removeSelectedText()
 {
     SendScintilla(SCI_REPLACESEL, "");
+}
+
+void QsciScintilla::removeSelectedTextMecha()
+{
+    SendScintilla(SCI_REPLACESELMECHA, "");
 }
 
 

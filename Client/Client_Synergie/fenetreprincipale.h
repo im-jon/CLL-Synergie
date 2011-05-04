@@ -44,9 +44,12 @@ public slots:
     void slNouvelleDonnees(int id, QString contenu);
     void slInsertionTexte(int,QString);
     void slNouveauTexte(int,int,QString);
+    void slEffacementTexteEditeur(int pos, int longeur);
+    void slEffacementTexteServeur(int id, int position, int longeur);
 
 signals :
     void InsertionTexte(int,int,QString);
+    void EffacementTexte(int id, int pos, int longeur);
 
 };
 

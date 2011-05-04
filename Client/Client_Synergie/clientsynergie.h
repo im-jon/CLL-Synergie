@@ -35,6 +35,7 @@ signals:
 
 public slots:
     void slOnInsertionTexte(int,int,QString);
+    void slEffacementTexte(int id, int pos, int longeur);
 
 };
 

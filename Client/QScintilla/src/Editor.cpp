@@ -3940,6 +3940,25 @@ void Editor::ClearSelection(bool retainMultipleSelections) {
 	ClaimSelection();
 }
 
+void Editor::ClearSelectionMecha(bool retainMultipleSelections) {
+        if (!sel.IsRectangular() && !retainMultipleSelections)
+                FilterSelections();
+        UndoGroup ug(pdoc);
+        for (size_t r=0; r<sel.Count(); r++) {
+                if (!sel.Range(r).Empty()) {
+                        if (!RangeContainsProtected(sel.Range(r).Start().Position(),
+                                sel.Range(r).End().Position())) {
+                                pdoc->DeleteCharsMecha(sel.Range(r).Start().Position(),
+                                        sel.Range(r).Length());
+                                sel.Range(r) = sel.Range(r).Start();
+                        }
+                }
+        }
+        ThinRectangularRange();
+        sel.RemoveDuplicates();
+        ClaimSelection();
+}
+
 void Editor::ClearAll() {
 	{
 		UndoGroup ug(pdoc);
@@ -7003,6 +7022,19 @@ sptr_t Editor::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam) {
 		}
 		break;
 
+        case SCI_REPLACESELMECHA: {
+                        if (lParam == 0)
+                                return 0;
+                        UndoGroup ug(pdoc);
+                        ClearSelectionMecha();
+                        char *replacement = CharPtrFromSPtr(lParam);
+                        pdoc->InsertCStringMecha(sel.MainCaret(), replacement);
+                        SetEmptySelection(sel.MainCaret() + istrlen(replacement));
+                        EnsureCaretVisible();
+                }
+                break;
+
+
 	case SCI_SETTARGETSTART:
 		targetStart = wParam;
 		break;
@@ -7184,7 +7216,7 @@ sptr_t Editor::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam) {
                                 insertPos = CurrentPosition();
                         int newCurrent = CurrentPosition();
                         char *sz = CharPtrFromSPtr(lParam);
-                        pdoc->InsertCString(insertPos, sz, true);
+                        pdoc->InsertCStringMecha(insertPos, sz);
                         if (newCurrent > insertPos)
                                 newCurrent += istrlen(sz);
                         SetEmptySelection(newCurrent);
@@ -7196,7 +7228,7 @@ sptr_t Editor::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam) {
 		return 0;
 
         case SCI_APPENDMECHA:
-                pdoc->InsertString(pdoc->Length(), CharPtrFromSPtr(lParam), wParam, true);
+                pdoc->InsertStringMecha(pdoc->Length(), CharPtrFromSPtr(lParam), wParam);
                 return 0;
 
 	case SCI_CLEARALL:

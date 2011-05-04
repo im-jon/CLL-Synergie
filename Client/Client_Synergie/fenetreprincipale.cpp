@@ -23,8 +23,11 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     connect (ClientSynergie::getInstance()->getMangePaquets(),SIGNAL(NouvelleListeFichiers(QStringList*)),this,SLOT(slMiseAJourListeFichiers(QStringList*)));
     connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siOuvrirFichier(int)), this, SLOT(slOuvrirFichier(int)));
     connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siNouvelleDonnees(int, QString)), this, SLOT(slNouvelleDonnees(int, QString)));
-    connect (this, SIGNAL(InsertionTexte(int,int,QString)), ClientSynergie::getInstance(), SLOT(slOnInsertionTexte(int,int,QString)));
     connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siNouveauTexte(int,int,QString)), this, SLOT(slNouveauTexte(int,int,QString)));
+    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siEffacementTexte(int,int,int)), this, SLOT(slEffacementTexteServeur(int,int,int)));
+
+    connect (this, SIGNAL(InsertionTexte(int,int,QString)), ClientSynergie::getInstance(), SLOT(slOnInsertionTexte(int,int,QString)));
+    connect (this, SIGNAL(EffacementTexte(int,int,int)), ClientSynergie::getInstance(), SLOT(slEffacementTexte(int,int,int)));
 }
 
 FenetrePrincipale::~FenetrePrincipale()
@@ -108,17 +111,20 @@ void FenetrePrincipale::slOuvrirFichier(int id)
     int index = ui->tabFeuilles->addTab(editeur, fichier);
     ui->tabFeuilles->setCurrentIndex(index);
     m_FeuillesOuvertes->insert(id, editeur);
-    connect(editeur,SIGNAL(textInserted(int,QString)),this,SLOT(slInsertionTexte(int,QString)));
+    connect (editeur,SIGNAL(textInserted(int,QString)),this,SLOT(slInsertionTexte(int,QString)));
+    connect (editeur, SIGNAL(textDeleted(int,int)), this, SLOT(slEffacementTexteEditeur(int,int)));
 }
 
 void FenetrePrincipale::slNouvelleDonnees(int id, QString contenu)
 {
-    m_FeuillesOuvertes->value(id)->append(contenu);
+    QsciScintilla* editeur = ChercherEditeurParID(id);
+    editeur->insertAtPosMecha(contenu, editeur->length() - 1);
 }
 
 void FenetrePrincipale::slInsertionTexte(int Position,QString Texte)
 {
     int id = m_FeuillesOuvertes->key((QsciScintilla*)ui->tabFeuilles->currentWidget());
+
     emit(InsertionTexte(id,Position,Texte));
 }
 
@@ -129,6 +135,28 @@ QsciScintilla* FenetrePrincipale::ChercherEditeurParID(int id)
 
 void FenetrePrincipale::slNouveauTexte(int id,int position, QString texte)
 {
-    qDebug() << "ID: " << id << " Texte: " << texte;
-    ChercherEditeurParID(id)->insertAtPos(texte, position, true);
+    ChercherEditeurParID(id)->insertAtPosMecha(texte, position);
+}
+
+void FenetrePrincipale::slEffacementTexteEditeur(int pos, int longeur)
+{
+    int id = m_FeuillesOuvertes->key((QsciScintilla*)ui->tabFeuilles->currentWidget());
+
+    emit (EffacementTexte(id, pos, longeur));
+}
+
+void FenetrePrincipale::slEffacementTexteServeur(int id, int position, int longeur)
+{
+    QsciScintilla* editeur = ChercherEditeurParID(id);
+
+    int ligneDebut;
+    int indexDebut;
+    editeur->lineIndexFromPosition(position, &ligneDebut, &indexDebut);
+
+    int ligneFin;
+    int indexFin;
+    editeur->lineIndexFromPosition(position + longeur, &ligneFin, &indexFin);
+
+    editeur->setSelection(ligneDebut, indexDebut, ligneFin, indexFin);
+    editeur->removeSelectedTextMecha();
 }

@@ -24,14 +24,17 @@ void MangePaquetClient::Interpreter(QDataStream* stream)
     case 2:
         Reception_ListeDesFichiers(stream);
         break;
+    case 5:
+        Reception_Texte(stream);
+        break;
+    case 7:
+        Reception_EffacementTexte(stream);
+        break;
     case 10:
         Reception_OuvertureFichier(stream);
         break;
     case 15:
         Reception_Donnees(stream);
-        break;
-    case 5:
-        Reception_Texte(stream);
         break;
     default:
         qDebug() << "Réception d'un paquet inconnu #" << id;
@@ -89,6 +92,7 @@ void MangePaquetClient::Reception_Donnees(QDataStream *stream)
     QString donnees;
     *stream >> donnees;
     ClientSynergie::getInstance()->getConnexion()->EnvoyerPaquet(new PaquetReceptionDonnees(id));
+
     emit(siNouvelleDonnees(id, donnees));
 }
 
@@ -97,10 +101,22 @@ void MangePaquetClient::Reception_Texte(QDataStream *stream)
     int id;
     *stream >>id;
     int position;
-    *stream >>position;
+    *stream >> position;
     QString Texte;
-    *stream >>Texte;
+    *stream >> Texte;
 
-    emit(siNouveauTexte(id,position,Texte));
+    emit (siNouveauTexte(id,position,Texte));
 
+}
+
+void MangePaquetClient::Reception_EffacementTexte(QDataStream *stream)
+{
+    int id;
+    *stream >> id;
+    int position;
+    *stream >> position;
+    int longeur;
+    *stream >> longeur;
+
+    emit (siEffacementTexte(id, position, longeur));
 }
