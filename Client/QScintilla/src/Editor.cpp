@@ -7184,7 +7184,7 @@ sptr_t Editor::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam) {
                                 insertPos = CurrentPosition();
                         int newCurrent = CurrentPosition();
                         char *sz = CharPtrFromSPtr(lParam);
-                        pdoc->InsertCString(insertPos, sz, true);
+                        pdoc->InsertCStringMecha(insertPos, sz);
                         if (newCurrent > insertPos)
                                 newCurrent += istrlen(sz);
                         SetEmptySelection(newCurrent);
@@ -7196,7 +7196,7 @@ sptr_t Editor::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam) {
 		return 0;
 
         case SCI_APPENDMECHA:
-                pdoc->InsertString(pdoc->Length(), CharPtrFromSPtr(lParam), wParam, true);
+                pdoc->InsertStringMecha(pdoc->Length(), CharPtrFromSPtr(lParam), wParam);
                 return 0;
 
 	case SCI_CLEARALL:

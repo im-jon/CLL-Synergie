@@ -113,7 +113,8 @@ void FenetrePrincipale::slOuvrirFichier(int id)
 
 void FenetrePrincipale::slNouvelleDonnees(int id, QString contenu)
 {
-    m_FeuillesOuvertes->value(id)->append(contenu, true);
+    QsciScintilla* editeur = ChercherEditeurParID(id);
+    editeur->insertAtPosMecha(contenu, editeur->length() - 1);
 }
 
 void FenetrePrincipale::slInsertionTexte(int Position,QString Texte)
@@ -131,5 +132,5 @@ QsciScintilla* FenetrePrincipale::ChercherEditeurParID(int id)
 void FenetrePrincipale::slNouveauTexte(int id,int position, QString texte)
 {
     qDebug() << "ID: " << id << " Texte: " << texte;
-    ChercherEditeurParID(id)->insertAtPos(texte, position, true);
+    ChercherEditeurParID(id)->insertAtPosMecha(texte, position);
 }

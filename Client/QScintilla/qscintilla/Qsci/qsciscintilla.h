@@ -756,7 +756,9 @@ public:
     //! \sa setIndicatorDrawUnder()
     bool indicatorDrawUnder(int indicatorNumber) const;
 
-    void insertAtPos(const QString &text, int pos, bool mechanic = false);
+    void insertAtPos(const QString &text, int pos);
+
+    void insertAtPosMecha(const QString &text, int pos);
 
     //! Returns true if a call tip is currently active.
     bool isCallTipActive() const;

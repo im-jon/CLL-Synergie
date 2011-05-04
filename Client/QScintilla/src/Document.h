@@ -239,7 +239,8 @@ public:
 	void ModifiedAt(int pos);
 	void CheckReadOnly();
 	bool DeleteChars(int pos, int len);
-        bool InsertString(int position, const char *s, int insertLength, bool mechanic = false);
+        bool InsertString(int position, const char *s, int insertLength);
+        bool InsertStringMecha(int position, const char *s, int insertLength);
 	int Undo();
 	int Redo();
 	bool CanUndo() { return cb.CanUndo(); }
@@ -268,7 +269,8 @@ public:
 	bool IsReadOnly() { return cb.IsReadOnly(); }
 
 	bool InsertChar(int pos, char ch);
-        bool InsertCString(int position, const char *s, bool mechanic = false);
+        bool InsertCString(int position, const char *s);
+        bool InsertCStringMecha(int position, const char *s);
 	void ChangeChar(int pos, char ch);
 	void DelChar(int pos);
 	void DelCharBack(int pos);
