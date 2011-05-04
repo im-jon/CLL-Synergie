@@ -4,6 +4,6 @@ PaquetInsertionTexte::PaquetInsertionTexte(Fichier* fichier, QString texte, int 
     BasePaquetServeur((qint8)5)
 {
     *m_Stream << fichier->getID();
-    *m_Stream << texte;
     *m_Stream << position;
+    *m_Stream << texte;
 }
