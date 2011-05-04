@@ -1577,7 +1577,7 @@ void QsciScintilla::handleModified(int pos, int mtype, const char *text,
     {
         emit textChanged();
 
-        if (mtype & SC_PERFORMED_USER)
+        if (mtype & (SC_PERFORMED_USER | SC_PERFORMED_UNDO | SC_PERFORMED_REDO))
         {
 
             if (mtype & SC_MOD_INSERTTEXT)
