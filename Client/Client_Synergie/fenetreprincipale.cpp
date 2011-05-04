@@ -151,11 +151,11 @@ void FenetrePrincipale::slEffacementTexteServeur(int id, int position, int longe
 
     int ligneDebut;
     int indexDebut;
-    editeur->lineIndexFromPosition(position - longeur, &ligneDebut, &indexDebut);
+    editeur->lineIndexFromPosition(position, &ligneDebut, &indexDebut);
 
     int ligneFin;
     int indexFin;
-    editeur->lineIndexFromPosition(position, &ligneFin, &indexFin);
+    editeur->lineIndexFromPosition(position + longeur, &ligneFin, &indexFin);
 
     editeur->setSelection(ligneDebut, indexDebut, ligneFin, indexFin);
     editeur->removeSelectedTextMecha();

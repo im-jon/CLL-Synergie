@@ -239,6 +239,7 @@ public:
 	void ModifiedAt(int pos);
 	void CheckReadOnly();
 	bool DeleteChars(int pos, int len);
+        bool DeleteCharsMecha(int pos, int len);
         bool InsertString(int position, const char *s, int insertLength);
         bool InsertStringMecha(int position, const char *s, int insertLength);
 	int Undo();

@@ -3940,6 +3940,25 @@ void Editor::ClearSelection(bool retainMultipleSelections) {
 	ClaimSelection();
 }
 
+void Editor::ClearSelectionMecha(bool retainMultipleSelections) {
+        if (!sel.IsRectangular() && !retainMultipleSelections)
+                FilterSelections();
+        UndoGroup ug(pdoc);
+        for (size_t r=0; r<sel.Count(); r++) {
+                if (!sel.Range(r).Empty()) {
+                        if (!RangeContainsProtected(sel.Range(r).Start().Position(),
+                                sel.Range(r).End().Position())) {
+                                pdoc->DeleteCharsMecha(sel.Range(r).Start().Position(),
+                                        sel.Range(r).Length());
+                                sel.Range(r) = sel.Range(r).Start();
+                        }
+                }
+        }
+        ThinRectangularRange();
+        sel.RemoveDuplicates();
+        ClaimSelection();
+}
+
 void Editor::ClearAll() {
 	{
 		UndoGroup ug(pdoc);
@@ -7007,7 +7026,7 @@ sptr_t Editor::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam) {
                         if (lParam == 0)
                                 return 0;
                         UndoGroup ug(pdoc);
-                        ClearSelection();
+                        ClearSelectionMecha();
                         char *replacement = CharPtrFromSPtr(lParam);
                         pdoc->InsertCStringMecha(sel.MainCaret(), replacement);
                         SetEmptySelection(sel.MainCaret() + istrlen(replacement));

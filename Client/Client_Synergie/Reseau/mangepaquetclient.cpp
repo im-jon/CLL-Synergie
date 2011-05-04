@@ -24,14 +24,17 @@ void MangePaquetClient::Interpreter(QDataStream* stream)
     case 2:
         Reception_ListeDesFichiers(stream);
         break;
+    case 5:
+        Reception_Texte(stream);
+        break;
+    case 7:
+        Reception_EffacementTexte(stream);
+        break;
     case 10:
         Reception_OuvertureFichier(stream);
         break;
     case 15:
         Reception_Donnees(stream);
-        break;
-    case 5:
-        Reception_Texte(stream);
         break;
     default:
         qDebug() << "Réception d'un paquet inconnu #" << id;
