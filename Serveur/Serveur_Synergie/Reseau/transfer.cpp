@@ -13,9 +13,9 @@ Transfer::Transfer(Fichier* fichier)
 
 QString Transfer::LireBloc()
 {
-    QString donnees = m_Stream->read(2048);
+    QString donnees = m_Stream->read(1024);
 
-    if (donnees.length() < 2048) {
+    if (donnees.length() < 1024) {
         m_Fini = true;
     }
     return donnees;

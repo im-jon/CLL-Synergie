@@ -18,13 +18,16 @@ void MangePaquetsServeur::Interpreter(Client* client, QDataStream* stream)
 {
     quint8 id;
     *stream >> id;
-
+    qDebug() << "ID: " << id;
     switch (id) {
     case 1:
         Reception_ChangerNom(client, stream);
         break;
     case 2:
         Reception_InsertionTexte(client, stream);
+        break;
+    case 4:
+        Reception_EffacementTexte(client, stream);
         break;
     case 7:
         Reception_OuvrirFichier(client, stream);
@@ -63,6 +66,20 @@ void MangePaquetsServeur::Reception_InsertionTexte(Client *client, QDataStream *
     Fichier* fichier = ServeurSynergie::getInstance()->ChercherFichierParID(id);
     fichier->InsererTexte(texte, position, client);
 
+}
+
+void MangePaquetsServeur::Reception_EffacementTexte(Client *client, QDataStream *stream)
+{
+    int id;
+    int position;
+    int longeur;
+
+    *stream >> id;
+    *stream >> position;
+    *stream >> longeur;
+
+    Fichier* fichier = ServeurSynergie::getInstance()->ChercherFichierParID(id);
+    fichier->EffacerTexte(position, longeur, client);
 }
 
 void MangePaquetsServeur::Reception_OuvrirFichier(Client *client, QDataStream *stream)

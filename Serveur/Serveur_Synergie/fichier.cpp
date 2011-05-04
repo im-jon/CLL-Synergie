@@ -3,6 +3,7 @@
 #include <QTextOStream>
 #include "Console/console.h"
 #include "Reseau/Paquets/paquetinsertiontexte.h"
+#include "Reseau/Paquets/paqueteffacementtexte.h"
 
 Fichier::Fichier(int id, QString chemin, QObject *parent) :
     QObject(parent)
@@ -70,6 +71,18 @@ void Fichier::InsererTexte(QString texte, int position, Client* auteur)
     foreach (client, *m_Clients) {
         if (client != auteur) {
             client->EnvoyerPaquet(new PaquetInsertionTexte(this, texte, position));
+        }
+    }
+}
+
+void Fichier::EffacerTexte(int position, int longeur, Client *auteur)
+{
+    m_Contenu.remove(position, longeur);
+
+    Client* client;
+    foreach (client, *m_Clients) {
+        if (client != auteur) {
+            client->EnvoyerPaquet(new PaquetEffacementTexte(this, position, longeur));
         }
     }
 }
