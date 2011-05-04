@@ -113,12 +113,13 @@ void FenetrePrincipale::slOuvrirFichier(int id)
 
 void FenetrePrincipale::slNouvelleDonnees(int id, QString contenu)
 {
-    m_FeuillesOuvertes->value(id)->append(contenu);
+    m_FeuillesOuvertes->value(id)->append(contenu, true);
 }
 
 void FenetrePrincipale::slInsertionTexte(int Position,QString Texte)
 {
     int id = m_FeuillesOuvertes->key((QsciScintilla*)ui->tabFeuilles->currentWidget());
+
     emit(InsertionTexte(id,Position,Texte));
 }
 
