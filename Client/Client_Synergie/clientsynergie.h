@@ -34,6 +34,7 @@ private:
 signals:
 
 public slots:
+    void slOnInsertionTexte(int,int,QString);
 
 };
 

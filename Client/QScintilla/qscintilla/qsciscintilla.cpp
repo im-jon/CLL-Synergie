@@ -1976,14 +1976,19 @@ void QsciScintilla::setReadOnly(bool ro)
 
 
 // Append the given text.
-void QsciScintilla::append(const QString &text)
+void QsciScintilla::append(const QString &text, bool mechanic)
 {
     bool ro = ensureRW();
 
     ScintillaString s = convertTextQ2S(text);
-    SendScintilla(SCI_APPENDTEXT, ScintillaStringLength(s),
-            ScintillaStringData(s));
-
+    if (mechanic)
+    {
+        SendScintilla(SCI_APPENDMECHA, ScintillaStringLength(s), ScintillaStringData(s));
+    }
+    else
+    {
+        SendScintilla(SCI_APPENDTEXT, ScintillaStringLength(s), ScintillaStringData(s));
+    }
     SendScintilla(SCI_EMPTYUNDOBUFFER);
 
     setReadOnly(ro);

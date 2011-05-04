@@ -1281,7 +1281,7 @@ public:
 public slots:
     //! Appends the text \a text to the end of the text edit.  Note that the
     //! undo/redo history is cleared by this function.
-    virtual void append(const QString &text);
+    virtual void append(const QString &text, bool mechanic = false);
 
     //! Display an auto-completion list based on any installed APIs, the
     //! current contents of the document and the characters immediately to the

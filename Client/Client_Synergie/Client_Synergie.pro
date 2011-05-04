@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     utils.cpp \
     Reseau/Paquets/paquetouvrirfichier.cpp \
     Reseau/Paquets/paquetreceptiondonnees.cpp \
-    clientsynergie.cpp
+    clientsynergie.cpp \
+    Reseau/Paquets/paquetinsertiontexte.cpp
 
 HEADERS  += fenetreprincipale.h \
     Reseau/connexion.h \
@@ -31,7 +32,8 @@ HEADERS  += fenetreprincipale.h \
     utils.h \
     Reseau/Paquets/paquetouvrirfichier.h \
     Reseau/Paquets/paquetreceptiondonnees.h \
-    clientsynergie.h
+    clientsynergie.h \
+    Reseau/Paquets/paquetinsertiontexte.h
 
 FORMS    += fenetreprincipale.ui \
     dlgconnexion.ui

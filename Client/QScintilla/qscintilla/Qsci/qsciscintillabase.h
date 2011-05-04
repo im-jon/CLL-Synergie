@@ -1008,6 +1008,9 @@ public:
         SCI_SETFOLDMARGINHICOLOUR = 2291,
 
         //!
+        SCI_APPENDMECHA = 2292,
+
+        //!
         SCI_LINEDOWN = 2300,
 
         //!

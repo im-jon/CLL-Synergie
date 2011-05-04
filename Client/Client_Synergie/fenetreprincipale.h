@@ -41,6 +41,10 @@ public slots:
     void slMiseAJourListeFichiers(QStringList* fichiers);
     void slOuvrirFichier(int id);
     void slNouvelleDonnees(int id, QString contenu);
+    void slInsertionTexte(int,QString);
+
+signals :
+    void InsertionTexte(int,int,QString);
 
 };
 

@@ -106,9 +106,16 @@ void FenetrePrincipale::slOuvrirFichier(int id)
     int index = ui->tabFeuilles->addTab(editeur, fichier);
     ui->tabFeuilles->setCurrentIndex(index);
     m_FeuillesOuvertes->insert(id, editeur);
+    connect(editeur,SIGNAL(textInserted(int,QString)),this,SLOT(slInsertionTexte(int,QString)));
 }
 
 void FenetrePrincipale::slNouvelleDonnees(int id, QString contenu)
 {
     m_FeuillesOuvertes->value(id)->append(contenu);
+}
+
+void FenetrePrincipale::slInsertionTexte(int Position,QString Texte)
+{
+    int id = m_FeuillesOuvertes->key((QsciScintilla*)ui->tabFeuilles->currentWidget());
+    emit(InsertionTexte(id,Position,Texte));
 }

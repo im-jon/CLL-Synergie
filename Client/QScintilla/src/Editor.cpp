@@ -4508,7 +4508,7 @@ void Editor::NotifyMacroRecord(unsigned int iMessage, uptr_t wParam, sptr_t lPar
 	case SCI_REPLACESEL:
 	case SCI_ADDTEXT:
 	case SCI_INSERTTEXT:
-	case SCI_APPENDTEXT:
+        case SCI_APPENDTEXT:
 	case SCI_CLEARALL:
 	case SCI_SELECTALL:
 	case SCI_GOTOLINE:
@@ -7179,6 +7179,10 @@ sptr_t Editor::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam) {
 	case SCI_APPENDTEXT:
 		pdoc->InsertString(pdoc->Length(), CharPtrFromSPtr(lParam), wParam);
 		return 0;
+
+        case SCI_APPENDMECHA:
+                pdoc->InsertString(pdoc->Length(), CharPtrFromSPtr(lParam), wParam, true);
+                return 0;
 
 	case SCI_CLEARALL:
 		ClearAll();

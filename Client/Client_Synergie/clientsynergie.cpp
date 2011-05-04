@@ -1,5 +1,6 @@
 #include "clientsynergie.h"
 #include "Reseau/Paquets/paquetchangernom.h"
+#include "Reseau/Paquets/paquetinsertiontexte.h"
 
 ClientSynergie* ClientSynergie::m_Instance = 0;
 
@@ -60,4 +61,9 @@ Connexion* ClientSynergie::getConnexion()
 MangePaquetClient* ClientSynergie::getMangePaquets()
 {
     return m_Connexion->getMangePaquets();
+}
+
+void ClientSynergie::slOnInsertionTexte(int id,int position,QString texte)
+{
+    m_Connexion->EnvoyerPaquet(new paquetinsertiontexte(id,position,texte));
 }
