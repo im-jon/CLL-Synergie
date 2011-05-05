@@ -5,7 +5,6 @@
 #include <QMap>
 #include <QDir>
 #include "fichier.h"
-#include "dossier.h"
 
 class Projet : public QObject
 {
@@ -14,10 +13,14 @@ public:
     explicit Projet(QString nom, QObject *parent = 0);
     QString getNom();
     void Initialiser();
+    Fichier* getFichier(int id);
 
 private:
+    void AjouterFichier(Fichier* fichier);
+    void EnleverFichier(int id);
+
     QString m_Nom;
-    Dossier* m_DossierPrincipal;
+    QMap<int, Fichier*>* m_Fichiers;
 
 signals:
 

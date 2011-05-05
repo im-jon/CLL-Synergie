@@ -42,7 +42,7 @@ ServeurSynergie::ServeurSynergie(QObject *parent) :
         QDir().mkdir("Projets");
     }
 
-    m_Projet = "Projet1";
+    m_Projet = new Projet("Projet1", this);
     InitialiserFichiers();
 }
 
@@ -105,7 +105,7 @@ void ServeurSynergie::InitialiserFichiers()
     m_Fichiers = new QMap<int, Fichier*>;
     QString nomFichier;
 
-    foreach (nomFichier, QDir("Projets/" + m_Projet).entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
+    foreach (nomFichier, QDir("Projets/" + m_Projet->getNom()).entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
         Fichier* fichier = new Fichier(nomFichier, this);
         m_Fichiers->insert(fichier->getID(), fichier);
     }
@@ -153,7 +153,7 @@ QMap<int, Client*>* ServeurSynergie::getClients()
     return m_Clients;
 }
 
-QString ServeurSynergie::getProjet()
+QString ServeurSynergie::getNomProjet()
 {
-    return m_Projet + "/"; // Pourquoi on devrais mettre le slash ici ?
+    return m_Projet->getNom();
 }

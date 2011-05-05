@@ -8,6 +8,7 @@
 #include "Reseau/mangepaquetsserveur.h"
 #include "Reseau/Paquets/basepaquetserveur.h"
 #include "fichier.h"
+#include "projet.h"
 
 class ServeurSynergie : public QObject
 {
@@ -26,7 +27,7 @@ public:
     QMap<int, Client*>* getClients();
     QMap<int, Fichier*>* getFichiers();
     int getGenerateurIDFichier();
-    QString getProjet();
+    QString getNomProjet();
     bool NouveauProjet(QString nom);
 
 private:
@@ -35,7 +36,7 @@ private:
     explicit ServeurSynergie(QObject *parent = 0);
     void InitialiserFichiers();
 
-    QString m_Projet;
+    Projet* m_Projet;
     QTcpServer* m_Ecouteur;
     MangePaquetsServeur* m_MangePaquets;
     QMap<int, Client*>* m_Clients;

@@ -33,8 +33,7 @@ SOURCES += main.cpp\
     fichier.cpp \
     Reseau/Paquets/paquetinsertiontexte.cpp \
     Reseau/Paquets/paqueteffacementtexte.cpp \
-    projet.cpp \
-    dossier.cpp
+    projet.cpp
 
 HEADERS  += fenetreprincipale.h \
     Console/console.h \
@@ -58,7 +57,6 @@ HEADERS  += fenetreprincipale.h \
     fichier.h \
     Reseau/Paquets/paquetinsertiontexte.h \
     Reseau/Paquets/paqueteffacementtexte.h \
-    projet.h \
-    dossier.h
+    projet.h
 
 FORMS    += fenetreprincipale.ui
