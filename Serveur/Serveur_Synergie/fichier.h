@@ -12,7 +12,8 @@ class Fichier : public QObject
 {
     Q_OBJECT
 public:
-    explicit Fichier(int id, QString chemin, QObject *parent = 0);
+    static int getGenerateurID();
+    explicit Fichier(QString chemin, QObject *parent = 0);
 
     void Sauvegarder();
     void AjouterClient(Client* client);
@@ -25,6 +26,7 @@ public:
     int getID();
 
 private:
+    static int GenerateurID;
     void ChargerContenu();
     void DechargerContenu();
     void NouvelleModification();

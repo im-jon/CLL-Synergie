@@ -32,7 +32,9 @@ SOURCES += main.cpp\
     Reseau/transfer.cpp \
     fichier.cpp \
     Reseau/Paquets/paquetinsertiontexte.cpp \
-    Reseau/Paquets/paqueteffacementtexte.cpp
+    Reseau/Paquets/paqueteffacementtexte.cpp \
+    projet.cpp \
+    dossier.cpp
 
 HEADERS  += fenetreprincipale.h \
     Console/console.h \
@@ -55,6 +57,8 @@ HEADERS  += fenetreprincipale.h \
     Reseau/transfer.h \
     fichier.h \
     Reseau/Paquets/paquetinsertiontexte.h \
-    Reseau/Paquets/paqueteffacementtexte.h
+    Reseau/Paquets/paqueteffacementtexte.h \
+    projet.h \
+    dossier.h
 
 FORMS    += fenetreprincipale.ui

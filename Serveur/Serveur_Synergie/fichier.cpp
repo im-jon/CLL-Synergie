@@ -8,13 +8,17 @@
 
 const int Seuil = 100;
 
-Fichier::Fichier(int id, QString chemin, QObject *parent) :
+int Fichier::GenerateurID = 0;
+
+Fichier::Fichier(QString chemin, QObject *parent) :
     QObject(parent)
 {
-    m_ID = id;
+    m_ID = GenerateurID;
     m_Chemin = chemin;
     m_Clients = new QList<Client*>();
     m_Charge = false;
+
+    GenerateurID++;
 }
 
 void Fichier::Sauvegarder()
@@ -23,8 +27,6 @@ void Fichier::Sauvegarder()
         QTextStream stream(m_Fichier);
         stream << m_Contenu;
         m_Modifications = 0;
-
-        Console::getInstance()->Imprimer(m_Chemin + " sauvegardé");
     }
 }
 
@@ -120,4 +122,9 @@ QString* Fichier::getContenu()
 QList<Client*>* Fichier::getClients()
 {
     return m_Clients;
+}
+
+int Fichier::getGenerateurID()
+{
+    return GenerateurID;
 }

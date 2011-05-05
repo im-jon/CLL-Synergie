@@ -25,6 +25,7 @@ public:
     MangePaquetsServeur* getMangePaquets();
     QMap<int, Client*>* getClients();
     QMap<int, Fichier*>* getFichiers();
+    int getGenerateurIDFichier();
     QString getProjet();
     bool NouveauProjet(QString nom);
 
@@ -39,7 +40,8 @@ private:
     MangePaquetsServeur* m_MangePaquets;
     QMap<int, Client*>* m_Clients;
     QMap<int, Fichier*>* m_Fichiers;
-    int m_GenerateurID; // Sert à attribuer des nombres d'identification aux clients.
+    int m_GenerateurIDClient; // Sert à attribuer des nombres d'identification aux clients.
+    int m_GenerateurIDFichier;
 
 signals:
 

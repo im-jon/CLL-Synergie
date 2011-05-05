@@ -25,7 +25,8 @@ ServeurSynergie* ServeurSynergie::getInstance()
 ServeurSynergie::ServeurSynergie(QObject *parent) :
     QObject(parent)
 {
-    m_GenerateurID = 1;
+    m_GenerateurIDClient = 1;
+    m_GenerateurIDFichier = 0;
     m_Ecouteur = new QTcpServer(this);
     m_Clients = new QMap<int, Client*>;
     m_MangePaquets = new MangePaquetsServeur(this);
@@ -68,15 +69,15 @@ bool ServeurSynergie::Arreter()
 
 void ServeurSynergie::slNouveauClient()
 {
-    Client* client = new Client(m_GenerateurID, m_Ecouteur->nextPendingConnection());
+    Client* client = new Client(m_GenerateurIDClient, m_Ecouteur->nextPendingConnection());
     AjouterClient(client);
     Console::getInstance()->Imprimer(client->getIP() + " est en ligne");
 }
 
 bool ServeurSynergie::AjouterClient(Client *client)
 {
-    m_Clients->insert(m_GenerateurID, client);
-    m_GenerateurID++;
+    m_Clients->insert(m_GenerateurIDClient, client);
+    m_GenerateurIDClient++;
 }
 
 bool ServeurSynergie::EnleverClient(Client *client)
@@ -102,12 +103,11 @@ bool ServeurSynergie::NouveauProjet(QString nom)
 void ServeurSynergie::InitialiserFichiers()
 {
     m_Fichiers = new QMap<int, Fichier*>;
-    QString fichier;
+    QString nomFichier;
 
-    int i = 0;
-    foreach (fichier, QDir("Projets/" + m_Projet).entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
-        m_Fichiers->insert(i, new Fichier(i, fichier, this));
-        i++;
+    foreach (nomFichier, QDir("Projets/" + m_Projet).entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
+        Fichier* fichier = new Fichier(nomFichier, this);
+        m_Fichiers->insert(fichier->getID(), fichier);
     }
 }
 
