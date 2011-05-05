@@ -6,7 +6,7 @@
 #include "Reseau/Paquets/paqueteffacementtexte.h"
 #include "serveursynergie.h"
 
-const int Threshold = 100;
+const int Seuil = 100;
 
 Fichier::Fichier(int id, QString chemin, QObject *parent) :
     QObject(parent)
@@ -94,7 +94,7 @@ void Fichier::EffacerTexte(int position, int longeur, Client *auteur)
 void Fichier::NouvelleModification()
 {
     m_Modifications++;
-    if (m_Modifications >= Threshold) {
+    if (m_Modifications >= Seuil) {
         Sauvegarder();
     }
 }
