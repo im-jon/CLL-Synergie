@@ -23,6 +23,7 @@ public:
     QString TrouverFichierParID(int id);
     void ConnexionCollegue(Collegue* collegue);
     void DeconnexionCollegue(int id);
+    Collegue* TrouverCollegueParID(int id);
 
 private:
     explicit ClientSynergie(QObject *parent = 0);

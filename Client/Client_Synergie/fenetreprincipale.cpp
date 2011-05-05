@@ -27,6 +27,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siEffacementTexte(int,int,int)), this, SLOT(slEffacementTexteServeur(int,int,int)));
     connect (ClientSynergie::getInstance(), SIGNAL(siConnexionCollegue(Collegue*)), this, SLOT(slConnexionCollegues(Collegue*)));
     connect (ClientSynergie::getInstance(), SIGNAL(siDeconnexionCollegue(Collegue*)), this, SLOT(slDeconnexionCollegues(Collegue*)));
+    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siNouveauTexteChat(QString,QString)), this, SLOT(slNouveauTexteChat(QString,QString)));
 
     connect (this, SIGNAL(InsertionTexte(int,int,QString)), ClientSynergie::getInstance(), SLOT(slOnInsertionTexte(int,int,QString)));
     connect (this, SIGNAL(EffacementTexte(int,int,int)), ClientSynergie::getInstance(), SLOT(slEffacementTexte(int,int,int)));
@@ -164,4 +165,10 @@ void FenetrePrincipale::slDeconnexionCollegues(Collegue *collegue)
 {
     ui->lstCollegues->removeItemWidget(m_Collegues->value(collegue));
     m_Collegues->remove(collegue);
+}
+
+void FenetrePrincipale::slNouveauTexteChat(QString Nom, QString Texte)
+{
+    Nom + " dit: " + Texte;
+    ui->txtConversation->append(Nom);
 }

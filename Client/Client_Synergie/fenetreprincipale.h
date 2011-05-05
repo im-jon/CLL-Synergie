@@ -50,6 +50,7 @@ public slots:
     void slNouveauTexte(int,int,QString);
     void slEffacementTexteEditeur(int pos, int longeur);
     void slEffacementTexteServeur(int id, int position, int longeur);
+    void slNouveauTexteChat(QString,QString);
 
 signals :
     void InsertionTexte(int,int,QString);

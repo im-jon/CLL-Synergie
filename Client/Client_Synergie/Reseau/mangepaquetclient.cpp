@@ -40,6 +40,9 @@ void MangePaquetClient::Interpreter(QDataStream* stream)
     case 15:
         Reception_Donnees(stream);
         break;
+    case 16:
+        Reception_TexteChat(stream);
+        break;
     default:
         qDebug() << "Réception d'un paquet inconnu #" << id;
         break;
@@ -134,4 +137,16 @@ void MangePaquetClient::Reception_EffacementTexte(QDataStream *stream)
     *stream >> longeur;
 
     emit (siEffacementTexte(id, position, longeur));
+}
+
+void MangePaquetClient::Reception_TexteChat(QDataStream *stream)
+{
+    int id;
+    *stream >> id;
+    QString Texte;
+    *stream >> Texte;
+
+    QString Nom=ClientSynergie::getInstance()->TrouverCollegueParID(id)->getNom();
+
+    emit (siNouveauTexteChat(Nom,Texte));
 }

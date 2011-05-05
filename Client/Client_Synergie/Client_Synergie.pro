@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     clientsynergie.cpp \
     Reseau/Paquets/paquetinsertiontexte.cpp \
     Reseau/Paquets/paqueteffacementtexte.cpp \
-    collegue.cpp
+    collegue.cpp \
+    Reseau/Paquets/paquetenvoichat.cpp
 
 HEADERS  += fenetreprincipale.h \
     Reseau/connexion.h \
@@ -37,7 +38,8 @@ HEADERS  += fenetreprincipale.h \
     clientsynergie.h \
     Reseau/Paquets/paquetinsertiontexte.h \
     Reseau/Paquets/paqueteffacementtexte.h \
-    collegue.h
+    collegue.h \
+    Reseau/Paquets/paquetenvoichat.h
 
 FORMS    += fenetreprincipale.ui \
     dlgconnexion.ui

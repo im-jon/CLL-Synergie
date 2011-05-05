@@ -19,6 +19,7 @@ private:
     void Reception_Donnees(QDataStream* stream);
     void Reception_Texte(QDataStream* stream);
     void Reception_EffacementTexte(QDataStream* stream);
+    void Reception_TexteChat(QDataStream* stream);
 
 signals:
     void siNouvelleListeCollegues(QStringList* noms);
@@ -27,6 +28,7 @@ signals:
     void siNouvelleDonnees(int id, QString donnees);
     void siNouveauTexte(int id, int position, QString Texte);
     void siEffacementTexte(int id, int position, int longeur);
+    void siNouveauTexteChat(QString Nom,QString Texte);
 
 public slots:
 };
