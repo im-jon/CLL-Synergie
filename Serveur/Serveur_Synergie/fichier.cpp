@@ -19,10 +19,13 @@ Fichier::Fichier(int id, QString chemin, QObject *parent) :
 
 void Fichier::Sauvegarder()
 {
-    QTextStream stream(m_Fichier);
-    stream << m_Contenu;
-    m_Modifications = 0;
-    Console::getInstance()->Imprimer(m_Chemin + " sauvegardé");
+    if (m_Modifications > 0) {
+        QTextStream stream(m_Fichier);
+        stream << m_Contenu;
+        m_Modifications = 0;
+
+        Console::getInstance()->Imprimer(m_Chemin + " sauvegardé");
+    }
 }
 
 void Fichier::ChargerContenu()
