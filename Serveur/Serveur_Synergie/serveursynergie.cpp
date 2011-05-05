@@ -111,6 +111,28 @@ void ServeurSynergie::InitialiserFichiers()
     }
 }
 
+void ServeurSynergie::EnvoyerPaquetATous(BasePaquetServeur *paquet, Client* exception)
+{
+    QMapIterator<int, Client*> iterateur(*m_Clients);
+    while (iterateur.hasNext()) {
+        iterateur.next();
+        if (iterateur.value() != exception) {
+            iterateur.value()->EnvoyerPaquet(paquet);
+        }
+    }
+}
+
+// Je pourrais être statique!
+void ServeurSynergie::EnvoyerPaquetAListe(QList<Client *>* clients, BasePaquetServeur *paquet, Client *exception)
+{
+    Client* client;
+    foreach (client, *clients) {
+        if (client != exception) {
+            client->EnvoyerPaquet(paquet);
+        }
+    }
+}
+
 Fichier* ServeurSynergie::ChercherFichierParID(int id)
 {
     return m_Fichiers->value(id);
@@ -133,26 +155,5 @@ QMap<int, Client*>* ServeurSynergie::getClients()
 
 QString ServeurSynergie::getProjet()
 {
-    return m_Projet + "/";
-}
-
-void ServeurSynergie::EnvoyerPaquetATous(BasePaquetServeur *paquet, Client* exception)
-{
-    QMapIterator<int, Client*> iterateur(*m_Clients);
-    while (iterateur.hasNext()) {
-        iterateur.next();
-        if (iterateur.value() != exception) {
-            iterateur.value()->EnvoyerPaquet(paquet);
-        }
-    }
-}
-
-void ServeurSynergie::EnvoyerPaquetAListe(QList<Client *>* clients, BasePaquetServeur *paquet, Client *exception)
-{
-    Client* client;
-    foreach (client, *clients) {
-        if (client != exception) {
-            client->EnvoyerPaquet(paquet);
-        }
-    }
+    return m_Projet + "/"; // Pourquoi on devrais mettre le slash ici ?
 }
