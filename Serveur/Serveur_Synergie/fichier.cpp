@@ -4,6 +4,9 @@
 #include "Console/console.h"
 #include "Reseau/Paquets/paquetinsertiontexte.h"
 #include "Reseau/Paquets/paqueteffacementtexte.h"
+#include "serveursynergie.h"
+
+const int Threshold = 100;
 
 Fichier::Fichier(int id, QString chemin, QObject *parent) :
     QObject(parent)
@@ -18,6 +21,7 @@ void Fichier::Sauvegarder()
 {
     QTextStream stream(m_Fichier);
     stream << m_Contenu;
+    m_Modifications = 0;
     Console::getInstance()->Imprimer(m_Chemin + " sauvegardé");
 }
 
@@ -67,23 +71,31 @@ void Fichier::InsererTexte(QString texte, int position, Client* auteur)
 {
     m_Contenu.insert(position, texte);
 
-    Client* client;
-    foreach (client, *m_Clients) {
-        if (client != auteur) {
-            client->EnvoyerPaquet(new PaquetInsertionTexte(this, texte, position));
-        }
-    }
+    ServeurSynergie::getInstance()->EnvoyerPaquetAListe(
+                m_Clients,
+                new PaquetInsertionTexte(this, texte, position),
+                auteur);
+
+    NouvelleModification();
 }
 
 void Fichier::EffacerTexte(int position, int longeur, Client *auteur)
 {
     m_Contenu = m_Contenu.remove(position, longeur);
 
-    Client* client;
-    foreach (client, *m_Clients) {
-        if (client != auteur) {
-            client->EnvoyerPaquet(new PaquetEffacementTexte(this, position, longeur));
-        }
+    ServeurSynergie::getInstance()->EnvoyerPaquetAListe(
+                m_Clients,
+                new PaquetEffacementTexte(this, position, longeur),
+                auteur);
+
+    NouvelleModification();
+}
+
+void Fichier::NouvelleModification()
+{
+    m_Modifications++;
+    if (m_Modifications >= Threshold) {
+        Sauvegarder();
     }
 }
 

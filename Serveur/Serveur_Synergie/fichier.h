@@ -27,6 +27,7 @@ public:
 private:
     void ChargerContenu();
     void DechargerContenu();
+    void NouvelleModification();
 
     bool m_Charge; // Chargé
     QFile* m_Fichier;
@@ -34,6 +35,7 @@ private:
     QString m_Contenu;
     QList<Client*>* m_Clients;
     int m_ID;
+    int m_Modifications;
 
 signals:
 

@@ -20,6 +20,7 @@ public:
     bool EnleverClient(Client* client);
     bool AjouterClient(Client* client);
     void EnvoyerPaquetATous(BasePaquetServeur* paquet, Client* exception = 0);
+    void EnvoyerPaquetAListe(QList<Client*>* clients, BasePaquetServeur* paquet, Client* exception = 0);
     Fichier* ChercherFichierParID(int id);
     MangePaquetsServeur* getMangePaquets();
     QMap<int, Client*>* getClients();

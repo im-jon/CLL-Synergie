@@ -146,3 +146,13 @@ void ServeurSynergie::EnvoyerPaquetATous(BasePaquetServeur *paquet, Client* exce
         }
     }
 }
+
+void ServeurSynergie::EnvoyerPaquetAListe(QList<Client *>* clients, BasePaquetServeur *paquet, Client *exception)
+{
+    Client* client;
+    foreach (client, *clients) {
+        if (client != exception) {
+            client->EnvoyerPaquet(paquet);
+        }
+    }
+}
