@@ -25,12 +25,12 @@ private:
 
 signals:
     void siNouvelleListeCollegues(QStringList* noms);
-    void NouvelleListeFichiers(QStringList* noms);
+    void siNouvelleListeFichiers(QStringList* noms);
     void siOuvrirFichier(int id);
     void siNouvelleDonnees(int id, QString donnees);
-    void siNouveauTexte(int id, int position, QString Texte);
+    void siNouveauTexte(int id, int position, QString texte);
     void siEffacementTexte(int id, int position, int longeur);
-    void siNouveauTexteChat(QString Nom,QString Texte);
+    void siNouveauTexteChat(Collegue* collegue, QString message);
 
 public slots:
 };

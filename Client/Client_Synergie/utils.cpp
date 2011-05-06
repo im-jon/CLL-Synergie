@@ -18,21 +18,25 @@ QMap<QsciLexer*, QStringList>* Utils::m_Extensions = 0;
 
 QsciLexer* Utils::TrouverLexer(QString extension)
 {
-    if (!m_Extensions) {
+    if (!m_Extensions)
+    {
         InitialiserExtensions();
     }
 
     extension = extension.toLower();
     QMapIterator<QsciLexer*, QStringList> iterateur(*m_Extensions);
     bool trouver = false;
-    while (iterateur.hasNext() && !trouver) {
+    while (iterateur.hasNext() && !trouver)
+    {
         iterateur.next();
-        if (iterateur.value().contains(extension)) {
+        if (iterateur.value().contains(extension))
+        {
             trouver = true;
         }
     }
 
-    if (trouver) {
+    if (trouver)
+    {
         return iterateur.key();
     }
     return 0;

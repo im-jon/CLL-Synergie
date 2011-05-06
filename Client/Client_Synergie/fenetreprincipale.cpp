@@ -10,6 +10,7 @@
 #include <QFileInfo>
 #include "utils.h"
 #include "clientsynergie.h"
+#include <QList>
 
 FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     QMainWindow(parent),
@@ -20,17 +21,17 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     m_FeuillesOuvertes = new QMap<int, QsciScintilla*>;
     m_Collegues = new QMap<Collegue*, QListWidgetItem*>;
 
-    connect (ClientSynergie::getInstance()->getMangePaquets(),SIGNAL(NouvelleListeFichiers(QStringList*)),this,SLOT(slMiseAJourListeFichiers(QStringList*)));
+    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siNouvelleListeFichiers(QStringList*)), this, SLOT(slMiseAJourListeFichiers(QStringList*)));
     connect (ClientSynergie::getInstance(), SIGNAL(siConnexionCollegue(Collegue*)), this, SLOT(slConnexionCollegues(Collegue*)));
     connect (ClientSynergie::getInstance(), SIGNAL(siDeconnexionCollegue(Collegue*)), this, SLOT(slDeconnexionCollegues(Collegue*)));
     connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siOuvrirFichier(int)), this, SLOT(slOuvrirFichier(int)));
     connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siNouvelleDonnees(int, QString)), this, SLOT(slNouvelleDonnees(int, QString)));
-    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siNouveauTexte(int, int, QString)), this, SLOT(slNouveauTexte(int, int, QString)));
-    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siEffacementTexte(int,int,int)), this, SLOT(slEffacementTexteServeur(int, int, int)));
-    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siNouveauTexteChat(QString, QString)), this, SLOT(slNouveauTexteChat(QString, QString)));
+    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siInsertionTexteServeur(int, int, QString)), this, SLOT(slNouveauTexte(int, int, QString)));
+    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siEffacementTexte(int, int, int)), this, SLOT(slEffacementTexteServeur(int, int, int)));
+    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siNouveauTexteChat(Collegue*, QString)), this, SLOT(slNouveauTexteChat(Collegue*, QString)));
 
-    connect (this, SIGNAL(InsertionTexte(int, int, QString)), ClientSynergie::getInstance(), SLOT(slOnInsertionTexte(int, int, QString)));
-    connect (this, SIGNAL(EffacementTexte(int, int, int)), ClientSynergie::getInstance(), SLOT(slEffacementTexte(int, int, int)));
+    connect (this, SIGNAL(siInsertionTexte(int, int, QString)), ClientSynergie::getInstance(), SLOT(slOnInsertionTexte(int, int, QString)));
+    connect (this, SIGNAL(siEffacementTexte(int, int, int)), ClientSynergie::getInstance(), SLOT(slEffacementTexte(int, int, int)));
 }
 
 FenetrePrincipale::~FenetrePrincipale()
@@ -60,20 +61,48 @@ void FenetrePrincipale::slMiseAJourListeFichiers(QStringList* fichiers)
 {
     ui->treeProjet->clear();
 
-    for (int i = 0; i < fichiers->length(); i++) {
+    for (int i = 0; i < fichiers->length(); i++)
+    {
+        QStringList parties = fichiers->at(i).split('/');
+        QString partie;
+        QTreeWidgetItem* parent;
+
+        foreach (partie, parties)
+        {
+            QList<QTreeWidgetItem*> resultats = ui->treeProjet->findItems(partie, Qt::MatchExactly);
+
+            if (resultats.count() > 0)
+            {
+                parent = resultats.first();
+            }
+        }
+
         QTreeWidgetItem* item = new QTreeWidgetItem();
-        item->setText(0, fichiers->at(i));
-        ui->treeProjet->addTopLevelItem(item);
+        item->setText(0, parties.last());
+
+        if (parent)
+        {
+            parent->addChild(item);
+        }
+        else
+        {
+            ui->treeProjet->addTopLevelItem(item);
+        }
+        parent = item;
     }
 }
 
 void FenetrePrincipale::on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, int column)
 {
-    if (item->childCount() == 0) {
+    if (item->childCount() == 0)
+    {
         int id = ClientSynergie::getInstance()->TrouverFichierParNom(item->text(column));
-        if (!m_FeuillesOuvertes->contains(id)) {
+        if (!m_FeuillesOuvertes->contains(id))
+        {
             ClientSynergie::getInstance()->getConnexion()->EnvoyerPaquet(new PaquetOuvrirFichier(id));
-        } else {
+        }
+        else
+        {
             int index = ui->tabFeuilles->indexOf(m_FeuillesOuvertes->value(id));
             ui->tabFeuilles->setCurrentIndex(index);
         }
@@ -83,7 +112,8 @@ void FenetrePrincipale::on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, i
 void FenetrePrincipale::on_tabFeuilles_currentChanged(int index)
 {
     QsciLexer* lexer = ((QsciScintilla*)ui->tabFeuilles->currentWidget())->lexer();
-    if (lexer) {
+    if (lexer)
+    {
         ui->lblLangage->setText(lexer->language());
     }
 
@@ -92,7 +122,8 @@ void FenetrePrincipale::on_tabFeuilles_currentChanged(int index)
 
 void FenetrePrincipale::on_tabFeuilles_tabCloseRequested(int index)
 {
-    if (ui->tabFeuilles->count() > 1) {
+    if (ui->tabFeuilles->count() > 1)
+    {
         m_FeuillesOuvertes->remove(m_FeuillesOuvertes->key((QsciScintilla*)ui->tabFeuilles->widget(index)));
         ui->tabFeuilles->removeTab(index);
     }
@@ -108,7 +139,8 @@ void FenetrePrincipale::slOuvrirFichier(int id)
     editeur->setMarginWidth(1, 30);
 
     QsciLexer* lexer = Utils::TrouverLexer(extension);
-    if (lexer) {
+    if (lexer)
+    {
         editeur->setLexer(lexer);
         editeur->lexer()->setFont(QFont("Monospace", 9));
     }
@@ -117,8 +149,8 @@ void FenetrePrincipale::slOuvrirFichier(int id)
     int index = ui->tabFeuilles->addTab(editeur, fichier);
     ui->tabFeuilles->setCurrentIndex(index);
     m_FeuillesOuvertes->insert(id, editeur);
-    connect (editeur,SIGNAL(textInserted(int,QString)),this,SLOT(slInsertionTexte(int,QString)));
-    connect (editeur, SIGNAL(textDeleted(int,int)), this, SLOT(slEffacementTexteEditeur(int,int)));
+    connect (editeur,SIGNAL(textInserted(int, QString)),this,SLOT(slInsertionTexteEditeur(int, QString)));
+    connect (editeur, SIGNAL(textDeleted(int, int)), this, SLOT(slEffacementTexteEditeur(int, int)));
 }
 
 void FenetrePrincipale::slNouvelleDonnees(int id, QString contenu)
@@ -127,11 +159,11 @@ void FenetrePrincipale::slNouvelleDonnees(int id, QString contenu)
     editeur->insertAtPosMecha(contenu, editeur->length() - 1);
 }
 
-void FenetrePrincipale::slInsertionTexte(int Position,QString Texte)
+void FenetrePrincipale::slInsertionTexteEditeur(int position, QString texte)
 {
     int id = m_FeuillesOuvertes->key((QsciScintilla*)ui->tabFeuilles->currentWidget());
 
-    emit(InsertionTexte(id,Position,Texte));
+    emit (siInsertionTexte(id, position, texte));
 }
 
 QsciScintilla* FenetrePrincipale::ChercherEditeurParID(int id)
@@ -139,7 +171,7 @@ QsciScintilla* FenetrePrincipale::ChercherEditeurParID(int id)
     return m_FeuillesOuvertes->value(id);
 }
 
-void FenetrePrincipale::slNouveauTexte(int id,int position, QString texte)
+void FenetrePrincipale::slInsertionTexteServeur(int id, int position, QString texte)
 {
     ChercherEditeurParID(id)->insertAtPosMecha(texte, position);
 }
@@ -148,7 +180,7 @@ void FenetrePrincipale::slEffacementTexteEditeur(int pos, int longeur)
 {
     int id = m_FeuillesOuvertes->key((QsciScintilla*)ui->tabFeuilles->currentWidget());
 
-    emit (EffacementTexte(id, pos, longeur));
+    emit (siEffacementTexte(id, pos, longeur));
 }
 
 void FenetrePrincipale::slEffacementTexteServeur(int id, int position, int longeur)
@@ -167,8 +199,8 @@ void FenetrePrincipale::slEffacementTexteServeur(int id, int position, int longe
     editeur->removeSelectedTextMecha();
 }
 
-void FenetrePrincipale::slNouveauTexteChat(QString Nom, QString Texte)
+void FenetrePrincipale::slNouveauTexteChat(Collegue* collegue, QString message)
 {
-    Nom + " dit: " + Texte;
-    ui->txtConversation->append(Nom);
+    QString ligne = "\n" + collegue->getNom() + " : " + message;
+    ui->txtConversation->append(ligne);
 }

@@ -3,10 +3,10 @@
 
 #include "basepaquet.h"
 
-class paquetEnvoiChat : public BasePaquet
+class PaquetEnvoiChat : public BasePaquet
 {
 public:
-    paquetEnvoiChat(QString);
+    PaquetEnvoiChat(QString message);
 };
 
 #endif // PAQUETENVOICHAT_H

@@ -3,10 +3,10 @@
 
 #include "basepaquet.h"
 
-class paquetinsertiontexte : public BasePaquet
+class PaquetInsertionTexte : public BasePaquet
 {
 public:
-    paquetinsertiontexte(int idfichier, int position, QString Texte);
+    PaquetInsertionTexte(int id, int pos, QString texte);
 };
 
 #endif // PAQUETINSERTIONTEXTE_H

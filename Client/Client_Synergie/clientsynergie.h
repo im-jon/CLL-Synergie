@@ -40,7 +40,7 @@ signals:
     void siDeconnexionCollegue(Collegue* collegue);
 
 public slots:
-    void slOnInsertionTexte(int,int,QString);
+    void slInsertionTexte(int id, int pos, QString texte);
     void slEffacementTexte(int id, int pos, int longeur);
 
 };

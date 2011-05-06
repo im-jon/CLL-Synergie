@@ -38,7 +38,8 @@ void Connexion::LirePaquet()
 
     m_MangePaquets->Interpreter(&stream);
 
-    if (m_Socket->bytesAvailable() > 0) {
+    if (m_Socket->bytesAvailable() > 0)
+    {
         LirePaquet();
     }
 }

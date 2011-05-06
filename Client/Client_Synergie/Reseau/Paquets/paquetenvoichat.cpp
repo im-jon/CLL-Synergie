@@ -1,7 +1,7 @@
 #include "paquetenvoichat.h"
 
-paquetEnvoiChat::paquetEnvoiChat(QString Texte):
+PaquetEnvoiChat::PaquetEnvoiChat(QString message):
     BasePaquet((qint8)10)
 {
-    *m_Stream << Texte;
+    *m_Stream << message;
 }

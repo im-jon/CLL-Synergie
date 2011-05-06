@@ -12,6 +12,7 @@ Projet::Projet(QString nom, QObject *parent) :
 
 void Projet::Initialiser()
 {
+    // Rien qui marche la dedans...
     QRegExp regex("Projets\/.*\/(.*)");
     QDirIterator iterateur(
                 "Projets/" + m_Nom + "/",

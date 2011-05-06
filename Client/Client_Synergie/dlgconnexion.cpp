@@ -26,9 +26,9 @@ dlgConnexion::~dlgConnexion()
 
 void dlgConnexion::on_buttonBox_accepted()
 {
-    if (ClientSynergie::getInstance()->Connecter(ui->txtAdresse->text(), ui->txtPort->text().toInt())) {
-        ClientSynergie::getInstance()->ChangerNom(ui->txtNom->text())
-                ;
+    if (ClientSynergie::getInstance()->Connecter(ui->txtAdresse->text(), ui->txtPort->text().toInt()))
+    {
+        ClientSynergie::getInstance()->ChangerNom(ui->txtNom->text());
         FenetrePrincipale* w = new FenetrePrincipale(this);
         w->show();
 
@@ -39,7 +39,9 @@ void dlgConnexion::on_buttonBox_accepted()
         parametres.setValue("nom", ui->txtNom->text());
         parametres.endGroup();
 
-    } else {
+    }
+    else
+    {
         QMessageBox::warning(this, "Erreur de connexion", QString::fromUtf8("Incapable de rejoindre l'hôte."));
         this->show();
     }

@@ -46,15 +46,15 @@ public slots:
     void slMiseAJourListeFichiers(QStringList* fichiers);
     void slOuvrirFichier(int id);
     void slNouvelleDonnees(int id, QString contenu);
-    void slInsertionTexte(int,QString);
-    void slNouveauTexte(int,int,QString);
+    void slInsertionTexteEditeur(int position, QString texte);
+    void slInsertionTexteServeur(int id, int position, QString texte);
     void slEffacementTexteEditeur(int pos, int longeur);
     void slEffacementTexteServeur(int id, int position, int longeur);
-    void slNouveauTexteChat(QString,QString);
+    void slNouveauTexteChat(Collegue* collegue, QString message);
 
 signals :
-    void InsertionTexte(int,int,QString);
-    void EffacementTexte(int id, int pos, int longeur);
+    void siInsertionTexte(int,int,QString);
+    void siEffacementTexte(int id, int pos, int longeur);
 
 };
 

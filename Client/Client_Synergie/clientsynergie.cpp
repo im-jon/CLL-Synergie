@@ -13,7 +13,9 @@ ClientSynergie* ClientSynergie::getInstance()
         mutex.lock();
 
         if (!m_Instance)
+        {
             m_Instance = new ClientSynergie;
+        }
         mutex.unlock();
     }
 
@@ -70,9 +72,9 @@ MangePaquetClient* ClientSynergie::getMangePaquets()
     return m_Connexion->getMangePaquets();
 }
 
-void ClientSynergie::slOnInsertionTexte(int id,int position,QString texte)
+void ClientSynergie::slInsertionTexte(int id, int pos, QString texte)
 {
-    m_Connexion->EnvoyerPaquet(new paquetinsertiontexte(id,position,texte));
+    m_Connexion->EnvoyerPaquet(new PaquetInsertionTexte(id, pos, texte));
 }
 
 void ClientSynergie::slEffacementTexte(int id, int pos, int longeur)
