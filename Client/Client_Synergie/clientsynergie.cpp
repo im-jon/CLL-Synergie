@@ -50,7 +50,7 @@ QString ClientSynergie::TrouverFichierParID(int id)
 
 Collegue* ClientSynergie::TrouverCollegueParID(int id)
 {
-    return m_Collegues->key(id);
+    return m_Collegues->value(id);
 }
 
 void ClientSynergie::ChangerNom(QString nom)
