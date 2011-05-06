@@ -54,7 +54,7 @@
           </size>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tabCollegues">
           <attribute name="icon">
@@ -231,7 +231,7 @@
      <x>0</x>
      <y>0</y>
      <width>967</width>
-     <height>25</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">

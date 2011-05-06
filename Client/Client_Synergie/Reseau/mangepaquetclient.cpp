@@ -25,6 +25,9 @@ void MangePaquetClient::Interpreter(QDataStream* stream)
     case 2:
         Reception_ListeDesFichiers(stream);
         break;
+    case 3:
+        Reception_ConnexionCollegue(stream);
+        break;
     case 4:
         Reception_DeconnexionCollegue(stream);
         break;
@@ -62,7 +65,7 @@ void MangePaquetClient::Reception_ListeCollegues(QDataStream* stream)
         *stream >> id;
         *stream >> nom;
 
-        ClientSynergie::getInstance()->ConnexionCollegue(new Collegue(id, nom));
+        ClientSynergie::getInstance()->ConnexionCollegue(new Collegue(id, nom, this));
     }
 
 
@@ -83,7 +86,19 @@ void MangePaquetClient::Reception_ListeDesFichiers(QDataStream* stream)
         fichiers->append(nom);
         ClientSynergie::getInstance()->AjouterFichier(nom, id);
     }
-    emit(NouvelleListeFichiers(fichiers));
+
+    emit (NouvelleListeFichiers(fichiers));
+}
+
+void MangePaquetClient::Reception_ConnexionCollegue(QDataStream *stream)
+{
+    int id;
+    QString nom;
+
+    *stream >> id;
+    *stream >> nom;
+
+    ClientSynergie::getInstance()->ConnexionCollegue(new Collegue(id, nom, this));
 }
 
 void MangePaquetClient::Reception_DeconnexionCollegue(QDataStream *stream)
@@ -99,7 +114,7 @@ void MangePaquetClient::Reception_OuvertureFichier(QDataStream *stream)
     int id;
     *stream >> id;
 
-    emit(siOuvrirFichier(id));
+    emit (siOuvrirFichier(id));
 }
 
 void MangePaquetClient::Reception_Donnees(QDataStream *stream)

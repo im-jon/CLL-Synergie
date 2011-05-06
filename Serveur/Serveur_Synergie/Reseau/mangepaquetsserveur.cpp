@@ -6,6 +6,7 @@
 #include "Paquets/paquetouverturefichier.h"
 #include "Paquets/paquetdonnees.h"
 #include "Paquets/paquetinsertiontexte.h"
+#include "Paquets/paquetconnexioncollegue.h"
 #include "serveursynergie.h"
 #include "fichier.h"
 
@@ -51,6 +52,7 @@ void MangePaquetsServeur::Reception_ChangerNom(Client* client, QDataStream* stre
 
     client->EnvoyerPaquet(new PaquetEnvoiCollegues());
     client->EnvoyerPaquet(new PaquetListeFichiers());
+    ServeurSynergie::getInstance()->EnvoyerPaquetATous(new PaquetConnexionCollegue(client), client);
 }
 
 void MangePaquetsServeur::Reception_InsertionTexte(Client *client, QDataStream *stream)

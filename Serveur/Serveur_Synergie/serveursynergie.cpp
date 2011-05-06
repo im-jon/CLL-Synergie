@@ -1,6 +1,7 @@
 #include "serveursynergie.h"
 #include "Console/console.h"
 #include "Reseau/Paquets/paquetenvoicollegues.h"
+#include "Reseau/Paquets/paquetconnexioncollegue.h"
 #include <QDir>
 #include <QMapIterator>
 

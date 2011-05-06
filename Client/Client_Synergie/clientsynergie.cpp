@@ -83,6 +83,7 @@ void ClientSynergie::slEffacementTexte(int id, int pos, int longeur)
 void ClientSynergie::ConnexionCollegue(Collegue *collegue)
 {
     m_Collegues->insert(collegue->getID(), collegue);
+
     emit (siConnexionCollegue(collegue));
 }
 
@@ -90,6 +91,7 @@ void ClientSynergie::DeconnexionCollegue(int id)
 {
     Collegue* collegue = m_Collegues->value(id);
     m_Collegues->remove(id);
+
     emit (siDeconnexionCollegue(collegue));
 }
 
