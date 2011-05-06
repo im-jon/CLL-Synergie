@@ -15,8 +15,8 @@ Fichiers::Fichiers()
 QString Fichiers::Executer(const QStringList& arguments)
 {
     QString retour;
-    if (ServeurSynergie::getInstance()->getFichiers()->count() > 0) {
-        QMapIterator<int, Fichier*> iterateur(*ServeurSynergie::getInstance()->getFichiers());
+    if (ServeurSynergie::getInstance()->getProjet()->getFichiers()->count() > 0) {
+        QMapIterator<int, Fichier*> iterateur(*ServeurSynergie::getInstance()->getProjet()->getFichiers());
         retour = "Liste des fichiers du projet :";
         while (iterateur.hasNext()) {
             iterateur.next();

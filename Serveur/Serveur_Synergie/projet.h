@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QMap>
 #include <QDir>
+#include <QStringList>
 #include "fichier.h"
 
 class Projet : public QObject
@@ -14,12 +15,14 @@ public:
     QString getNom();
     void Initialiser();
     Fichier* getFichier(int id);
+    QMap<int, Fichier*>* getFichiers();
 
 private:
     void AjouterFichier(Fichier* fichier);
     void EnleverFichier(int id);
 
     QString m_Nom;
+    QStringList* m_Elements;
     QMap<int, Fichier*>* m_Fichiers;
 
 signals:

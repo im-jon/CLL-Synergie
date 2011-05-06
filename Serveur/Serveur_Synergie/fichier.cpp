@@ -33,7 +33,7 @@ void Fichier::Sauvegarder()
 void Fichier::ChargerContenu()
 {
     if (!m_Charge) {
-        m_Fichier = new QFile("Projets/" + ServeurSynergie::getInstance()->getNomProjet() + "/" + m_Chemin); // Corriger ici
+        m_Fichier = new QFile("Projets/" + ServeurSynergie::getInstance()->getProjet()->getNom() + "/" + m_Chemin); // Corriger ici
         m_Fichier->open(QFile::ReadWrite);
         QTextStream* stream = new QTextStream(m_Fichier);
         m_Contenu = stream->readAll();

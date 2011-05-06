@@ -65,7 +65,7 @@ void MangePaquetsServeur::Reception_InsertionTexte(Client *client, QDataStream *
     *stream >> position;
     *stream >> texte;
 
-    Fichier* fichier = ServeurSynergie::getInstance()->ChercherFichierParID(id);
+    Fichier* fichier = ServeurSynergie::getInstance()->getProjet()->getFichier(id);
     fichier->InsererTexte(texte, position, client);
 
 }
@@ -80,7 +80,7 @@ void MangePaquetsServeur::Reception_EffacementTexte(Client *client, QDataStream 
     *stream >> position;
     *stream >> longeur;
 
-    Fichier* fichier = ServeurSynergie::getInstance()->ChercherFichierParID(id);
+    Fichier* fichier = ServeurSynergie::getInstance()->getProjet()->getFichier(id);
     fichier->EffacerTexte(position, longeur, client);
 }
 
@@ -90,7 +90,7 @@ void MangePaquetsServeur::Reception_OuvrirFichier(Client *client, QDataStream *s
 
     *stream >> id;
 
-    client->OuvrirFichier(ServeurSynergie::getInstance()->ChercherFichierParID(id));
+    client->OuvrirFichier(ServeurSynergie::getInstance()->getProjet()->getFichier(id));
 }
 
 void MangePaquetsServeur::Reception_DonneesRecues(Client *client, QDataStream *stream)

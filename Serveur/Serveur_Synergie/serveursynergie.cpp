@@ -27,7 +27,6 @@ ServeurSynergie::ServeurSynergie(QObject *parent) :
     QObject(parent)
 {
     m_GenerateurIDClient = 1;
-    m_GenerateurIDFichier = 0;
     m_Ecouteur = new QTcpServer(this);
     m_Clients = new QMap<int, Client*>;
     m_MangePaquets = new MangePaquetsServeur(this);
@@ -44,7 +43,6 @@ ServeurSynergie::ServeurSynergie(QObject *parent) :
     }
 
     m_Projet = new Projet("Projet1", this);
-    InitialiserFichiers();
 }
 
 bool ServeurSynergie::Demarrer()
@@ -101,17 +99,6 @@ bool ServeurSynergie::NouveauProjet(QString nom)
     return dossierProjets.mkdir(nom);
 }
 
-void ServeurSynergie::InitialiserFichiers()
-{
-    m_Fichiers = new QMap<int, Fichier*>;
-    QString nomFichier;
-
-    foreach (nomFichier, QDir("Projets/" + m_Projet->getNom()).entryList(QDir::NoDotAndDotDot | QDir::AllEntries)) {
-        Fichier* fichier = new Fichier(nomFichier, this);
-        m_Fichiers->insert(fichier->getID(), fichier);
-    }
-}
-
 void ServeurSynergie::EnvoyerPaquetATous(BasePaquetServeur *paquet, Client* exception)
 {
     QMapIterator<int, Client*> iterateur(*m_Clients);
@@ -134,16 +121,6 @@ void ServeurSynergie::EnvoyerPaquetAListe(QList<Client *>* clients, BasePaquetSe
     }
 }
 
-Fichier* ServeurSynergie::ChercherFichierParID(int id)
-{
-    return m_Fichiers->value(id);
-}
-
-QMap<int, Fichier*>* ServeurSynergie::getFichiers()
-{
-    return m_Fichiers;
-}
-
 MangePaquetsServeur* ServeurSynergie::getMangePaquets()
 {
     return m_MangePaquets;
@@ -154,7 +131,7 @@ QMap<int, Client*>* ServeurSynergie::getClients()
     return m_Clients;
 }
 
-QString ServeurSynergie::getNomProjet()
+Projet* ServeurSynergie::getProjet()
 {
-    return m_Projet->getNom();
+    return m_Projet;
 }
