@@ -22,17 +22,17 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     m_Feuilles = new QMap<Feuille*, QTreeWidgetItem*>;
     m_FeuillesOuvertes = new QMap<Feuille*, QsciScintilla*>;
 
-    connect (ClientSynergie::getInstance(), SIGNAL(siConnexionCollegue(Collegue*)), this, SLOT(slConnexionCollegues(Collegue*)));
-    connect (ClientSynergie::getInstance(), SIGNAL(siDeconnexionCollegue(Collegue*)), this, SLOT(slDeconnexionCollegues(Collegue*)));
-    connect (ClientSynergie::getInstance(), SIGNAL(siAjoutFeuille(Feuille*)), this, SLOT(slAjoutFeuille(Feuille*)));
-    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siOuvrirFichier(int)), this, SLOT(slOuvrirFichier(int)));
-    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siDonnees(int, QString)), this, SLOT(slNouvelleDonnees(int, QString)));
-    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siInsertionTexte(int, int, QString)), this, SLOT(slInsertionTexteServeur(int, int, QString)));
-    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siEffacementTexte(int, int, int)), this, SLOT(slEffacementTexteServeur(int, int, int)));
-    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siMessageChat(Collegue*, QString)), this, SLOT(slMessageChat(Collegue*, QString)));
+    connect (ClientSynergie::Instance(), SIGNAL(siConnexionCollegue(Collegue*)), this, SLOT(slConnexionCollegues(Collegue*)));
+    connect (ClientSynergie::Instance(), SIGNAL(siDeconnexionCollegue(Collegue*)), this, SLOT(slDeconnexionCollegues(Collegue*)));
+    connect (ClientSynergie::Instance(), SIGNAL(siAjoutFeuille(Feuille*)), this, SLOT(slAjoutFeuille(Feuille*)));
+    connect (ClientSynergie::Instance()->getMangePaquets(), SIGNAL(siOuvrirFichier(int)), this, SLOT(slOuvrirFichier(int)));
+    connect (ClientSynergie::Instance()->getMangePaquets(), SIGNAL(siDonnees(int, QString)), this, SLOT(slNouvelleDonnees(int, QString)));
+    connect (ClientSynergie::Instance()->getMangePaquets(), SIGNAL(siInsertionTexte(int, int, QString)), this, SLOT(slInsertionTexteServeur(int, int, QString)));
+    connect (ClientSynergie::Instance()->getMangePaquets(), SIGNAL(siEffacementTexte(int, int, int)), this, SLOT(slEffacementTexteServeur(int, int, int)));
+    connect (ClientSynergie::Instance()->getMangePaquets(), SIGNAL(siMessageChat(Collegue*, QString)), this, SLOT(slMessageChat(Collegue*, QString)));
 
-    connect (this, SIGNAL(siInsertionTexte(int, int, QString)), ClientSynergie::getInstance(), SLOT(slInsertionTexte(int, int, QString)));
-    connect (this, SIGNAL(siEffacementTexte(int, int, int)), ClientSynergie::getInstance(), SLOT(slEffacementTexte(int, int, int)));
+    connect (this, SIGNAL(siInsertionTexte(int, int, QString)), ClientSynergie::Instance(), SLOT(slInsertionTexte(int, int, QString)));
+    connect (this, SIGNAL(siEffacementTexte(int, int, int)), ClientSynergie::Instance(), SLOT(slEffacementTexte(int, int, int)));
 }
 
 FenetrePrincipale::~FenetrePrincipale()
@@ -74,7 +74,7 @@ void FenetrePrincipale::on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, i
 
         if (!m_FeuillesOuvertes->contains(feuille))
         {
-            ClientSynergie::getInstance()->getConnexion()->EnvoyerPaquet(new PaquetOuvrirFeuille(feuille->getID()));
+            ClientSynergie::Instance()->getConnexion()->EnvoyerPaquet(new PaquetOuvrirFeuille(feuille->getID()));
         }
         else
         {
@@ -107,7 +107,7 @@ void FenetrePrincipale::on_tabFeuilles_tabCloseRequested(int index)
 
 void FenetrePrincipale::slOuvrirFichier(int id)
 {
-    Feuille* feuille = ClientSynergie::getInstance()->getFeuille(id);
+    Feuille* feuille = ClientSynergie::Instance()->getFeuille(id);
     QString extension = QFileInfo(feuille->getNom()).suffix();
 
     QsciScintilla* editeur = new QsciScintilla();
@@ -145,7 +145,7 @@ void FenetrePrincipale::slInsertionTexteEditeur(int position, QString texte)
 
 QsciScintilla* FenetrePrincipale::getEditeur(int id)
 {
-    return getEditeur(ClientSynergie::getInstance()->getFeuille(id));
+    return getEditeur(ClientSynergie::Instance()->getFeuille(id));
 }
 
 QsciScintilla* FenetrePrincipale::getEditeur(Feuille* feuille)

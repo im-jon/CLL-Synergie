@@ -1,10 +1,10 @@
 #ifndef PAQUETEFFACEMENTTEXTE_H
 #define PAQUETEFFACEMENTTEXTE_H
 
-#include "basepaquetserveur.h"
+#include "basepaquet.h"
 #include "fichier.h"
 
-class PaquetEffacementTexte : public BasePaquetServeur
+class PaquetEffacementTexte : public BasePaquet
 {
 public:
     PaquetEffacementTexte(Fichier* fichier, int position, int longeur);

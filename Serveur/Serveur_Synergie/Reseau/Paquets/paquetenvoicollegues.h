@@ -1,9 +1,9 @@
 #ifndef PAQUETENVOICOLLEGUES_H
 #define PAQUETENVOICOLLEGUES_H
 
-#include "basepaquetserveur.h"
+#include "basepaquet.h"
 
-class PaquetEnvoiCollegues : public BasePaquetServeur
+class PaquetEnvoiCollegues : public BasePaquet
 {
 public:
     PaquetEnvoiCollegues();

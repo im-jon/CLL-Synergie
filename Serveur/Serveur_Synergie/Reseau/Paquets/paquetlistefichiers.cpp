@@ -1,14 +1,14 @@
 #include "paquetlistefichiers.h"
-#include "serveursynergie.h"
+#include "serveur.h"
 #include <QDebug>
 #include "fichier.h"
 
 PaquetListeFichiers::PaquetListeFichiers()
-    : BasePaquetServeur((qint8)2)
+    : BasePaquet(2)
 {
-    *m_Stream << ServeurSynergie::getInstance()->getProjet()->getFichiers()->count();
+    *m_Stream << Serveur::Instance()->getProjet()->getFichiers()->count();
 
-    QMapIterator<int, Fichier*> iterateur(*ServeurSynergie::getInstance()->getProjet()->getFichiers());
+    QMapIterator<int, Fichier*> iterateur(*Serveur::Instance()->getProjet()->getFichiers());
     while (iterateur.hasNext())
     {
         iterateur.next();

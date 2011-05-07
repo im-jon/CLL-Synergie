@@ -1,10 +1,10 @@
 #include "fichier.h"
-#include "serveursynergie.h"
+#include "serveur.h"
 #include <QTextOStream>
 #include "Console/console.h"
 #include "Reseau/Paquets/paquetinsertiontexte.h"
 #include "Reseau/Paquets/paqueteffacementtexte.h"
-#include "serveursynergie.h"
+#include "serveur.h"
 
 const int Seuil = 100;
 
@@ -42,7 +42,7 @@ void Fichier::ChargerContenu()
 {
     if (!m_Charge)
     {
-        m_Fichier = new QFile("Projets/" + ServeurSynergie::getInstance()->getProjet()->getNom() + "/" + m_Chemin); // Corriger ici
+        m_Fichier = new QFile(Serveur::Instance()->getProjet()->getChemin() + m_Chemin); // Corriger ici
         m_Fichier->open(QFile::ReadWrite);
         QTextStream* stream = new QTextStream(m_Fichier);
         m_Contenu = stream->readAll();
@@ -82,11 +82,12 @@ void Fichier::EnleverClient(Client *client)
     }
 }
 
+// On pourrais merger les deux prochaines méthodes
 void Fichier::InsererTexte(QString texte, int position, Client* auteur)
 {
     m_Contenu.insert(position, texte);
 
-    ServeurSynergie::getInstance()->EnvoyerPaquetAListe(
+    Clients::EnvoyerPaquetAListe(
                 m_Clients,
                 new PaquetInsertionTexte(this, texte, position),
                 auteur);
@@ -98,7 +99,7 @@ void Fichier::EffacerTexte(int position, int longeur, Client *auteur)
 {
     m_Contenu = m_Contenu.remove(position, longeur);
 
-    ServeurSynergie::getInstance()->EnvoyerPaquetAListe(
+    Clients::EnvoyerPaquetAListe(
                 m_Clients,
                 new PaquetEffacementTexte(this, position, longeur),
                 auteur);

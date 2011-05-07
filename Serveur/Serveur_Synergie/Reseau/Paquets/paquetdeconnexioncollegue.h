@@ -1,10 +1,10 @@
 #ifndef PAQUETDECONNEXIONCOLLEGUE_H
 #define PAQUETDECONNEXIONCOLLEGUE_H
 
-#include "basepaquetserveur.h"
+#include "basepaquet.h"
 #include "Reseau/client.h"
 
-class PaquetDeconnexionCollegue : public BasePaquetServeur
+class PaquetDeconnexionCollegue : public BasePaquet
 {
 public:
     PaquetDeconnexionCollegue(Client* client);

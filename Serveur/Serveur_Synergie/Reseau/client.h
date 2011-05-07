@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QTcpSocket>
-#include "Paquets/basepaquetserveur.h"
+#include "Paquets/basepaquet.h"
 #include "fichier.h"
 #include "transfer.h"
 #include <QMap>
@@ -19,7 +19,7 @@ public:
     explicit Client(QTcpSocket* socket, QObject *parent = 0);
 
     void Deconnecter();
-    void EnvoyerPaquet(BasePaquetServeur* paquet);
+    void EnvoyerPaquet(BasePaquet* paquet);
     void OuvrirFichier(Fichier* fichier);
     void FermerFichier(Fichier* fichier);
     void FinTransfer(int id);
@@ -45,6 +45,7 @@ private:
     QList<Fichier*>* m_FichiersOuverts;
 
 signals:
+    void siDeconnexion(Client* client);
 
 public slots:
     void slPretALire();

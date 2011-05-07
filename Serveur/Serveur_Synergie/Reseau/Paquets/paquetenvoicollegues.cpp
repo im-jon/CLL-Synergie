@@ -1,15 +1,15 @@
 #include "paquetenvoicollegues.h"
 #include <QMapIterator>
 #include "Reseau/client.h"
-#include "serveursynergie.h"
+#include "serveur.h"
 #include <QDebug>
 
 PaquetEnvoiCollegues::PaquetEnvoiCollegues() :
-    BasePaquetServeur((qint8)1)
+    BasePaquet(1)
 {
-    *m_Stream << ServeurSynergie::getInstance()->getClients()->count();
+    *m_Stream << Serveur::Instance()->getClients()->compte();
 
-    QMapIterator<int, Client*> iterateur(*ServeurSynergie::getInstance()->getClients());
+    QMapIterator<int, Client*> iterateur(*Serveur::Instance()->getClients()->getClients());
     while (iterateur.hasNext())
     {
         iterateur.next();

@@ -7,7 +7,7 @@
 #include "Paquets/paquetdonnees.h"
 #include "Paquets/paquetinsertiontexte.h"
 #include "Paquets/paquetconnexioncollegue.h"
-#include "serveursynergie.h"
+#include "serveur.h"
 #include "fichier.h"
 
 MangePaquets::MangePaquets(QObject* parent) :
@@ -39,7 +39,7 @@ void MangePaquets::Interpreter(Client* client, QDataStream& stream)
             Reception_DonneesRecues(client, stream);
             break;
         default:
-            Console::getInstance()->Imprimer("Réception d'un paquet inconnu #" + QString::number(id));
+            Console::Instance()->Imprimer("Réception d'un paquet inconnu #" + QString::number(id));
             break;
     }
 }
@@ -54,7 +54,7 @@ void MangePaquets::Reception_ChangerNom(Client* client, QDataStream& stream)
 
     client->EnvoyerPaquet(new PaquetEnvoiCollegues());
     client->EnvoyerPaquet(new PaquetListeFichiers());
-    ServeurSynergie::getInstance()->EnvoyerPaquetATous(new PaquetConnexionCollegue(client), client);
+    Serveur::Instance()->getClients()->EnvoyerPaquetATous(new PaquetConnexionCollegue(client), client);
 }
 
 void MangePaquets::Reception_InsertionTexte(Client* client, QDataStream& stream)
@@ -67,7 +67,7 @@ void MangePaquets::Reception_InsertionTexte(Client* client, QDataStream& stream)
     stream >> position;
     stream >> texte;
 
-    Fichier* fichier = ServeurSynergie::getInstance()->getProjet()->getFichier(id);
+    Fichier* fichier = Serveur::Instance()->getProjet()->getFichier(id);
     fichier->InsererTexte(texte, position, client);
 
 }
@@ -82,7 +82,7 @@ void MangePaquets::Reception_EffacementTexte(Client* client, QDataStream& stream
     stream >> position;
     stream >> longeur;
 
-    Fichier* fichier = ServeurSynergie::getInstance()->getProjet()->getFichier(id);
+    Fichier* fichier = Serveur::Instance()->getProjet()->getFichier(id);
     fichier->EffacerTexte(position, longeur, client);
 }
 
@@ -92,7 +92,7 @@ void MangePaquets::Reception_OuvrirFichier(Client* client, QDataStream& stream)
 
     stream >> id;
 
-    client->OuvrirFichier(ServeurSynergie::getInstance()->getProjet()->getFichier(id));
+    client->OuvrirFichier(Serveur::Instance()->getProjet()->getFichier(id));
 }
 
 void MangePaquets::Reception_DonneesRecues(Client* client, QDataStream& stream)

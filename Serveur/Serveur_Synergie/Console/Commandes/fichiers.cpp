@@ -1,5 +1,5 @@
 #include "fichiers.h"
-#include "serveursynergie.h"
+#include "serveur.h"
 #include <QMapIterator>
 #include <QStringBuilder>
 #include <QStringList>
@@ -15,9 +15,9 @@ Fichiers::Fichiers()
 QString Fichiers::Executer(const QStringList& arguments)
 {
     QString retour;
-    if (ServeurSynergie::getInstance()->getProjet()->getFichiers()->count() > 0)
+    if (Serveur::Instance()->getProjet()->getFichiers()->count() > 0)
     {
-        QMapIterator<int, Fichier*> iterateur(*ServeurSynergie::getInstance()->getProjet()->getFichiers());
+        QMapIterator<int, Fichier*> iterateur(*Serveur::Instance()->getProjet()->getFichiers());
         retour = "Liste des fichiers du projet :";
         while (iterateur.hasNext())
         {

@@ -13,7 +13,7 @@ class ClientSynergie : public QObject
 {
     Q_OBJECT
 public:
-    static ClientSynergie* getInstance();
+    static ClientSynergie* Instance();
 
     bool Connecter(QString adresse, int port);
     void Renommer(QString nom);

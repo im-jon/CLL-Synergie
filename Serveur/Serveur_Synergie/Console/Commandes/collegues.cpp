@@ -1,7 +1,7 @@
 #include "collegues.h"
 #include <QStringBuilder>
 #include <QMapIterator>
-#include "serveursynergie.h"
+#include "serveur.h"
 
 
 Collegues::Collegues()
@@ -14,9 +14,9 @@ Collegues::Collegues()
 QString Collegues::Executer(const QStringList& arguments)
 {
     QString retour;
-    if (ServeurSynergie::getInstance()->getClients()->count() > 0)
+    if (Serveur::Instance()->getClients()->compte() > 0)
     {
-        QMapIterator<int, Client*> iterateur(*ServeurSynergie::getInstance()->getClients());
+        QMapIterator<int, Client*> iterateur(*Serveur::Instance()->getClients()->getClients());
         retour = "Liste des collègues en ligne :";
         while (iterateur.hasNext())
         {

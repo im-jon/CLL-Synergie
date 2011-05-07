@@ -1,10 +1,10 @@
-#ifndef BASEPAQUETSERVEUR_H
-#define BASEPAQUETSERVEUR_H
+#ifndef BASEPAQUET_H
+#define BASEPAQUET_H
 
 #include <QByteArray>
 #include <QDataStream>
 
-class BasePaquetServeur
+class BasePaquet
 {
 public:
     QByteArray getBuffer();
@@ -14,7 +14,7 @@ private:
 
 protected:
     QDataStream* m_Stream;
-    BasePaquetServeur(qint8 id);
+    BasePaquet(qint8 id);
 };
 
 #endif // BASEPAQUETSERVEUR_H

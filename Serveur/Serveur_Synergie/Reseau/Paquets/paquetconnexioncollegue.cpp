@@ -1,7 +1,7 @@
 #include "paquetconnexioncollegue.h"
 
 PaquetConnexionCollegue::PaquetConnexionCollegue(Client* client) :
-    BasePaquetServeur((qint8)3)
+    BasePaquet(3)
 {
     *m_Stream << client->getID();
     *m_Stream << client->getNom();

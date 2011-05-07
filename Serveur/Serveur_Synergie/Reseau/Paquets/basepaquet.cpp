@@ -1,14 +1,14 @@
-#include "basepaquetserveur.h"
+#include "basepaquet.h"
 #include <QDebug>
 
-BasePaquetServeur::BasePaquetServeur(qint8 id)
+BasePaquet::BasePaquet(qint8 id)
 {
     m_Stream = new QDataStream(&m_Buffer, QIODevice::WriteOnly);
 
     *m_Stream << id;
 }
 
-QByteArray BasePaquetServeur::getBuffer()
+QByteArray BasePaquet::getBuffer()
 {
     int taille = m_Buffer.length();
     QByteArray ba(reinterpret_cast<const char*>(&taille), sizeof(taille));

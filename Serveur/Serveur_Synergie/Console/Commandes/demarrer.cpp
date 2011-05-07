@@ -1,5 +1,5 @@
 #include "demarrer.h"
-#include "serveursynergie.h"
+#include "serveur.h"
 
 Demarrer::Demarrer()
 {
@@ -11,6 +11,6 @@ Demarrer::Demarrer()
 QString Demarrer::Executer(const QStringList& arguments)
 {
 
-    ServeurSynergie::getInstance()->Demarrer();
+    Serveur::Instance()->Demarrer();
     return "";
 }

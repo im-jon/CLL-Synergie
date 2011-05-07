@@ -5,6 +5,7 @@ Projet::Projet(QString nom, QObject *parent) :
     QObject(parent)
 {
     m_Nom = nom;
+    m_Chemin = "Projets/" + nom + "/";
     m_Fichiers = new QMap<int, Fichier*>;
 
     Initialiser();
@@ -13,9 +14,9 @@ Projet::Projet(QString nom, QObject *parent) :
 void Projet::Initialiser()
 {
     // Rien qui marche la dedans...
-    QRegExp regex("Projets/" + m_Nom + "/(.*)");
+    QRegExp regex(m_Chemin + "(.*)");
     QDirIterator iterateur(
-                "Projets/" + m_Nom + "/",
+                m_Chemin,
                 (QDir::NoDotAndDotDot | QDir::Files),
                 QDirIterator::Subdirectories);
     while (iterateur.hasNext())
@@ -66,6 +67,11 @@ Fichier* Projet::getFichier(int id)
 QString Projet::getNom()
 {
     return m_Nom;
+}
+
+QString Projet::getChemin()
+{
+    return m_Chemin;
 }
 
 QMap<int, Fichier*>* Projet::getFichiers()

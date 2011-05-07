@@ -4,7 +4,7 @@
 
 Console* Console::m_Instance = 0;
 
-Console* Console::getInstance()
+Console* Console::Instance()
 {
     static QMutex mutex;
     if (!m_Instance)

@@ -26,9 +26,9 @@ dlgConnexion::~dlgConnexion()
 
 void dlgConnexion::on_buttonBox_accepted()
 {
-    if (ClientSynergie::getInstance()->Connecter(ui->txtAdresse->text(), ui->txtPort->text().toInt()))
+    if (ClientSynergie::Instance()->Connecter(ui->txtAdresse->text(), ui->txtPort->text().toInt()))
     {
-        ClientSynergie::getInstance()->Renommer(ui->txtNom->text());
+        ClientSynergie::Instance()->Renommer(ui->txtNom->text());
         FenetrePrincipale* w = new FenetrePrincipale(this);
         w->show();
 

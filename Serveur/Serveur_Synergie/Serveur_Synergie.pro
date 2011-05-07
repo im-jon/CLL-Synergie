@@ -16,11 +16,9 @@ SOURCES += main.cpp\
     Console/Commandes/basecommande.cpp \
     Console/Commandes/aide.cpp \
     Console/Commandes/vider.cpp \
-    serveursynergie.cpp \
     Reseau/client.cpp \
     Console/Commandes/demarrer.cpp \
     Reseau/Paquets/paquetenvoicollegues.cpp \
-    Reseau/Paquets/basepaquetserveur.cpp \
     Console/Commandes/collegues.cpp \
     Reseau/Paquets/paquetlistefichiers.cpp \
     Console/Commandes/fichiers.cpp \
@@ -33,18 +31,19 @@ SOURCES += main.cpp\
     Reseau/Paquets/paqueteffacementtexte.cpp \
     projet.cpp \
     Reseau/transfer.cpp \
-    Reseau/mangepaquets.cpp
+    Reseau/mangepaquets.cpp \
+    clients.cpp \
+    serveur.cpp \
+    Reseau/Paquets/basepaquet.cpp
 
 HEADERS  += fenetreprincipale.h \
     Console/console.h \
     Console/Commandes/basecommande.h \
     Console/Commandes/aide.h \
     Console/Commandes/vider.h \
-    serveursynergie.h \
     Reseau/client.h \
     Console/Commandes/demarrer.h \
     Reseau/Paquets/paquetenvoicollegues.h \
-    Reseau/Paquets/basepaquetserveur.h \
     Console/Commandes/collegues.h \
     Reseau/Paquets/paquetlistefichiers.h \
     Console/Commandes/fichiers.h \
@@ -57,6 +56,9 @@ HEADERS  += fenetreprincipale.h \
     Reseau/Paquets/paqueteffacementtexte.h \
     projet.h \
     Reseau/transfer.h \
-    Reseau/mangepaquets.h
+    Reseau/mangepaquets.h \
+    clients.h \
+    serveur.h \
+    Reseau/Paquets/basepaquet.h
 
 FORMS    += fenetreprincipale.ui

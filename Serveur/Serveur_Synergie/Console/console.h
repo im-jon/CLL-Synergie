@@ -10,7 +10,7 @@ class Console : public QObject
 {
     Q_OBJECT
 public:
-    static Console* getInstance();
+    static Console* Instance();
 
     void Ecrire(QString ligne);
     void Imprimer(QString ligne);

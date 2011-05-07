@@ -67,7 +67,7 @@ void MangePaquets::Reception_ListeCollegues(QDataStream& stream)
         stream >> id;
         stream >> nom;
 
-        ClientSynergie::getInstance()->ConnexionCollegue(new Collegue(id, nom, this));
+        ClientSynergie::Instance()->ConnexionCollegue(new Collegue(id, nom, this));
     }
 }
 
@@ -85,7 +85,7 @@ void MangePaquets::Reception_ListeFichiers(QDataStream& stream)
         stream >> id;
         stream >> nom;
 
-        ClientSynergie::getInstance()->AjouterFeuille(nom, id);
+        ClientSynergie::Instance()->AjouterFeuille(nom, id);
     }
 }
 
@@ -97,7 +97,7 @@ void MangePaquets::Reception_ConnexionCollegue(QDataStream& stream)
     stream >> id;
     stream >> nom;
 
-    ClientSynergie::getInstance()->ConnexionCollegue(new Collegue(id, nom, this));
+    ClientSynergie::Instance()->ConnexionCollegue(new Collegue(id, nom, this));
 }
 
 void MangePaquets::Reception_DeconnexionCollegue(QDataStream& stream)
@@ -106,7 +106,7 @@ void MangePaquets::Reception_DeconnexionCollegue(QDataStream& stream)
 
     stream >> id;
 
-    ClientSynergie::getInstance()->DeconnexionCollegue(id);
+    ClientSynergie::Instance()->DeconnexionCollegue(id);
 }
 
 void MangePaquets::Reception_OuvertureFichier(QDataStream& stream)
@@ -126,7 +126,7 @@ void MangePaquets::Reception_Donnees(QDataStream& stream)
     stream >> id;
     stream >> donnees;
 
-    ClientSynergie::getInstance()->getConnexion()->EnvoyerPaquet(new PaquetReceptionDonnees(id));
+    ClientSynergie::Instance()->getConnexion()->EnvoyerPaquet(new PaquetReceptionDonnees(id));
 
     emit(siDonnees(id, donnees));
 }
@@ -166,7 +166,7 @@ void MangePaquets::Reception_MessageChat(QDataStream& stream)
     stream >> id;
     stream >> message;
 
-    Collegue* collegue = ClientSynergie::getInstance()->getCollegue(id);
+    Collegue* collegue = ClientSynergie::Instance()->getCollegue(id);
 
     emit (siMessageChat(collegue, message));
 }

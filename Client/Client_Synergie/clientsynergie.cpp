@@ -5,7 +5,7 @@
 
 ClientSynergie* ClientSynergie::m_Instance = 0;
 
-ClientSynergie* ClientSynergie::getInstance()
+ClientSynergie* ClientSynergie::Instance()
 {
     static QMutex mutex;
     if (!m_Instance)

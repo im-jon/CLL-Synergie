@@ -1,5 +1,7 @@
 #include "transfer.h"
 
+static const int TailleBloc = 1024; // Octets
+
 Transfer::Transfer(Fichier* fichier, QObject *parent) :
     QObject(parent)
 {
@@ -10,9 +12,9 @@ Transfer::Transfer(Fichier* fichier, QObject *parent) :
 
 QString Transfer::LireBloc()
 {
-    QString donnees = m_Stream->read(1024);
+    QString donnees = m_Stream->read(TailleBloc);
 
-    if (donnees.length() < 1024)
+    if (donnees.length() < TailleBloc)
     {
         emit (siFin(m_Fichier->getID()));
     }

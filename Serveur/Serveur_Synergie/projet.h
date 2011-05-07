@@ -16,6 +16,7 @@ public:
     void Fermer();
     void Sauvegarder();
     QString getNom();
+    QString getChemin();
     Fichier* getFichier(int id);
     QMap<int, Fichier*>* getFichiers();
 
@@ -25,6 +26,7 @@ private:
     void EnleverFichier(int id);
 
     QString m_Nom;
+    QString m_Chemin;
     QMap<int, Fichier*>* m_Fichiers;
 
 signals:

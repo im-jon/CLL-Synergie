@@ -2,9 +2,9 @@
 #define PAQUETINSERTIONTEXTE_H
 
 #include "fichier.h"
-#include "basepaquetserveur.h"
+#include "basepaquet.h"
 
-class PaquetInsertionTexte : public BasePaquetServeur
+class PaquetInsertionTexte : public BasePaquet
 {
 public:
     PaquetInsertionTexte(Fichier* fichier, QString texte, int position);

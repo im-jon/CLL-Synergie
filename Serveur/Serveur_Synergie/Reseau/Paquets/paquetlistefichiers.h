@@ -1,9 +1,9 @@
 #ifndef PAQUETLISTEFICHIERS_H
 #define PAQUETLISTEFICHIERS_H
 
-#include "basepaquetserveur.h"
+#include "basepaquet.h"
 
-class PaquetListeFichiers : public BasePaquetServeur
+class PaquetListeFichiers : public BasePaquet
 {
 public:
     PaquetListeFichiers();

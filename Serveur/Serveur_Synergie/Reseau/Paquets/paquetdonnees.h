@@ -1,11 +1,11 @@
 #ifndef PAQUETDONNEES_H
 #define PAQUETDONNEES_H
 
-#include "basepaquetserveur.h"
+#include "basepaquet.h"
 #include <QByteArray>
 #include "Reseau/transfer.h"
 
-class PaquetDonnees : public BasePaquetServeur
+class PaquetDonnees : public BasePaquet
 {
 public:
     PaquetDonnees(Transfer* transfer);

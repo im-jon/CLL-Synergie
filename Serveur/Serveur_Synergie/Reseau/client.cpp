@@ -1,13 +1,11 @@
 #include "client.h"
 #include <QByteArray>
 #include <QDataStream>
-#include <QtCore>
-#include "serveursynergie.h"
+#include "serveur.h"
 #include "Console/console.h"
 #include "Paquets/paquetouverturefichier.h"
-#include "Paquets/basepaquetserveur.h"
+#include "Paquets/basepaquet.h"
 #include "Paquets/paquetdonnees.h"
-#include "Paquets/paquetdeconnexioncollegue.h"
 
 int Client::GenerateurID = 1;
 
@@ -25,7 +23,7 @@ Client::Client(QTcpSocket* socket, QObject* parent) :
     connect(m_Socket, SIGNAL(disconnected()), this, SLOT(slDeconnection()));
 }
 
-void Client::EnvoyerPaquet(BasePaquetServeur* paquet)
+void Client::EnvoyerPaquet(BasePaquet* paquet)
 {
    m_Socket->write(paquet->getBuffer());
    m_Socket->waitForBytesWritten();
@@ -41,7 +39,7 @@ void Client::LirePaquet()
 
     buffer = m_Socket->read(taille);
 
-    ServeurSynergie::getInstance()->getMangePaquets()->Interpreter(this, stream);
+    Serveur::Instance()->getMangePaquets()->Interpreter(this, stream);
 
     if (m_Socket->bytesAvailable() > 0)
     {
@@ -59,10 +57,9 @@ void Client::Deconnecter()
         FermerFichier(fichier);
     }
 
-    ServeurSynergie::getInstance()->EnleverClient(this);
-    ServeurSynergie::getInstance()->EnvoyerPaquetATous(new PaquetDeconnexionCollegue(this));
+    emit (siDeconnexion(this));
 
-    Console::getInstance()->Imprimer(m_Nom + " est déconnecté");
+    Console::Instance()->Imprimer(m_Nom + " est déconnecté");
 }
 
 void Client::OuvrirFichier(Fichier* fichier)
@@ -109,15 +106,16 @@ Transfer* Client::getTransfer(int id)
     return m_Transfers->value(id);
 }
 
-void Client::setNom(QString nom)
-{
-    m_Nom = nom;
-    Console::getInstance()->Imprimer(getIP() + " change de nom pour " + nom);
-}
-
 QList<Fichier*>* Client::getFichiers()
 {
     return m_FichiersOuverts;
+}
+
+void Client::setNom(QString nom)
+{
+    m_Nom = nom;
+
+    Console::Instance()->Imprimer(getIP() + " change de nom pour " + nom);
 }
 
 void Client::slPretALire()
