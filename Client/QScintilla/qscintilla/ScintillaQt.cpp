@@ -585,7 +585,6 @@ void ScintillaQt::paintEvent(QPaintEvent *e)
     sw->Init(&painter);
     sw->SetUnicodeMode(CodePage() == SC_CP_UTF8);
     Paint(sw, rcPaint);
-
     delete sw;
 
     // If the painting area was insufficient to cover the new style or brace

@@ -662,6 +662,7 @@ bool Document::DeleteChars(int pos, int len) {
 	return !cb.IsReadOnly();
 }
 
+
 bool Document::DeleteCharsMecha(int pos, int len) {
         if (len == 0)
                 return false;

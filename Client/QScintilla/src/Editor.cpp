@@ -3275,7 +3275,7 @@ void Editor::DrawCarets(Surface *surface, ViewStyle &vsDraw, int lineDoc, int xS
 				if (drawBlockCaret) {
 					DrawBlockCaret(surface, vsDraw, ll, subLine, xStart, offset, posCaret.Position(), rcCaret, caretColour);
 				} else {
-					surface->FillRectangle(rcCaret, caretColour);
+                                        surface->FillRectangle(rcCaret, caretColour);
 				}
 			}
 		}
@@ -3381,7 +3381,7 @@ void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea) {
 		SelectionPosition posCaret = sel.RangeMain().caret;
 		if (posDrag.IsValid())
 			posCaret = posDrag;
-		int lineCaret = pdoc->LineFromPosition(posCaret.Position());
+                int lineCaret = pdoc->LineFromPosition(posCaret.Position());
 
 		// Remove selection margin from drawing area so text will not be drawn
 		// on it in unbuffered mode.
@@ -3398,7 +3398,6 @@ void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea) {
 		int lineDocPrevious = -1;	// Used to avoid laying out one document line multiple times
 		AutoLineLayout ll(llc, 0);
 		while (visibleLine < cs.LinesDisplayed() && yposScreen < rcArea.bottom) {
-
 			int lineDoc = cs.DocFromDisplay(visibleLine);
 			// Only visible lines should be handled by the code within the loop
 			PLATFORM_ASSERT(cs.GetVisible(lineDoc));
@@ -3430,11 +3429,11 @@ void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea) {
 
 				Range rangeLine(pdoc->LineStart(lineDoc), pdoc->LineStart(lineDoc + 1));
 				// Highlight the current braces if any
-				ll->SetBracesHighlight(rangeLine, braces, static_cast<char>(bracesMatchStyle),
+                                ll->SetBracesHighlight(rangeLine, braces, static_cast<char>(bracesMatchStyle),
 				        highlightGuideColumn * vs.spaceWidth);
 
 				// Draw the line
-				DrawLine(surface, vs, lineDoc, visibleLine, xStart, rcLine, ll, subLine);
+                                DrawLine(surface, vs, lineDoc, visibleLine, xStart, rcLine, ll, subLine);
 				//durPaint += et.Duration(true);
 
 				// Restore the previous styles for the brace highlights in case layout is in cache.
@@ -3461,8 +3460,7 @@ void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea) {
 						surface->FillRectangle(rcFoldLine, vs.styles[STYLE_DEFAULT].fore.allocated);
 					}
 				}
-
-				DrawCarets(surface, vs, lineDoc, xStart, rcLine, ll, subLine);
+                                DrawCarets(surface, vs, lineDoc, xStart, rcLine, ll, subLine);
 
 				if (bufferedDraw) {
 					Point from(vs.fixedColumnWidth, 0);
@@ -3503,9 +3501,10 @@ void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea) {
 				surfaceWindow->FillRectangle(rcBeyondEOF, vs.edgecolour.allocated);
 			}
 		}
+
 		//Platform::DebugPrintf(
 		//"Layout:%9.6g    Paint:%9.6g    Ratio:%9.6g   Copy:%9.6g   Total:%9.6g\n",
-		//durLayout, durPaint, durLayout / durPaint, durCopy, etWhole.Duration());
+                //durLayout, durPaint, durLayout / durPaint, durCopy, etWhole.Duration());
 		NotifyPainted();
 	}
 }
@@ -4402,7 +4401,7 @@ void Editor::NotifyModified(Document *, DocModification mh, void *) {
 			braces[1] = MovePositionForInsertion(braces[1], mh.position, mh.length);
 		} else if (mh.modificationType & SC_MOD_DELETETEXT) {
 			sel.MovePositions(false, mh.position, mh.length);
-			braces[0] = MovePositionForDeletion(braces[0], mh.position, mh.length);
+                        braces[0] = MovePositionForDeletion(braces[0], mh.position, mh.length);
 			braces[1] = MovePositionForDeletion(braces[1], mh.position, mh.length);
 		}
 		if (cs.LinesDisplayed() < cs.LinesInDoc()) {

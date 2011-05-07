@@ -2029,8 +2029,10 @@ void QsciScintilla::insertAtPos(const QString &text, int pos)
 
 void QsciScintilla::insertAtPosMecha(const QString &text, int pos)
 {
+    SendScintilla(SCI_SETUNDOCOLLECTION, false);
     SendScintilla(SCI_INSERTMECHA, pos,
         ScintillaStringData(convertTextQ2S(text)));
+    SendScintilla(SCI_SETUNDOCOLLECTION, true);
 }
 
 // Begin a sequence of undoable actions.
@@ -2119,7 +2121,9 @@ void QsciScintilla::removeSelectedText()
 
 void QsciScintilla::remove(int pos, int len)
 {
+    SendScintilla(SCI_SETUNDOCOLLECTION, false);
     SendScintilla(SCI_REMOVEMECHA, pos, len);
+    SendScintilla(SCI_SETUNDOCOLLECTION, true);
 }
 
 
@@ -3175,10 +3179,17 @@ void QsciScintilla::handleUpdateUI(int)
 
     if (newPos != oldPos)
     {
+        int oldline = SendScintilla(SCI_LINEFROMPOSITION, oldPos);
+
         oldPos = newPos;
 
         int line = SendScintilla(SCI_LINEFROMPOSITION, newPos);
         int col = SendScintilla(SCI_GETCOLUMN, newPos);
+
+        if (oldline != line)
+        {
+            SendScintilla(SCI_EMPTYUNDOBUFFER);
+        }
 
         emit cursorPositionChanged(line, col);
     }
