@@ -26,6 +26,7 @@ public:
 
     QString getNom();
     QString getIP();
+    int getID();
     Transfer* getTransfer(int index);
     QList<Fichier*>* getFichiers();
 
@@ -47,8 +48,8 @@ signals:
 
 public slots:
     void slPretALire();
-    void slOnDeconnection();
-    int getID();
+    void slDeconnection();
+    void slFinTransfer(int id);
 };
 
 #endif // CLIENT_H

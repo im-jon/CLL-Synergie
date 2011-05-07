@@ -49,7 +49,7 @@ void Projet::Fermer()
     }
 }
 
-void Projet::AjouterFichier(Fichier *fichier)
+void Projet::AjouterFichier(Fichier* fichier)
 {
     m_Fichiers->insert(fichier->getID(), fichier);
 }

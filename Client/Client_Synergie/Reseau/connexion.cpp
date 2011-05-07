@@ -6,7 +6,7 @@ Connexion::Connexion(QObject *parent) :
     QObject(parent)
 {
     m_Socket = new QTcpSocket(this);
-    m_MangePaquets = new MangePaquetClient(this);
+    m_MangePaquets = new MangePaquets(this);
 
     connect (m_Socket, SIGNAL(readyRead()), this, SLOT(slPretALire()));
 }
@@ -15,11 +15,6 @@ bool Connexion::Connecter(QString addr, int port)
 {
     m_Socket->connectToHost(addr, port);
     return m_Socket->waitForConnected(1000);
-}
-
-void Connexion::slPretALire()
-{
-    LirePaquet();
 }
 
 void Connexion::LirePaquet()
@@ -36,7 +31,7 @@ void Connexion::LirePaquet()
 
     buffer = m_Socket->read(taille);
 
-    m_MangePaquets->Interpreter(&stream);
+    m_MangePaquets->Interpreter(stream);
 
     if (m_Socket->bytesAvailable() > 0)
     {
@@ -49,9 +44,14 @@ void Connexion::EnvoyerPaquet(BasePaquet* paquet)
     m_Socket->write(paquet->getBuffer());
 }
 
-MangePaquetClient* Connexion::getMangePaquets()
+MangePaquets* Connexion::getMangePaquets()
 {
     return m_MangePaquets;
+}
+
+void Connexion::slPretALire()
+{
+    LirePaquet();
 }
 
 

@@ -1,4 +1,4 @@
-#include "mangepaquetclient.h"
+#include "mangepaquets.h"
 #include <QDataStream>
 #include <QDebug>
 #include <QStringList>
@@ -7,16 +7,16 @@
 #include "collegue.h"
 #include "Paquets/paquetreceptiondonnees.h"
 
-MangePaquetClient::MangePaquetClient(QObject *parent) :
+MangePaquets::MangePaquets(QObject *parent) :
     QObject(parent)
 {
 }
 
-void MangePaquetClient::Interpreter(QDataStream* stream)
+void MangePaquets::Interpreter(QDataStream& stream)
 {
     quint8 id;
 
-    *stream >> id;
+    stream >> id;
 
     switch (id)
     {
@@ -53,116 +53,118 @@ void MangePaquetClient::Interpreter(QDataStream* stream)
     }
 }
 
-void MangePaquetClient::Reception_ListeCollegues(QDataStream* stream)
+void MangePaquets::Reception_ListeCollegues(QDataStream& stream)
 {
     int nombre;
 
-    *stream >> nombre;
+    stream >> nombre;
 
     for (int i = 0; i < nombre; i++)
     {
         int id;
         QString nom;
 
-        *stream >> id;
-        *stream >> nom;
+        stream >> id;
+        stream >> nom;
 
         ClientSynergie::getInstance()->ConnexionCollegue(new Collegue(id, nom, this));
     }
 }
 
-void MangePaquetClient::Reception_ListeFichiers(QDataStream* stream)
+void MangePaquets::Reception_ListeFichiers(QDataStream& stream)
 {
     int nombre;
 
-    *stream >> nombre;
+    stream >> nombre;
 
     for (int i = 0; i < nombre; i++)
     {
         int id;
         QString nom;
 
-        *stream >> id;
-        *stream >> nom;
+        stream >> id;
+        stream >> nom;
 
         ClientSynergie::getInstance()->AjouterFeuille(nom, id);
     }
 }
 
-void MangePaquetClient::Reception_ConnexionCollegue(QDataStream *stream)
+void MangePaquets::Reception_ConnexionCollegue(QDataStream& stream)
 {
     int id;
     QString nom;
 
-    *stream >> id;
-    *stream >> nom;
+    stream >> id;
+    stream >> nom;
 
     ClientSynergie::getInstance()->ConnexionCollegue(new Collegue(id, nom, this));
 }
 
-void MangePaquetClient::Reception_DeconnexionCollegue(QDataStream *stream)
+void MangePaquets::Reception_DeconnexionCollegue(QDataStream& stream)
 {
     int id;
-    *stream >> id;
+
+    stream >> id;
 
     ClientSynergie::getInstance()->DeconnexionCollegue(id);
 }
 
-void MangePaquetClient::Reception_OuvertureFichier(QDataStream *stream)
+void MangePaquets::Reception_OuvertureFichier(QDataStream& stream)
 {
     int id;
-    *stream >> id;
+
+    stream >> id;
 
     emit (siOuvrirFichier(id));
 }
 
-void MangePaquetClient::Reception_Donnees(QDataStream *stream)
+void MangePaquets::Reception_Donnees(QDataStream& stream)
 {
     int id;
     QString donnees;
 
-    *stream >> id;
-    *stream >> donnees;
+    stream >> id;
+    stream >> donnees;
 
     ClientSynergie::getInstance()->getConnexion()->EnvoyerPaquet(new PaquetReceptionDonnees(id));
 
     emit(siDonnees(id, donnees));
 }
 
-void MangePaquetClient::Reception_Texte(QDataStream *stream)
+void MangePaquets::Reception_Texte(QDataStream& stream)
 {
     int id;
     int position;
     QString texte;
 
-    *stream >>id;
-    *stream >> position;
-    *stream >> texte;
+    stream >> id;
+    stream >> position;
+    stream >> texte;
 
     emit (siInsertionTexte(id, position, texte));
 
 }
 
-void MangePaquetClient::Reception_EffacementTexte(QDataStream *stream)
+void MangePaquets::Reception_EffacementTexte(QDataStream& stream)
 {
     int id;
     int position;
     int longeur;
 
-    *stream >> id;
-    *stream >> position;
-    *stream >> longeur;
+    stream >> id;
+    stream >> position;
+    stream >> longeur;
 
     emit (siEffacementTexte(id, position, longeur));
 }
 
-void MangePaquetClient::Reception_MessageChat(QDataStream *stream)
+void MangePaquets::Reception_MessageChat(QDataStream& stream)
 {
     int id;
     QString message;
 
-    *stream >> id;
-    *stream >> message;
+    stream >> id;
+    stream >> message;
 
     Collegue* collegue = ClientSynergie::getInstance()->getCollegue(id);
 

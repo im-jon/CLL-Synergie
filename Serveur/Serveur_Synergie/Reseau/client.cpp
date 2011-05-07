@@ -11,16 +11,16 @@
 
 int Client::GenerateurID = 1;
 
-Client::Client(QTcpSocket* socket, QObject *parent) :
+Client::Client(QTcpSocket* socket, QObject* parent) :
     QObject(parent)
 {
     m_ID = GenerateurID;
     m_Socket = socket;
     m_Transfers = new QMap<int, Transfer*>;
-    m_FichiersOuverts = new QList<Fichier*>();
+    m_FichiersOuverts = new QList<Fichier*>;
 
-    connect(m_Socket, SIGNAL(readyRead()),this,SLOT(slPretALire()));
-    connect(m_Socket,SIGNAL(disconnected()),this,SLOT(slOnDeconnection()));
+    connect(m_Socket, SIGNAL(readyRead()), this, SLOT(slPretALire()));
+    connect(m_Socket, SIGNAL(disconnected()), this, SLOT(slDeconnection()));
 
     GenerateurID++;
 }
@@ -31,14 +31,9 @@ void Client::EnvoyerPaquet(BasePaquetServeur* paquet)
    m_Socket->waitForBytesWritten();
 }
 
-void Client::slPretALire()
-{
-    LirePaquet();
-}
-
 void Client::LirePaquet()
 {
-    QByteArray bufferTaille; // Pourquoi deux buffer et deux datastream ???
+    QByteArray bufferTaille;
     QDataStream streamTaille(&bufferTaille, QIODevice::ReadOnly);
 
     int taille = 0;
@@ -50,16 +45,12 @@ void Client::LirePaquet()
 
     buffer = m_Socket->read(taille);
 
-    ServeurSynergie::getInstance()->getMangePaquets()->Interpreter(this, &stream);
+    ServeurSynergie::getInstance()->getMangePaquets()->Interpreter(this, stream);
 
-    if (m_Socket->bytesAvailable() > 0) {
+    if (m_Socket->bytesAvailable() > 0)
+    {
         LirePaquet();
     }
-}
-
-void Client::slOnDeconnection()
-{
-    Deconnecter();
 }
 
 void Client::Deconnecter()
@@ -67,7 +58,8 @@ void Client::Deconnecter()
     m_Socket->close();
 
     Fichier* fichier;
-    foreach (fichier, *m_FichiersOuverts) {
+    foreach (fichier, *m_FichiersOuverts)
+    {
         FermerFichier(fichier);
     }
 
@@ -92,16 +84,13 @@ void Client::FermerFichier(Fichier *fichier)
 
 void Client::EnvoyerFichier(Fichier* fichier)
 {
-    Transfer* transfer = new Transfer(fichier);
+    Transfer* transfer = new Transfer(fichier, this);
     m_Transfers->insert(fichier->getID(), transfer);
+
+    connect (transfer, SIGNAL(siFin(int)), this, SLOT(slFinTransfer(int)));
 
     EnvoyerPaquet(new PaquetOuvertureFichier(fichier));
     EnvoyerPaquet(new PaquetDonnees(transfer));
-}
-
-void Client::FinTransfer(int id)
-{
-    m_Transfers->remove(id);
 }
 
 QString Client::getNom()
@@ -133,4 +122,19 @@ void Client::setNom(QString nom)
 QList<Fichier*>* Client::getFichiers()
 {
     return m_FichiersOuverts;
+}
+
+void Client::slPretALire()
+{
+    LirePaquet();
+}
+
+void Client::slDeconnection()
+{
+    Deconnecter();
+}
+
+void Client::slFinTransfer(int id)
+{
+    m_Transfers->remove(id);
 }

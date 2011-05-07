@@ -12,7 +12,6 @@ class Fichier : public QObject
 {
     Q_OBJECT
 public:
-    static int getGenerateurID();
     explicit Fichier(QString chemin, QObject *parent = 0);
 
     void Fermer();
@@ -28,11 +27,12 @@ public:
 
 private:
     static int GenerateurID;
+
     void ChargerContenu();
     void DechargerContenu();
     void NouvelleModification();
 
-    bool m_Charge; // Chargé
+    bool m_Charge;
     QFile* m_Fichier;
     QString m_Chemin;
     QString m_Contenu;

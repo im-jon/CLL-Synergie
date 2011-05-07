@@ -65,7 +65,7 @@ Connexion* ClientSynergie::getConnexion()
     return m_Connexion;
 }
 
-MangePaquetClient* ClientSynergie::getMangePaquets()
+MangePaquets* ClientSynergie::getMangePaquets()
 {
     return m_Connexion->getMangePaquets();
 }

@@ -21,8 +21,9 @@ BaseCommande::BaseCommande()
 {
 }
 
-QString BaseCommande::Executer(const QStringList &arguments)
+QString BaseCommande::Executer(const QStringList& arguments)
 {
+    return QString::null;
 }
 
 const QStringList& BaseCommande::getMotsCle()

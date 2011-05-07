@@ -13,7 +13,6 @@ TEMPLATE = app
 SOURCES += main.cpp\
         fenetreprincipale.cpp \
     Reseau/connexion.cpp \
-    Reseau/mangepaquetclient.cpp \
     Reseau/Paquets/basepaquet.cpp \
     Reseau/Paquets/paquetchangernom.cpp \
     dlgconnexion.cpp \
@@ -25,11 +24,11 @@ SOURCES += main.cpp\
     collegue.cpp \
     Reseau/Paquets/paquetenvoichat.cpp \
     feuille.cpp \
-    Reseau/Paquets/paquetouvrirfeuille.cpp
+    Reseau/Paquets/paquetouvrirfeuille.cpp \
+    Reseau/mangepaquets.cpp
 
 HEADERS  += fenetreprincipale.h \
     Reseau/connexion.h \
-    Reseau/mangepaquetclient.h \
     Reseau/Paquets/basepaquet.h \
     Reseau/Paquets/paquetchangernom.h \
     dlgconnexion.h \
@@ -41,7 +40,8 @@ HEADERS  += fenetreprincipale.h \
     collegue.h \
     Reseau/Paquets/paquetenvoichat.h \
     feuille.h \
-    Reseau/Paquets/paquetouvrirfeuille.h
+    Reseau/Paquets/paquetouvrirfeuille.h \
+    Reseau/mangepaquets.h
 
 FORMS    += fenetreprincipale.ui \
     dlgconnexion.ui

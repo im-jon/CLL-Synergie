@@ -1,24 +1,30 @@
 #ifndef TRANSFER_H
 #define TRANSFER_H
 
+#include <QObject>
 #include <QFile>
 #include <QTextStream>
 #include "fichier.h"
 
 class Fichier;
 
-class Transfer
+class Transfer : public QObject
 {
+    Q_OBJECT
 public:
-    Transfer(Fichier* fichier);
+    explicit Transfer(Fichier* fichier, QObject* parent = 0);
     QString LireBloc();
     Fichier* getFichier();
-    bool estFini();
 
 private:
     QTextStream* m_Stream;
     Fichier* m_Fichier;
-    bool m_Fini;
+
+signals:
+    void siFin(int id);
+
+public slots:
+
 };
 
-#endif // TRANSFER_H
+#endif // TRANSFER2_H

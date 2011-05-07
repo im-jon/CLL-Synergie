@@ -30,7 +30,7 @@ ServeurSynergie::ServeurSynergie(QObject *parent) :
 {
     m_Ecouteur = new QTcpServer(this);
     m_Clients = new QMap<int, Client*>;
-    m_MangePaquets = new MangePaquetsServeur(this);
+    m_MangePaquets = new MangePaquets(this);
 
     connect (m_Ecouteur, SIGNAL(newConnection()), this, SLOT(slNouveauClient()));
 
@@ -69,7 +69,9 @@ bool ServeurSynergie::Arreter()
         Console::getInstance()->Imprimer("Le serveur est hors ligne");
         return true;
     }
+
     m_Projet->Fermer();
+
     Console::getInstance()->Imprimer("Le serveur est incapable de se déconnecter");
     return false;
 }
@@ -78,22 +80,18 @@ void ServeurSynergie::slNouveauClient()
 {
     Client* client = new Client(m_Ecouteur->nextPendingConnection(), this);
     AjouterClient(client);
+
     Console::getInstance()->Imprimer(client->getIP() + " est en ligne");
 }
 
-bool ServeurSynergie::AjouterClient(Client *client)
+void ServeurSynergie::AjouterClient(Client *client)
 {
     m_Clients->insert(client->getID(), client);
 }
 
-bool ServeurSynergie::EnleverClient(Client *client)
+void ServeurSynergie::EnleverClient(Client *client)
 {
-    int nb = m_Clients->remove(client->getID());
-    if (nb >= 1)
-    {
-        return true;
-    }
-    return false;
+    m_Clients->remove(client->getID());
 }
 
 bool ServeurSynergie::NouveauProjet(QString nom)
@@ -109,7 +107,7 @@ bool ServeurSynergie::NouveauProjet(QString nom)
     return dossierProjets.mkdir(nom);
 }
 
-void ServeurSynergie::EnvoyerPaquetATous(BasePaquetServeur *paquet, Client* exception)
+void ServeurSynergie::EnvoyerPaquetATous(BasePaquetServeur* paquet, Client* exception)
 {
     QMapIterator<int, Client*> iterateur(*m_Clients);
     while (iterateur.hasNext())
@@ -135,7 +133,7 @@ void ServeurSynergie::EnvoyerPaquetAListe(QList<Client *>* clients, BasePaquetSe
     }
 }
 
-MangePaquetsServeur* ServeurSynergie::getMangePaquets()
+MangePaquets* ServeurSynergie::getMangePaquets()
 {
     return m_MangePaquets;
 }

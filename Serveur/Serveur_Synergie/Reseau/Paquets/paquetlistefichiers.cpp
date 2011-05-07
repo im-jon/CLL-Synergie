@@ -9,7 +9,8 @@ PaquetListeFichiers::PaquetListeFichiers()
     *m_Stream << ServeurSynergie::getInstance()->getProjet()->getFichiers()->count();
 
     QMapIterator<int, Fichier*> iterateur(*ServeurSynergie::getInstance()->getProjet()->getFichiers());
-    while (iterateur.hasNext()) {
+    while (iterateur.hasNext())
+    {
         iterateur.next();
         *m_Stream << iterateur.key();
         *m_Stream << iterateur.value()->getChemin();

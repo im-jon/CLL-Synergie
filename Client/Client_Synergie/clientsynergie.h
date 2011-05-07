@@ -5,7 +5,7 @@
 #include <QMutex>
 #include <QMap>
 #include "Reseau/connexion.h"
-#include "Reseau/mangepaquetclient.h"
+#include "Reseau/mangepaquets.h"
 #include "collegue.h"
 #include "feuille.h"
 
@@ -22,7 +22,7 @@ public:
     void DeconnexionCollegue(int id);
 
     Connexion* getConnexion();
-    MangePaquetClient* getMangePaquets();
+    MangePaquets* getMangePaquets();
     Collegue* getCollegue(int id);
     int getFeuille(Feuille* feuille);
     Feuille* getFeuille(int id);

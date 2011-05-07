@@ -19,7 +19,6 @@ SOURCES += main.cpp\
     serveursynergie.cpp \
     Reseau/client.cpp \
     Console/Commandes/demarrer.cpp \
-    Reseau/mangepaquetsserveur.cpp \
     Reseau/Paquets/paquetenvoicollegues.cpp \
     Reseau/Paquets/basepaquetserveur.cpp \
     Console/Commandes/collegues.cpp \
@@ -29,11 +28,12 @@ SOURCES += main.cpp\
     Reseau/Paquets/paquetdeconnexioncollegue.cpp \
     Reseau/Paquets/paquetouverturefichier.cpp \
     Reseau/Paquets/paquetdonnees.cpp \
-    Reseau/transfer.cpp \
     fichier.cpp \
     Reseau/Paquets/paquetinsertiontexte.cpp \
     Reseau/Paquets/paqueteffacementtexte.cpp \
-    projet.cpp
+    projet.cpp \
+    Reseau/transfer.cpp \
+    Reseau/mangepaquets.cpp
 
 HEADERS  += fenetreprincipale.h \
     Console/console.h \
@@ -43,7 +43,6 @@ HEADERS  += fenetreprincipale.h \
     serveursynergie.h \
     Reseau/client.h \
     Console/Commandes/demarrer.h \
-    Reseau/mangepaquetsserveur.h \
     Reseau/Paquets/paquetenvoicollegues.h \
     Reseau/Paquets/basepaquetserveur.h \
     Console/Commandes/collegues.h \
@@ -53,10 +52,11 @@ HEADERS  += fenetreprincipale.h \
     Reseau/Paquets/paquetdeconnexioncollegue.h \
     Reseau/Paquets/paquetouverturefichier.h \
     Reseau/Paquets/paquetdonnees.h \
-    Reseau/transfer.h \
     fichier.h \
     Reseau/Paquets/paquetinsertiontexte.h \
     Reseau/Paquets/paqueteffacementtexte.h \
-    projet.h
+    projet.h \
+    Reseau/transfer.h \
+    Reseau/mangepaquets.h
 
 FORMS    += fenetreprincipale.ui
