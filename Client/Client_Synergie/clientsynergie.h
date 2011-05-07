@@ -7,6 +7,7 @@
 #include "Reseau/connexion.h"
 #include "Reseau/mangepaquetclient.h"
 #include "collegue.h"
+#include "feuille.h"
 
 class ClientSynergie : public QObject
 {
@@ -15,15 +16,16 @@ public:
     static ClientSynergie* getInstance();
 
     bool Connecter(QString adresse, int port);
-    void ChangerNom(QString nom);
-    Connexion* getConnexion();
-    MangePaquetClient* getMangePaquets();
-    void AjouterFichier(QString nom, int id);
-    int TrouverFichierParNom(QString nom);
-    QString TrouverFichierParID(int id);
+    void Renommer(QString nom);
+    void AjouterFeuille(QString nom, int id);
     void ConnexionCollegue(Collegue* collegue);
     void DeconnexionCollegue(int id);
-    Collegue* TrouverCollegueParID(int id);
+
+    Connexion* getConnexion();
+    MangePaquetClient* getMangePaquets();
+    Collegue* getCollegue(int id);
+    int getFeuille(Feuille* feuille);
+    Feuille* getFeuille(int id);
 
 private:
     explicit ClientSynergie(QObject *parent = 0);
@@ -32,12 +34,14 @@ private:
 
     QString m_Nom;
     Connexion* m_Connexion;
-    QMap<QString, int>* m_Fichiers;
+    QMap<int, Feuille*>* m_Feuilles;
     QMap<int, Collegue*>* m_Collegues;
 
 signals:
     void siConnexionCollegue(Collegue* collegue);
     void siDeconnexionCollegue(Collegue* collegue);
+    void siAjoutFeuille(Feuille* feuille);
+    void siSupressionFeuille(Feuille* feuille);
 
 public slots:
     void slInsertionTexte(int id, int pos, QString texte);

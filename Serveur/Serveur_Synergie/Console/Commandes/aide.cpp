@@ -14,7 +14,8 @@ QString Aide::Executer(const QStringList& arguments)
     QString retour = "Liste des commandes:";
     BaseCommande* commande;
 
-    for (int i = 0; i < BaseCommande::ListeCommandes->length(); i++) {
+    for (int i = 0; i < BaseCommande::ListeCommandes->length(); i++)
+    {
         commande = BaseCommande::ListeCommandes->at(i);
         retour = retour % "\n" % commande->getMotsCle().first() % "    -    " % commande->getDescription();
     }

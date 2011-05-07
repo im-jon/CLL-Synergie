@@ -14,23 +14,23 @@ public:
 
 private:
     void Reception_ListeCollegues(QDataStream* stream);
-    void Reception_ListeDesFichiers(QDataStream* stream);
+    void Reception_ListeFichiers(QDataStream* stream);
     void Reception_ConnexionCollegue(QDataStream* stream);
     void Reception_DeconnexionCollegue(QDataStream* stream);
     void Reception_OuvertureFichier(QDataStream* stream);
     void Reception_Donnees(QDataStream* stream);
     void Reception_Texte(QDataStream* stream);
     void Reception_EffacementTexte(QDataStream* stream);
-    void Reception_TexteChat(QDataStream* stream);
+    void Reception_MessageChat(QDataStream* stream);
 
 signals:
-    void siNouvelleListeCollegues(QStringList* noms);
-    void siNouvelleListeFichiers(QStringList* noms);
+    void siListeCollegues(QStringList* noms);
+    void siListeFichiers(QStringList* noms);
     void siOuvrirFichier(int id);
-    void siNouvelleDonnees(int id, QString donnees);
-    void siNouveauTexte(int id, int position, QString texte);
+    void siDonnees(int id, QString donnees);
+    void siInsertionTexte(int id, int position, QString texte);
     void siEffacementTexte(int id, int position, int longeur);
-    void siNouveauTexteChat(Collegue* collegue, QString message);
+    void siMessageChat(Collegue* collegue, QString message);
 
 public slots:
 };

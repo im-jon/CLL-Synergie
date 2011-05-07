@@ -8,6 +8,7 @@
 #include <QList>
 #include <qtabbar.h>
 #include "collegue.h"
+#include "feuille.h"
 
 class QsciScintilla;
 class QsciLexer;
@@ -23,34 +24,35 @@ class FenetrePrincipale : public QMainWindow
 public:
     explicit FenetrePrincipale(QWidget *parent = 0);
     ~FenetrePrincipale();
-    void AjouterCollegueListe(Collegue* collegue);
-    QsciScintilla* ChercherEditeurParID(int id);
+
+    QsciScintilla* getEditeur(int id);
+    QsciScintilla* getEditeur(Feuille* feuille);
 
 private:
+    void AjouterCollegue(Collegue* collegue);
+    void AjouterFeuille(Feuille* feuille);
+
     Ui::FenetrePrincipale *ui;
-    QMap<int, QsciScintilla*>* m_FeuillesOuvertes;
     QMap<Collegue*, QListWidgetItem*>* m_Collegues;
+    QMap<Feuille*, QTreeWidgetItem*>* m_Feuilles;
+    QMap<Feuille*, QsciScintilla*>* m_FeuillesOuvertes;
 
 
 private slots:
-
     void on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, int column);
-
     void on_tabFeuilles_currentChanged(int index);
-
     void on_tabFeuilles_tabCloseRequested(int index);
+    void slInsertionTexteEditeur(int position, QString texte);
+    void slEffacementTexteEditeur(int pos, int longeur);
 
-public slots:
     void slConnexionCollegues(Collegue* collegue);
     void slDeconnexionCollegues(Collegue* collegue);
-    void slMiseAJourListeFichiers(QStringList* fichiers);
+    void slAjoutFeuille(Feuille* feuille);
     void slOuvrirFichier(int id);
     void slNouvelleDonnees(int id, QString contenu);
-    void slInsertionTexteEditeur(int position, QString texte);
     void slInsertionTexteServeur(int id, int position, QString texte);
-    void slEffacementTexteEditeur(int pos, int longeur);
     void slEffacementTexteServeur(int id, int position, int longeur);
-    void slNouveauTexteChat(Collegue* collegue, QString message);
+    void slTexteChat(Collegue* collegue, QString message);
 
 signals :
     void siInsertionTexte(int,int,QString);

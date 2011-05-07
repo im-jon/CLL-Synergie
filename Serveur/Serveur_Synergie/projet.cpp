@@ -6,29 +6,47 @@ Projet::Projet(QString nom, QObject *parent) :
 {
     m_Nom = nom;
     m_Fichiers = new QMap<int, Fichier*>;
-    m_Elements = new QStringList;
+
     Initialiser();
 }
 
 void Projet::Initialiser()
 {
     // Rien qui marche la dedans...
-    QRegExp regex("Projets\/.*\/(.*)");
+    QRegExp regex("Projets/" + m_Nom + "/(.*)");
     QDirIterator iterateur(
                 "Projets/" + m_Nom + "/",
-                (QDir::NoDotAndDotDot | QDir::AllEntries),
+                (QDir::NoDotAndDotDot | QDir::Files),
                 QDirIterator::Subdirectories);
-    while (iterateur.hasNext()) {
+    while (iterateur.hasNext())
+    {
         iterateur.next();
         regex.indexIn(iterateur.filePath());
         QString chemin = regex.capturedTexts().at(1);
-        m_Elements->append(chemin);
-        if (iterateur.fileInfo().isFile()) {
-            Fichier* fichier = new Fichier(chemin, this);
-            m_Fichiers->insert(fichier->getID(), fichier);
-        }
+        Fichier* fichier = new Fichier(chemin, this);
+        m_Fichiers->insert(fichier->getID(), fichier);
     }
-    qDebug() << m_Elements->count();
+    qDebug() << "Fichiers: " << m_Fichiers->count();
+}
+
+void Projet::Sauvegarder()
+{
+    QMapIterator<int, Fichier*> iterateur(*m_Fichiers);
+    while (iterateur.hasNext())
+    {
+        iterateur.next();
+        iterateur.value()->Sauvegarder();
+    }
+}
+
+void Projet::Fermer()
+{
+    QMapIterator<int, Fichier*> iterateur(*m_Fichiers);
+    while (iterateur.hasNext())
+    {
+        iterateur.next();
+        iterateur.value()->Fermer();
+    }
 }
 
 void Projet::AjouterFichier(Fichier *fichier)

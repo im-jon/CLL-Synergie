@@ -21,6 +21,12 @@ Fichier::Fichier(QString chemin, QObject *parent) :
     GenerateurID++;
 }
 
+void Fichier::Fermer()
+{
+    Sauvegarder();
+    DechargerContenu();
+}
+
 void Fichier::Sauvegarder()
 {
     if (m_Modifications > 0) {
@@ -45,8 +51,6 @@ void Fichier::ChargerContenu()
 
 void Fichier::DechargerContenu()
 {
-    Sauvegarder();
-
     if (m_Charge) {
         m_Fichier->close();
         m_Contenu = QString::null;
@@ -68,7 +72,7 @@ void Fichier::EnleverClient(Client *client)
     m_Clients->removeOne(client);
 
     if (m_Clients->count() == 0) {
-        DechargerContenu();
+        Fermer();
     }
 }
 

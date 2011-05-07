@@ -18,13 +18,14 @@ SOURCES += main.cpp\
     Reseau/Paquets/paquetchangernom.cpp \
     dlgconnexion.cpp \
     utils.cpp \
-    Reseau/Paquets/paquetouvrirfichier.cpp \
     Reseau/Paquets/paquetreceptiondonnees.cpp \
     clientsynergie.cpp \
     Reseau/Paquets/paquetinsertiontexte.cpp \
     Reseau/Paquets/paqueteffacementtexte.cpp \
     collegue.cpp \
-    Reseau/Paquets/paquetenvoichat.cpp
+    Reseau/Paquets/paquetenvoichat.cpp \
+    feuille.cpp \
+    Reseau/Paquets/paquetouvrirfeuille.cpp
 
 HEADERS  += fenetreprincipale.h \
     Reseau/connexion.h \
@@ -33,13 +34,14 @@ HEADERS  += fenetreprincipale.h \
     Reseau/Paquets/paquetchangernom.h \
     dlgconnexion.h \
     utils.h \
-    Reseau/Paquets/paquetouvrirfichier.h \
     Reseau/Paquets/paquetreceptiondonnees.h \
     clientsynergie.h \
     Reseau/Paquets/paquetinsertiontexte.h \
     Reseau/Paquets/paqueteffacementtexte.h \
     collegue.h \
-    Reseau/Paquets/paquetenvoichat.h
+    Reseau/Paquets/paquetenvoichat.h \
+    feuille.h \
+    Reseau/Paquets/paquetouvrirfeuille.h
 
 FORMS    += fenetreprincipale.ui \
     dlgconnexion.ui

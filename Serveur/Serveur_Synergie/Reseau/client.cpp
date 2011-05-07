@@ -9,15 +9,20 @@
 #include "Paquets/paquetdonnees.h"
 #include "Paquets/paquetdeconnexioncollegue.h"
 
-Client::Client(int id, QTcpSocket* socket)
+int Client::GenerateurID = 1;
+
+Client::Client(QTcpSocket* socket, QObject *parent) :
+    QObject(parent)
 {
-    m_ID = id;
+    m_ID = GenerateurID;
     m_Socket = socket;
     m_Transfers = new QMap<int, Transfer*>;
     m_FichiersOuverts = new QList<Fichier*>();
 
     connect(m_Socket, SIGNAL(readyRead()),this,SLOT(slPretALire()));
     connect(m_Socket,SIGNAL(disconnected()),this,SLOT(slOnDeconnection()));
+
+    GenerateurID++;
 }
 
 void Client::EnvoyerPaquet(BasePaquetServeur* paquet)

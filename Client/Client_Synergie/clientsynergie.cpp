@@ -26,7 +26,7 @@ ClientSynergie::ClientSynergie(QObject *parent) :
     QObject(parent)
 {
     m_Connexion = new Connexion(this);
-    m_Fichiers = new QMap<QString, int>;
+    m_Feuilles = new QMap<int, Feuille*>;
     m_Collegues = new QMap<int, Collegue*>;
 }
 
@@ -35,27 +35,25 @@ bool ClientSynergie::Connecter(QString adresse, int port)
     return m_Connexion->Connecter(adresse, port);
 }
 
-void ClientSynergie::AjouterFichier(QString nom, int id)
+void ClientSynergie::AjouterFeuille(QString nom, int id)
 {
-    m_Fichiers->insert(nom, id);
+    Feuille* feuille = new Feuille(id, nom, this);
+    m_Feuilles->insert(id, feuille);
+
+    emit (siAjoutFeuille(feuille));
 }
 
-int ClientSynergie::TrouverFichierParNom(QString nom)
+Feuille* ClientSynergie::getFeuille(int id)
 {
-    return m_Fichiers->value(nom);
+    return m_Feuilles->value(id);
 }
 
-QString ClientSynergie::TrouverFichierParID(int id)
-{
-    return m_Fichiers->key(id);
-}
-
-Collegue* ClientSynergie::TrouverCollegueParID(int id)
+Collegue* ClientSynergie::getCollegue(int id)
 {
     return m_Collegues->value(id);
 }
 
-void ClientSynergie::ChangerNom(QString nom)
+void ClientSynergie::Renommer(QString nom)
 {
     m_Nom = nom;
 

@@ -36,7 +36,6 @@ private:
     QTcpServer* m_Ecouteur;
     MangePaquetsServeur* m_MangePaquets;
     QMap<int, Client*>* m_Clients;
-    int m_GenerateurIDClient; // Sert à attribuer des nombres d'identification aux clients.
 
 signals:
 

@@ -15,6 +15,7 @@ public:
     static int getGenerateurID();
     explicit Fichier(QString chemin, QObject *parent = 0);
 
+    void Fermer();
     void Sauvegarder();
     void AjouterClient(Client* client);
     void EnleverClient(Client* client);

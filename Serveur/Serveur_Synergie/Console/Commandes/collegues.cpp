@@ -14,14 +14,18 @@ Collegues::Collegues()
 QString Collegues::Executer(const QStringList& arguments)
 {
     QString retour;
-    if (ServeurSynergie::getInstance()->getClients()->count() > 0) {
+    if (ServeurSynergie::getInstance()->getClients()->count() > 0)
+    {
         QMapIterator<int, Client*> iterateur(*ServeurSynergie::getInstance()->getClients());
         retour = "Liste des collègues en ligne :";
-        while (iterateur.hasNext()) {
+        while (iterateur.hasNext())
+        {
             iterateur.next();
             retour = retour % "\n" % QString::number(iterateur.value()->getID()) % " - " % iterateur.value()->getNom() % " (" % iterateur.value()->getIP() % ")";
         }
-    } else {
+    }
+    else
+    {
         retour = "Il n'y à aucun collègue en ligne";
     }
     return retour;

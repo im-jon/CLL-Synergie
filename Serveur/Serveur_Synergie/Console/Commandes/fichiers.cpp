@@ -15,17 +15,21 @@ Fichiers::Fichiers()
 QString Fichiers::Executer(const QStringList& arguments)
 {
     QString retour;
-    if (ServeurSynergie::getInstance()->getProjet()->getFichiers()->count() > 0) {
+    if (ServeurSynergie::getInstance()->getProjet()->getFichiers()->count() > 0)
+    {
         QMapIterator<int, Fichier*> iterateur(*ServeurSynergie::getInstance()->getProjet()->getFichiers());
         retour = "Liste des fichiers du projet :";
-        while (iterateur.hasNext()) {
+        while (iterateur.hasNext())
+        {
             iterateur.next();
             retour = retour %
                     "\n" % iterateur.value()->getChemin() %
                     " (" % QString::number(iterateur.key()) %
                     ") Clients: " % QString::number(iterateur.value()->getClients()->count());
         }
-    } else {
+    }
+    else
+    {
         retour = "Il n'y à aucun fichiers dans le projet actuel";
     }
     return retour;

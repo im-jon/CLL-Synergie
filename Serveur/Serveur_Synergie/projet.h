@@ -12,17 +12,19 @@ class Projet : public QObject
     Q_OBJECT
 public:
     explicit Projet(QString nom, QObject *parent = 0);
+
+    void Fermer();
+    void Sauvegarder();
     QString getNom();
-    void Initialiser();
     Fichier* getFichier(int id);
     QMap<int, Fichier*>* getFichiers();
 
 private:
+    void Initialiser();
     void AjouterFichier(Fichier* fichier);
     void EnleverFichier(int id);
 
     QString m_Nom;
-    QStringList* m_Elements;
     QMap<int, Fichier*>* m_Fichiers;
 
 signals:

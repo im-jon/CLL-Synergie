@@ -3,7 +3,7 @@
 #include "Reseau/connexion.h"
 #include <QBoxLayout>
 #include <../QScintilla/qscintilla/Qsci/qsciscintilla.h>
-#include "Reseau/Paquets/paquetouvrirfichier.h"
+#include "Reseau/Paquets/paquetouvrirfeuille.h"
 #include <QStringList>
 #include <QListWidgetItem>
 #include <QTreeWidgetItem>
@@ -18,19 +18,20 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    m_FeuillesOuvertes = new QMap<int, QsciScintilla*>;
     m_Collegues = new QMap<Collegue*, QListWidgetItem*>;
+    m_Feuilles = new QMap<Feuille*, QTreeWidgetItem*>;
+    m_FeuillesOuvertes = new QMap<Feuille*, QsciScintilla*>;
 
-    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siNouvelleListeFichiers(QStringList*)), this, SLOT(slMiseAJourListeFichiers(QStringList*)));
     connect (ClientSynergie::getInstance(), SIGNAL(siConnexionCollegue(Collegue*)), this, SLOT(slConnexionCollegues(Collegue*)));
     connect (ClientSynergie::getInstance(), SIGNAL(siDeconnexionCollegue(Collegue*)), this, SLOT(slDeconnexionCollegues(Collegue*)));
+    connect (ClientSynergie::getInstance(), SIGNAL(siAjoutFeuille(Feuille*)), this, SLOT(slAjoutFeuille(Feuille*)));
     connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siOuvrirFichier(int)), this, SLOT(slOuvrirFichier(int)));
-    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siNouvelleDonnees(int, QString)), this, SLOT(slNouvelleDonnees(int, QString)));
-    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siInsertionTexteServeur(int, int, QString)), this, SLOT(slNouveauTexte(int, int, QString)));
+    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siDonnees(int, QString)), this, SLOT(slNouvelleDonnees(int, QString)));
+    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siInsertionTexte(int, int, QString)), this, SLOT(slInsertionTexteServeur(int, int, QString)));
     connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siEffacementTexte(int, int, int)), this, SLOT(slEffacementTexteServeur(int, int, int)));
-    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siNouveauTexteChat(Collegue*, QString)), this, SLOT(slNouveauTexteChat(Collegue*, QString)));
+    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siTexteChat(Collegue*, QString)), this, SLOT(slTexteChat(Collegue*, QString)));
 
-    connect (this, SIGNAL(siInsertionTexte(int, int, QString)), ClientSynergie::getInstance(), SLOT(slOnInsertionTexte(int, int, QString)));
+    connect (this, SIGNAL(siInsertionTexte(int, int, QString)), ClientSynergie::getInstance(), SLOT(slInsertionTexte(int, int, QString)));
     connect (this, SIGNAL(siEffacementTexte(int, int, int)), ClientSynergie::getInstance(), SLOT(slEffacementTexte(int, int, int)));
 }
 
@@ -39,16 +40,24 @@ FenetrePrincipale::~FenetrePrincipale()
     delete ui;
 }
 
-void FenetrePrincipale::AjouterCollegueListe(Collegue* collegue)
+void FenetrePrincipale::AjouterCollegue(Collegue* collegue)
 {
     QListWidgetItem* item = new QListWidgetItem(QIcon(":/Icones/utilisateur.png"), collegue->getNom());
     ui->lstCollegues->addItem(item);
     m_Collegues->insert(collegue, item);
 }
 
+void FenetrePrincipale::AjouterFeuille(Feuille *feuille)
+{
+    QTreeWidgetItem* item = new QTreeWidgetItem();
+    item->setText(0, feuille->getNom());
+    ui->treeProjet->addTopLevelItem(item);
+    m_Feuilles->insert(feuille, item);
+}
+
 void FenetrePrincipale::slConnexionCollegues(Collegue *collegue)
 {
-    AjouterCollegueListe(collegue);
+    AjouterCollegue(collegue);
 }
 
 void FenetrePrincipale::slDeconnexionCollegues(Collegue* collegue)
@@ -57,53 +66,19 @@ void FenetrePrincipale::slDeconnexionCollegues(Collegue* collegue)
     m_Collegues->remove(collegue);
 }
 
-void FenetrePrincipale::slMiseAJourListeFichiers(QStringList* fichiers)
-{
-    ui->treeProjet->clear();
-
-    for (int i = 0; i < fichiers->length(); i++)
-    {
-        QStringList parties = fichiers->at(i).split('/');
-        QString partie;
-        QTreeWidgetItem* parent;
-
-        foreach (partie, parties)
-        {
-            QList<QTreeWidgetItem*> resultats = ui->treeProjet->findItems(partie, Qt::MatchExactly);
-
-            if (resultats.count() > 0)
-            {
-                parent = resultats.first();
-            }
-        }
-
-        QTreeWidgetItem* item = new QTreeWidgetItem();
-        item->setText(0, parties.last());
-
-        if (parent)
-        {
-            parent->addChild(item);
-        }
-        else
-        {
-            ui->treeProjet->addTopLevelItem(item);
-        }
-        parent = item;
-    }
-}
-
 void FenetrePrincipale::on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, int column)
 {
     if (item->childCount() == 0)
     {
-        int id = ClientSynergie::getInstance()->TrouverFichierParNom(item->text(column));
-        if (!m_FeuillesOuvertes->contains(id))
+        Feuille* feuille = m_Feuilles->key(item);
+
+        if (!m_FeuillesOuvertes->contains(feuille))
         {
-            ClientSynergie::getInstance()->getConnexion()->EnvoyerPaquet(new PaquetOuvrirFichier(id));
+            ClientSynergie::getInstance()->getConnexion()->EnvoyerPaquet(new PaquetOuvrirFeuille(feuille->getID()));
         }
         else
         {
-            int index = ui->tabFeuilles->indexOf(m_FeuillesOuvertes->value(id));
+            int index = ui->tabFeuilles->indexOf(m_FeuillesOuvertes->value(feuille));
             ui->tabFeuilles->setCurrentIndex(index);
         }
     }
@@ -111,28 +86,29 @@ void FenetrePrincipale::on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, i
 
 void FenetrePrincipale::on_tabFeuilles_currentChanged(int index)
 {
-    QsciLexer* lexer = ((QsciScintilla*)ui->tabFeuilles->currentWidget())->lexer();
-    if (lexer)
+    if (ui->tabFeuilles->widget(index))
     {
-        ui->lblLangage->setText(lexer->language());
-    }
+        QsciLexer* lexer = ((QsciScintilla*)ui->tabFeuilles->currentWidget())->lexer();
+        if (lexer)
+        {
+            ui->lblLangage->setText(lexer->language());
+        }
 
-    // Envoyer le paquet pour changer la feuille active.
+        // Envoyer le paquet pour changer la feuille active.
+    }
 }
 
 void FenetrePrincipale::on_tabFeuilles_tabCloseRequested(int index)
 {
-    if (ui->tabFeuilles->count() > 1)
-    {
-        m_FeuillesOuvertes->remove(m_FeuillesOuvertes->key((QsciScintilla*)ui->tabFeuilles->widget(index)));
-        ui->tabFeuilles->removeTab(index);
-    }
+    QsciScintilla* editeur = (QsciScintilla*)ui->tabFeuilles->widget(index);
+    m_FeuillesOuvertes->remove(m_FeuillesOuvertes->key(editeur));
+    delete editeur;
 }
 
 void FenetrePrincipale::slOuvrirFichier(int id)
 {
-    QString fichier = ClientSynergie::getInstance()->TrouverFichierParID(id);
-    QString extension = QFileInfo(fichier).suffix();
+    Feuille* feuille = ClientSynergie::getInstance()->getFeuille(id);
+    QString extension = QFileInfo(feuille->getNom()).suffix();
 
     QsciScintilla* editeur = new QsciScintilla();
     editeur->setMarginLineNumbers(1, true);
@@ -146,46 +122,52 @@ void FenetrePrincipale::slOuvrirFichier(int id)
     }
     editeur->setAutoIndent(true);
 
-    int index = ui->tabFeuilles->addTab(editeur, fichier);
+    int index = ui->tabFeuilles->addTab(editeur, feuille->getNom());
     ui->tabFeuilles->setCurrentIndex(index);
-    m_FeuillesOuvertes->insert(id, editeur);
-    connect (editeur,SIGNAL(textInserted(int, QString)),this,SLOT(slInsertionTexteEditeur(int, QString)));
+    m_FeuillesOuvertes->insert(feuille, editeur);
+
+    connect (editeur, SIGNAL(textInserted(int, QString)), this, SLOT(slInsertionTexteEditeur(int, QString)));
     connect (editeur, SIGNAL(textDeleted(int, int)), this, SLOT(slEffacementTexteEditeur(int, int)));
 }
 
 void FenetrePrincipale::slNouvelleDonnees(int id, QString contenu)
 {
-    QsciScintilla* editeur = ChercherEditeurParID(id);
+    QsciScintilla* editeur = getEditeur(id);
     editeur->insertAtPosMecha(contenu, editeur->length() - 1);
 }
 
 void FenetrePrincipale::slInsertionTexteEditeur(int position, QString texte)
 {
-    int id = m_FeuillesOuvertes->key((QsciScintilla*)ui->tabFeuilles->currentWidget());
+    int id = m_FeuillesOuvertes->key((QsciScintilla*)ui->tabFeuilles->currentWidget())->getID();
 
     emit (siInsertionTexte(id, position, texte));
 }
 
-QsciScintilla* FenetrePrincipale::ChercherEditeurParID(int id)
+QsciScintilla* FenetrePrincipale::getEditeur(int id)
 {
-    return m_FeuillesOuvertes->value(id);
+    return getEditeur(ClientSynergie::getInstance()->getFeuille(id));
+}
+
+QsciScintilla* FenetrePrincipale::getEditeur(Feuille* feuille)
+{
+    return m_FeuillesOuvertes->value(feuille);
 }
 
 void FenetrePrincipale::slInsertionTexteServeur(int id, int position, QString texte)
 {
-    ChercherEditeurParID(id)->insertAtPosMecha(texte, position);
+    getEditeur(id)->insertAtPosMecha(texte, position);
 }
 
 void FenetrePrincipale::slEffacementTexteEditeur(int pos, int longeur)
 {
-    int id = m_FeuillesOuvertes->key((QsciScintilla*)ui->tabFeuilles->currentWidget());
+    int id = m_FeuillesOuvertes->key((QsciScintilla*)ui->tabFeuilles->currentWidget())->getID();
 
     emit (siEffacementTexte(id, pos, longeur));
 }
 
 void FenetrePrincipale::slEffacementTexteServeur(int id, int position, int longeur)
 {
-    QsciScintilla* editeur = ChercherEditeurParID(id);
+    QsciScintilla* editeur = getEditeur(id);
 
     int ligneDebut;
     int indexDebut;
@@ -199,8 +181,13 @@ void FenetrePrincipale::slEffacementTexteServeur(int id, int position, int longe
     editeur->removeSelectedTextMecha();
 }
 
-void FenetrePrincipale::slNouveauTexteChat(Collegue* collegue, QString message)
+void FenetrePrincipale::slTexteChat(Collegue* collegue, QString message)
 {
     QString ligne = "\n" + collegue->getNom() + " : " + message;
     ui->txtConversation->append(ligne);
+}
+
+void FenetrePrincipale::slAjoutFeuille(Feuille *feuille)
+{
+    AjouterFeuille(feuille);
 }

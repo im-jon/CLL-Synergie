@@ -16,7 +16,7 @@ class Client : public QObject
 {
     Q_OBJECT
 public:
-    explicit Client(int id, QTcpSocket* socket);
+    explicit Client(QTcpSocket* socket, QObject *parent = 0);
 
     void Deconnecter();
     void EnvoyerPaquet(BasePaquetServeur* paquet);
@@ -34,6 +34,8 @@ public:
 private:
     void LirePaquet();
     void EnvoyerFichier(Fichier* fichier);
+
+    static int GenerateurID;
 
     int m_ID;
     QString m_Nom;

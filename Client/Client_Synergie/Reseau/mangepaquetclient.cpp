@@ -17,14 +17,14 @@ void MangePaquetClient::Interpreter(QDataStream* stream)
     quint8 id;
 
     *stream >> id;
-    qDebug() << id;
+
     switch (id)
     {
         case 1:
             Reception_ListeCollegues(stream);
             break;
         case 2:
-            Reception_ListeDesFichiers(stream);
+            Reception_ListeFichiers(stream);
             break;
         case 3:
             Reception_ConnexionCollegue(stream);
@@ -45,7 +45,7 @@ void MangePaquetClient::Interpreter(QDataStream* stream)
             Reception_Donnees(stream);
             break;
         case 16:
-            Reception_TexteChat(stream);
+            Reception_MessageChat(stream);
             break;
         default:
             qDebug() << "Réception d'un paquet inconnu #" << id;
@@ -59,7 +59,7 @@ void MangePaquetClient::Reception_ListeCollegues(QDataStream* stream)
 
     *stream >> nombre;
 
-    for(int i = 0; i < nombre; i++)
+    for (int i = 0; i < nombre; i++)
     {
         int id;
         QString nom;
@@ -69,18 +69,15 @@ void MangePaquetClient::Reception_ListeCollegues(QDataStream* stream)
 
         ClientSynergie::getInstance()->ConnexionCollegue(new Collegue(id, nom, this));
     }
-
-
 }
 
-void MangePaquetClient::Reception_ListeDesFichiers(QDataStream* stream)
+void MangePaquetClient::Reception_ListeFichiers(QDataStream* stream)
 {
-    QStringList* fichiers = new QStringList;
     int nombre;
 
     *stream >> nombre;
 
-    for(int i = 0; i < nombre; i++)
+    for (int i = 0; i < nombre; i++)
     {
         int id;
         QString nom;
@@ -88,11 +85,8 @@ void MangePaquetClient::Reception_ListeDesFichiers(QDataStream* stream)
         *stream >> id;
         *stream >> nom;
 
-        fichiers->append(nom);
-        ClientSynergie::getInstance()->AjouterFichier(nom, id);
+        ClientSynergie::getInstance()->AjouterFeuille(nom, id);
     }
-
-    emit (siNouvelleListeFichiers(fichiers));
 }
 
 void MangePaquetClient::Reception_ConnexionCollegue(QDataStream *stream)
@@ -132,7 +126,7 @@ void MangePaquetClient::Reception_Donnees(QDataStream *stream)
 
     ClientSynergie::getInstance()->getConnexion()->EnvoyerPaquet(new PaquetReceptionDonnees(id));
 
-    emit(siNouvelleDonnees(id, donnees));
+    emit(siDonnees(id, donnees));
 }
 
 void MangePaquetClient::Reception_Texte(QDataStream *stream)
@@ -145,7 +139,7 @@ void MangePaquetClient::Reception_Texte(QDataStream *stream)
     *stream >> position;
     *stream >> texte;
 
-    emit (siNouveauTexte(id, position, texte));
+    emit (siInsertionTexte(id, position, texte));
 
 }
 
@@ -162,7 +156,7 @@ void MangePaquetClient::Reception_EffacementTexte(QDataStream *stream)
     emit (siEffacementTexte(id, position, longeur));
 }
 
-void MangePaquetClient::Reception_TexteChat(QDataStream *stream)
+void MangePaquetClient::Reception_MessageChat(QDataStream *stream)
 {
     int id;
     QString message;
@@ -170,7 +164,7 @@ void MangePaquetClient::Reception_TexteChat(QDataStream *stream)
     *stream >> id;
     *stream >> message;
 
-    Collegue* collegue = ClientSynergie::getInstance()->TrouverCollegueParID(id);
+    Collegue* collegue = ClientSynergie::getInstance()->getCollegue(id);
 
-    emit (siNouveauTexteChat(collegue, message));
+    emit (siMessageChat(collegue, message));
 }

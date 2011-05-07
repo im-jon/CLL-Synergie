@@ -16,7 +16,9 @@ ServeurSynergie* ServeurSynergie::getInstance()
         mutex.lock();
 
         if (!m_Instance)
+        {
             m_Instance = new ServeurSynergie;
+        }
         mutex.unlock();
     }
 
@@ -26,7 +28,6 @@ ServeurSynergie* ServeurSynergie::getInstance()
 ServeurSynergie::ServeurSynergie(QObject *parent) :
     QObject(parent)
 {
-    m_GenerateurIDClient = 1;
     m_Ecouteur = new QTcpServer(this);
     m_Clients = new QMap<int, Client*>;
     m_MangePaquets = new MangePaquetsServeur(this);
@@ -34,11 +35,15 @@ ServeurSynergie::ServeurSynergie(QObject *parent) :
     connect (m_Ecouteur, SIGNAL(newConnection()), this, SLOT(slNouveauClient()));
 
     QDir dossierProjets("Projets");
-    if (dossierProjets.exists()) {
-        if (dossierProjets.entryList(QDir::AllDirs).count() == 2) {
+    if (dossierProjets.exists())
+    {
+        if (dossierProjets.entryList(QDir::AllDirs | QDir::NoDotAndDotDot).count() == 0)
+        {
             Console::getInstance()->Imprimer("Le répertoire de projets est vide");
         }
-    } else {
+    }
+    else
+    {
         QDir().mkdir("Projets");
     }
 
@@ -47,7 +52,8 @@ ServeurSynergie::ServeurSynergie(QObject *parent) :
 
 bool ServeurSynergie::Demarrer()
 {
-    if (m_Ecouteur->listen(QHostAddress::Any, 9001)) {
+    if (m_Ecouteur->listen(QHostAddress::Any, 9001))
+    {
         Console::getInstance()->Imprimer("Le serveur est en ligne");
         return true;
     }
@@ -57,32 +63,34 @@ bool ServeurSynergie::Demarrer()
 
 bool ServeurSynergie::Arreter()
 {
-    if (m_Ecouteur->isListening()) {
+    if (m_Ecouteur->isListening())
+    {
         m_Ecouteur->close();
         Console::getInstance()->Imprimer("Le serveur est hors ligne");
         return true;
     }
+    m_Projet->Fermer();
     Console::getInstance()->Imprimer("Le serveur est incapable de se déconnecter");
     return false;
 }
 
 void ServeurSynergie::slNouveauClient()
 {
-    Client* client = new Client(m_GenerateurIDClient, m_Ecouteur->nextPendingConnection());
+    Client* client = new Client(m_Ecouteur->nextPendingConnection(), this);
     AjouterClient(client);
     Console::getInstance()->Imprimer(client->getIP() + " est en ligne");
 }
 
 bool ServeurSynergie::AjouterClient(Client *client)
 {
-    m_Clients->insert(m_GenerateurIDClient, client);
-    m_GenerateurIDClient++;
+    m_Clients->insert(client->getID(), client);
 }
 
 bool ServeurSynergie::EnleverClient(Client *client)
 {
     int nb = m_Clients->remove(client->getID());
-    if (nb >= 1) {
+    if (nb >= 1)
+    {
         return true;
     }
     return false;
@@ -91,8 +99,10 @@ bool ServeurSynergie::EnleverClient(Client *client)
 bool ServeurSynergie::NouveauProjet(QString nom)
 {
     QDir dossierProjets("Projets");
-    if (!dossierProjets.exists()) {
-        if (!QDir().mkdir("Projets")) {
+    if (!dossierProjets.exists())
+    {
+        if (!QDir().mkdir("Projets"))
+        {
             return false;
         }
     }
@@ -102,9 +112,11 @@ bool ServeurSynergie::NouveauProjet(QString nom)
 void ServeurSynergie::EnvoyerPaquetATous(BasePaquetServeur *paquet, Client* exception)
 {
     QMapIterator<int, Client*> iterateur(*m_Clients);
-    while (iterateur.hasNext()) {
+    while (iterateur.hasNext())
+    {
         iterateur.next();
-        if (iterateur.value() != exception) {
+        if (iterateur.value() != exception)
+        {
             iterateur.value()->EnvoyerPaquet(paquet);
         }
     }
@@ -114,8 +126,10 @@ void ServeurSynergie::EnvoyerPaquetATous(BasePaquetServeur *paquet, Client* exce
 void ServeurSynergie::EnvoyerPaquetAListe(QList<Client *>* clients, BasePaquetServeur *paquet, Client *exception)
 {
     Client* client;
-    foreach (client, *clients) {
-        if (client != exception) {
+    foreach (client, *clients)
+    {
+        if (client != exception)
+        {
             client->EnvoyerPaquet(paquet);
         }
     }
