@@ -19,6 +19,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
 FenetrePrincipale::~FenetrePrincipale()
 {
     ServeurSynergie::getInstance()->Arreter();
+
     delete ui;
 }
 

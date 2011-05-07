@@ -19,10 +19,10 @@ Client::Client(QTcpSocket* socket, QObject* parent) :
     m_Transfers = new QMap<int, Transfer*>;
     m_FichiersOuverts = new QList<Fichier*>;
 
+    GenerateurID++;
+
     connect(m_Socket, SIGNAL(readyRead()), this, SLOT(slPretALire()));
     connect(m_Socket, SIGNAL(disconnected()), this, SLOT(slDeconnection()));
-
-    GenerateurID++;
 }
 
 void Client::EnvoyerPaquet(BasePaquetServeur* paquet)
@@ -33,12 +33,8 @@ void Client::EnvoyerPaquet(BasePaquetServeur* paquet)
 
 void Client::LirePaquet()
 {
-    QByteArray bufferTaille;
-    QDataStream streamTaille(&bufferTaille, QIODevice::ReadOnly);
-
-    int taille = 0;
-    bufferTaille = m_Socket->read(4);
-    streamTaille >> taille;
+    int taille;
+    memcpy(&taille, m_Socket->read(sizeof(taille)), sizeof(taille));
 
     QByteArray buffer;
     QDataStream stream(&buffer, QIODevice::ReadOnly);

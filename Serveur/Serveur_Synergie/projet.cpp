@@ -26,7 +26,6 @@ void Projet::Initialiser()
         Fichier* fichier = new Fichier(chemin, this);
         m_Fichiers->insert(fichier->getID(), fichier);
     }
-    qDebug() << "Fichiers: " << m_Fichiers->count();
 }
 
 void Projet::Sauvegarder()

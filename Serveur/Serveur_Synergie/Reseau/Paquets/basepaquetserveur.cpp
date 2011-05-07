@@ -10,10 +10,8 @@ BasePaquetServeur::BasePaquetServeur(qint8 id)
 
 QByteArray BasePaquetServeur::getBuffer()
 {
-    int number = m_Buffer.length();
-    QByteArray ba;
-    QDataStream* stream = new QDataStream(&ba, QIODevice::WriteOnly);
-    *stream << number;
+    int taille = m_Buffer.length();
+    QByteArray ba(reinterpret_cast<const char*>(&taille), sizeof(taille));
     m_Buffer.insert(0, ba);
     return m_Buffer;
 }

@@ -16,6 +16,7 @@ QString Transfer::LireBloc()
     {
         emit (siFin(m_Fichier->getID()));
     }
+
     return donnees;
 }
 

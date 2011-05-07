@@ -19,12 +19,8 @@ bool Connexion::Connecter(QString addr, int port)
 
 void Connexion::LirePaquet()
 {
-    QByteArray bufferTaille;
-    QDataStream streamTaille(&bufferTaille, QIODevice::ReadOnly);
-
-    int taille = 0;
-    bufferTaille = m_Socket->read(4);
-    streamTaille >> taille;
+    int taille;
+    memcpy(&taille, m_Socket->read(sizeof(taille)), sizeof(taille));
 
     QByteArray buffer;
     QDataStream stream(&buffer, QIODevice::ReadOnly);
