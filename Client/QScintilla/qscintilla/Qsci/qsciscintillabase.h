@@ -865,7 +865,7 @@ public:
         //!
         SCI_CALLTIPUSESTYLE = 2212,
 
-        SCI_REPLACESELMECHA = 2213,
+        SCI_REMOVEMECHA = 2213,
 
         //!
         SCI_VISIBLEFROMDOCLINE = 2220,

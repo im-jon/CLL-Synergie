@@ -29,7 +29,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siDonnees(int, QString)), this, SLOT(slNouvelleDonnees(int, QString)));
     connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siInsertionTexte(int, int, QString)), this, SLOT(slInsertionTexteServeur(int, int, QString)));
     connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siEffacementTexte(int, int, int)), this, SLOT(slEffacementTexteServeur(int, int, int)));
-    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siTexteChat(Collegue*, QString)), this, SLOT(slTexteChat(Collegue*, QString)));
+    connect (ClientSynergie::getInstance()->getMangePaquets(), SIGNAL(siMessageChat(Collegue*, QString)), this, SLOT(slMessageChat(Collegue*, QString)));
 
     connect (this, SIGNAL(siInsertionTexte(int, int, QString)), ClientSynergie::getInstance(), SLOT(slInsertionTexte(int, int, QString)));
     connect (this, SIGNAL(siEffacementTexte(int, int, int)), ClientSynergie::getInstance(), SLOT(slEffacementTexte(int, int, int)));
@@ -168,20 +168,10 @@ void FenetrePrincipale::slEffacementTexteEditeur(int pos, int longeur)
 void FenetrePrincipale::slEffacementTexteServeur(int id, int position, int longeur)
 {
     QsciScintilla* editeur = getEditeur(id);
-
-    int ligneDebut;
-    int indexDebut;
-    editeur->lineIndexFromPosition(position, &ligneDebut, &indexDebut);
-
-    int ligneFin;
-    int indexFin;
-    editeur->lineIndexFromPosition(position + longeur, &ligneFin, &indexFin);
-
-    editeur->setSelection(ligneDebut, indexDebut, ligneFin, indexFin);
-    editeur->removeSelectedTextMecha();
+    editeur->remove(position, longeur);
 }
 
-void FenetrePrincipale::slTexteChat(Collegue* collegue, QString message)
+void FenetrePrincipale::slMessageChat(Collegue* collegue, QString message)
 {
     QString ligne = "\n" + collegue->getNom() + " : " + message;
     ui->txtConversation->append(ligne);

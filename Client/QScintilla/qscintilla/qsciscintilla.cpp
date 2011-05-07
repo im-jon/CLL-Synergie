@@ -2117,9 +2117,9 @@ void QsciScintilla::removeSelectedText()
     SendScintilla(SCI_REPLACESEL, "");
 }
 
-void QsciScintilla::removeSelectedTextMecha()
+void QsciScintilla::remove(int pos, int len)
 {
-    SendScintilla(SCI_REPLACESELMECHA, "");
+    SendScintilla(SCI_REMOVEMECHA, pos, len);
 }
 
 

@@ -52,7 +52,7 @@ private slots:
     void slNouvelleDonnees(int id, QString contenu);
     void slInsertionTexteServeur(int id, int position, QString texte);
     void slEffacementTexteServeur(int id, int position, int longeur);
-    void slTexteChat(Collegue* collegue, QString message);
+    void slMessageChat(Collegue* collegue, QString message);
 
 signals :
     void siInsertionTexte(int,int,QString);
