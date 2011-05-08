@@ -1,4 +1,4 @@
-#include "mangepaquets.h"
+#include "depaqueteur.h"
 #include <QDataStream>
 #include "Console/console.h"
 #include "Paquets/paquetenvoicollegues.h"
@@ -10,12 +10,12 @@
 #include "serveur.h"
 #include "fichier.h"
 
-MangePaquets::MangePaquets(QObject* parent) :
+Depaqueteur::Depaqueteur(QObject* parent) :
     QObject(parent)
 {
 }
 
-void MangePaquets::Interpreter(Client* client, QDataStream& stream)
+void Depaqueteur::Interpreter(Client* client, QDataStream& stream)
 {
     quint8 id;
 
@@ -44,7 +44,7 @@ void MangePaquets::Interpreter(Client* client, QDataStream& stream)
     }
 }
 
-void MangePaquets::Reception_ChangerNom(Client* client, QDataStream& stream)
+void Depaqueteur::Reception_ChangerNom(Client* client, QDataStream& stream)
 {
     QString nom;
 
@@ -57,7 +57,7 @@ void MangePaquets::Reception_ChangerNom(Client* client, QDataStream& stream)
     Serveur::Instance()->getClients()->EnvoyerPaquetATous(new PaquetConnexionCollegue(client), client);
 }
 
-void MangePaquets::Reception_InsertionTexte(Client* client, QDataStream& stream)
+void Depaqueteur::Reception_InsertionTexte(Client* client, QDataStream& stream)
 {
     int id;
     int position;
@@ -72,7 +72,7 @@ void MangePaquets::Reception_InsertionTexte(Client* client, QDataStream& stream)
 
 }
 
-void MangePaquets::Reception_EffacementTexte(Client* client, QDataStream& stream)
+void Depaqueteur::Reception_EffacementTexte(Client* client, QDataStream& stream)
 {
     int id;
     int position;
@@ -86,7 +86,7 @@ void MangePaquets::Reception_EffacementTexte(Client* client, QDataStream& stream
     fichier->EffacerTexte(position, longeur, client);
 }
 
-void MangePaquets::Reception_OuvrirFichier(Client* client, QDataStream& stream)
+void Depaqueteur::Reception_OuvrirFichier(Client* client, QDataStream& stream)
 {
     int id;
 
@@ -95,7 +95,7 @@ void MangePaquets::Reception_OuvrirFichier(Client* client, QDataStream& stream)
     client->OuvrirFichier(Serveur::Instance()->getProjet()->getFichier(id));
 }
 
-void MangePaquets::Reception_DonneesRecues(Client* client, QDataStream& stream)
+void Depaqueteur::Reception_DonneesRecues(Client* client, QDataStream& stream)
 {
     int id;
 

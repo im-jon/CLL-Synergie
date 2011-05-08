@@ -8,6 +8,7 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+
 #ifdef SCI_NAMESPACE
 namespace Scintilla {
 #endif
@@ -165,6 +166,7 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	int multiPasteMode;
 	bool additionalCaretsBlink;
 	bool additionalCaretsVisible;
+
 
 	int virtualSpaceOptions;
 

@@ -31,10 +31,10 @@ SOURCES += main.cpp\
     Reseau/Paquets/paqueteffacementtexte.cpp \
     projet.cpp \
     Reseau/transfer.cpp \
-    Reseau/mangepaquets.cpp \
     clients.cpp \
     serveur.cpp \
-    Reseau/Paquets/basepaquet.cpp
+    Reseau/Paquets/basepaquet.cpp \
+    Reseau/depaqueteur.cpp
 
 HEADERS  += fenetreprincipale.h \
     Console/console.h \
@@ -56,9 +56,9 @@ HEADERS  += fenetreprincipale.h \
     Reseau/Paquets/paqueteffacementtexte.h \
     projet.h \
     Reseau/transfer.h \
-    Reseau/mangepaquets.h \
     clients.h \
     serveur.h \
-    Reseau/Paquets/basepaquet.h
+    Reseau/Paquets/basepaquet.h \
+    Reseau/depaqueteur.h
 
 FORMS    += fenetreprincipale.ui

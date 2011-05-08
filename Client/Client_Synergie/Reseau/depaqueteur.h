@@ -1,15 +1,15 @@
-#ifndef MANGEPAQUETS_H
-#define MANGEPAQUETS_H
+#ifndef DEPAQUETEUR_H
+#define DEPAQUETEUR_H
 
 #include <QObject>
 #include <QMap>
 #include "collegue.h"
 
-class MangePaquets : public QObject
+class Depaqueteur : public QObject
 {
     Q_OBJECT
 public:
-    explicit MangePaquets(QObject* parent = 0);
+    explicit Depaqueteur(QObject* parent = 0);
     void Interpreter(QDataStream&);
 
 private:
@@ -35,4 +35,4 @@ signals:
 public slots:
 };
 
-#endif // MANGEPAQUETS_H
+#endif // DEPAQUETEUR_H

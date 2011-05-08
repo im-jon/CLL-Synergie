@@ -1,14 +1,14 @@
-#ifndef MANGEPAQUETS_H
-#define MANGEPAQUETS_H
+#ifndef DEPAQUETEUR_H
+#define DEPAQUETEUR_H
 
 #include <QObject>
 #include "client.h"
 
-class MangePaquets : public QObject
+class Depaqueteur : public QObject
 {
     Q_OBJECT
 public:
-    explicit MangePaquets(QObject* parent = 0);
+    explicit Depaqueteur(QObject* parent = 0);
     void Interpreter(Client* client, QDataStream& stream);
 
 private:
@@ -24,4 +24,4 @@ public slots:
 
 };
 
-#endif // MANGEPAQUETSSERVEUR_H
+#endif // DEPAQUETEUR_H

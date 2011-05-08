@@ -25,7 +25,7 @@ SOURCES += main.cpp\
     Reseau/Paquets/paquetenvoichat.cpp \
     feuille.cpp \
     Reseau/Paquets/paquetouvrirfeuille.cpp \
-    Reseau/mangepaquets.cpp
+    Reseau/depaqueteur.cpp
 
 HEADERS  += fenetreprincipale.h \
     Reseau/connexion.h \
@@ -41,7 +41,7 @@ HEADERS  += fenetreprincipale.h \
     Reseau/Paquets/paquetenvoichat.h \
     feuille.h \
     Reseau/Paquets/paquetouvrirfeuille.h \
-    Reseau/mangepaquets.h
+    Reseau/depaqueteur.h
 
 FORMS    += fenetreprincipale.ui \
     dlgconnexion.ui

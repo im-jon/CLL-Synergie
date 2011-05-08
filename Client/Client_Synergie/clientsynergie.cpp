@@ -65,9 +65,9 @@ Connexion* ClientSynergie::getConnexion()
     return m_Connexion;
 }
 
-MangePaquets* ClientSynergie::getMangePaquets()
+Depaqueteur* ClientSynergie::getDepaqueteur()
 {
-    return m_Connexion->getMangePaquets();
+    return m_Connexion->getDepaqueteur();
 }
 
 void ClientSynergie::slInsertionTexte(int id, int pos, QString texte)

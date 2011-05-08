@@ -1,4 +1,4 @@
-#include "mangepaquets.h"
+#include "depaqueteur.h"
 #include <QDataStream>
 #include <QDebug>
 #include <QStringList>
@@ -7,12 +7,12 @@
 #include "collegue.h"
 #include "Paquets/paquetreceptiondonnees.h"
 
-MangePaquets::MangePaquets(QObject *parent) :
+Depaqueteur::Depaqueteur(QObject *parent) :
     QObject(parent)
 {
 }
 
-void MangePaquets::Interpreter(QDataStream& stream)
+void Depaqueteur::Interpreter(QDataStream& stream)
 {
     quint8 id;
 
@@ -53,7 +53,7 @@ void MangePaquets::Interpreter(QDataStream& stream)
     }
 }
 
-void MangePaquets::Reception_ListeCollegues(QDataStream& stream)
+void Depaqueteur::Reception_ListeCollegues(QDataStream& stream)
 {
     int nombre;
 
@@ -71,7 +71,7 @@ void MangePaquets::Reception_ListeCollegues(QDataStream& stream)
     }
 }
 
-void MangePaquets::Reception_ListeFichiers(QDataStream& stream)
+void Depaqueteur::Reception_ListeFichiers(QDataStream& stream)
 {
     int nombre;
 
@@ -89,7 +89,7 @@ void MangePaquets::Reception_ListeFichiers(QDataStream& stream)
     }
 }
 
-void MangePaquets::Reception_ConnexionCollegue(QDataStream& stream)
+void Depaqueteur::Reception_ConnexionCollegue(QDataStream& stream)
 {
     int id;
     QString nom;
@@ -100,7 +100,7 @@ void MangePaquets::Reception_ConnexionCollegue(QDataStream& stream)
     ClientSynergie::Instance()->ConnexionCollegue(new Collegue(id, nom, this));
 }
 
-void MangePaquets::Reception_DeconnexionCollegue(QDataStream& stream)
+void Depaqueteur::Reception_DeconnexionCollegue(QDataStream& stream)
 {
     int id;
 
@@ -109,7 +109,7 @@ void MangePaquets::Reception_DeconnexionCollegue(QDataStream& stream)
     ClientSynergie::Instance()->DeconnexionCollegue(id);
 }
 
-void MangePaquets::Reception_OuvertureFichier(QDataStream& stream)
+void Depaqueteur::Reception_OuvertureFichier(QDataStream& stream)
 {
     int id;
 
@@ -118,7 +118,7 @@ void MangePaquets::Reception_OuvertureFichier(QDataStream& stream)
     emit (siOuvrirFichier(id));
 }
 
-void MangePaquets::Reception_Donnees(QDataStream& stream)
+void Depaqueteur::Reception_Donnees(QDataStream& stream)
 {
     int id;
     QString donnees;
@@ -131,7 +131,7 @@ void MangePaquets::Reception_Donnees(QDataStream& stream)
     emit(siDonnees(id, donnees));
 }
 
-void MangePaquets::Reception_Texte(QDataStream& stream)
+void Depaqueteur::Reception_Texte(QDataStream& stream)
 {
     int id;
     int position;
@@ -145,7 +145,7 @@ void MangePaquets::Reception_Texte(QDataStream& stream)
 
 }
 
-void MangePaquets::Reception_EffacementTexte(QDataStream& stream)
+void Depaqueteur::Reception_EffacementTexte(QDataStream& stream)
 {
     int id;
     int position;
@@ -158,7 +158,7 @@ void MangePaquets::Reception_EffacementTexte(QDataStream& stream)
     emit (siEffacementTexte(id, position, longeur));
 }
 
-void MangePaquets::Reception_MessageChat(QDataStream& stream)
+void Depaqueteur::Reception_MessageChat(QDataStream& stream)
 {
     int id;
     QString message;

@@ -5,7 +5,7 @@
 #include <QTcpSocket>
 #include <QMap>
 #include "Paquets/basepaquet.h"
-#include "mangepaquets.h"
+#include "depaqueteur.h"
 
 class Connexion : public QObject
 {
@@ -15,13 +15,13 @@ public:
 
     bool Connecter(QString, int);
     void EnvoyerPaquet(BasePaquet* paquet);
-    MangePaquets* getMangePaquets();
+    Depaqueteur* getDepaqueteur();
 
 private:
     void LirePaquet();
 
     QTcpSocket* m_Socket;
-    MangePaquets* m_MangePaquets;
+    Depaqueteur* m_Depaqueteur;
 
 signals:
 

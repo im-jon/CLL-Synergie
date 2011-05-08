@@ -25,11 +25,11 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     connect (ClientSynergie::Instance(), SIGNAL(siConnexionCollegue(Collegue*)), this, SLOT(slConnexionCollegues(Collegue*)));
     connect (ClientSynergie::Instance(), SIGNAL(siDeconnexionCollegue(Collegue*)), this, SLOT(slDeconnexionCollegues(Collegue*)));
     connect (ClientSynergie::Instance(), SIGNAL(siAjoutFeuille(Feuille*)), this, SLOT(slAjoutFeuille(Feuille*)));
-    connect (ClientSynergie::Instance()->getMangePaquets(), SIGNAL(siOuvrirFichier(int)), this, SLOT(slOuvrirFichier(int)));
-    connect (ClientSynergie::Instance()->getMangePaquets(), SIGNAL(siDonnees(int, QString)), this, SLOT(slNouvelleDonnees(int, QString)));
-    connect (ClientSynergie::Instance()->getMangePaquets(), SIGNAL(siInsertionTexte(int, int, QString)), this, SLOT(slInsertionTexteServeur(int, int, QString)));
-    connect (ClientSynergie::Instance()->getMangePaquets(), SIGNAL(siEffacementTexte(int, int, int)), this, SLOT(slEffacementTexteServeur(int, int, int)));
-    connect (ClientSynergie::Instance()->getMangePaquets(), SIGNAL(siMessageChat(Collegue*, QString)), this, SLOT(slMessageChat(Collegue*, QString)));
+    connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siOuvrirFichier(int)), this, SLOT(slOuvrirFichier(int)));
+    connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siDonnees(int, QString)), this, SLOT(slNouvelleDonnees(int, QString)));
+    connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siInsertionTexte(int, int, QString)), this, SLOT(slInsertionTexteServeur(int, int, QString)));
+    connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siEffacementTexte(int, int, int)), this, SLOT(slEffacementTexteServeur(int, int, int)));
+    connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siMessageChat(Collegue*, QString)), this, SLOT(slMessageChat(Collegue*, QString)));
 
     connect (this, SIGNAL(siInsertionTexte(int, int, QString)), ClientSynergie::Instance(), SLOT(slInsertionTexte(int, int, QString)));
     connect (this, SIGNAL(siEffacementTexte(int, int, int)), ClientSynergie::Instance(), SLOT(slEffacementTexte(int, int, int)));

@@ -2617,7 +2617,7 @@ void Editor::DrawLine(Surface *surface, ViewStyle &vsDraw, int line, int lineVis
 		overrideBackground = true;
 		background = vsDraw.caretLineBackground.allocated;
 	}
-	if (!overrideBackground) {
+        if (!overrideBackground) {
 		int marks = pdoc->GetMark(line);
 		for (int markBit = 0; (markBit < 32) && marks; markBit++) {
 			if ((marks & 1) && (vsDraw.markers[markBit].markType == SC_MARK_BACKGROUND) &&
@@ -2628,7 +2628,7 @@ void Editor::DrawLine(Surface *surface, ViewStyle &vsDraw, int line, int lineVis
 			marks >>= 1;
 		}
 	}
-	if (!overrideBackground) {
+        if (!overrideBackground) {
 		if (vsDraw.maskInLine) {
 			int marksMasked = pdoc->GetMark(line) & vsDraw.maskInLine;
 			if (marksMasked) {
@@ -3074,7 +3074,7 @@ void Editor::DrawLine(Surface *surface, ViewStyle &vsDraw, int line, int lineVis
 }
 
 void Editor::DrawBlockCaret(Surface *surface, ViewStyle &vsDraw, LineLayout *ll, int subLine,
-							int xStart, int offset, int posCaret, PRectangle rcCaret, ColourAllocated caretColour) {
+                                                        int xStart, int offset, int posCaret, PRectangle rcCaret, ColourAllocated caretColour) {
 
 	int lineStart = ll->LineStart(subLine);
 	int posBefore = posCaret;

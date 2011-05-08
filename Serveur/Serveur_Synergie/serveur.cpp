@@ -12,7 +12,7 @@ Serveur::Serveur(QObject *parent) :
 {
     m_Clients = new Clients(this);
     m_Ecouteur = new QTcpServer(this);
-    m_MangePaquets = new MangePaquets(this);
+    m_Depaqueteur = new Depaqueteur(this);
 
     connect (m_Ecouteur, SIGNAL(newConnection()), this, SLOT(slNouveauClient()));
 
@@ -71,9 +71,9 @@ bool Serveur::NouveauProjet(QString nom)
     return dossierProjets.mkdir(nom);
 }
 
-MangePaquets* Serveur::getMangePaquets()
+Depaqueteur* Serveur::getDepaqueteur()
 {
-    return m_MangePaquets;
+    return m_Depaqueteur;
 }
 
 Projet* Serveur::getProjet()

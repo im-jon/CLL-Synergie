@@ -5,7 +5,7 @@
 #include <QTcpServer>
 #include <QMap>
 #include "clients.h"
-#include "Reseau/mangepaquets.h"
+#include "Reseau/depaqueteur.h"
 #include "Reseau/Paquets/basepaquet.h"
 #include "fichier.h"
 #include "projet.h"
@@ -18,7 +18,7 @@ public:
 
     bool Demarrer();
     bool Arreter();
-    MangePaquets* getMangePaquets();
+    Depaqueteur* getDepaqueteur();
     Projet* getProjet();
     Clients* getClients();
     bool NouveauProjet(QString nom);
@@ -30,7 +30,7 @@ private:
     Projet* m_Projet;
     Clients* m_Clients;
     QTcpServer* m_Ecouteur;
-    MangePaquets* m_MangePaquets;
+    Depaqueteur* m_Depaqueteur;
 
 signals:
 

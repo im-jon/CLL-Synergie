@@ -39,7 +39,7 @@ void Client::LirePaquet()
 
     buffer = m_Socket->read(taille);
 
-    Serveur::Instance()->getMangePaquets()->Interpreter(this, stream);
+    Serveur::Instance()->getDepaqueteur()->Interpreter(this, stream);
 
     if (m_Socket->bytesAvailable() > 0)
     {
