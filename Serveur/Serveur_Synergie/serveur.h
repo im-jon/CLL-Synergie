@@ -21,7 +21,6 @@ public:
     Depaqueteur* getDepaqueteur();
     Projet* getProjet();
     Clients* getClients();
-    bool NouveauProjet(QString nom);
 private:
     explicit Serveur(QObject* parent = 0);
 

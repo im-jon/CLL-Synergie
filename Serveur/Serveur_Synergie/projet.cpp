@@ -7,46 +7,77 @@ Projet::Projet(QString nom, QObject *parent) :
     m_Nom = nom;
     m_Chemin = "Projets/" + nom + "/";
     m_Fichiers = new QMap<int, Fichier*>;
-
-    Initialiser();
+    m_Ouvert = false;
 }
 
-void Projet::Initialiser()
+bool Projet::Creer()
 {
-    // Rien qui marche la dedans...
-    QRegExp regex(m_Chemin + "(.*)");
-    QDirIterator iterateur(
-                m_Chemin,
-                (QDir::NoDotAndDotDot | QDir::Files),
-                QDirIterator::Subdirectories);
-    while (iterateur.hasNext())
+    if (!m_Ouvert)
     {
-        iterateur.next();
-        regex.indexIn(iterateur.filePath());
-        QString chemin = regex.capturedTexts().at(1);
-        Fichier* fichier = new Fichier(chemin, this);
-        m_Fichiers->insert(fichier->getID(), fichier);
+        QDir dossierProjets("Projets");
+        if (!dossierProjets.exists())
+        {
+            QDir().mkdir("Projets");
+        }
+        return dossierProjets.mkdir(m_Nom);
     }
+    return false;
 }
 
-void Projet::Sauvegarder()
+bool Projet::Ouvrir()
 {
-    QMapIterator<int, Fichier*> iterateur(*m_Fichiers);
-    while (iterateur.hasNext())
+    if (!m_Ouvert)
     {
-        iterateur.next();
-        iterateur.value()->Sauvegarder();
+        // Rien qui marche la dedans...
+        QRegExp regex(m_Chemin + "(.*)");
+        QDirIterator iterateur(
+                    m_Chemin,
+                    (QDir::NoDotAndDotDot | QDir::Files),
+                    QDirIterator::Subdirectories);
+        while (iterateur.hasNext())
+        {
+            iterateur.next();
+            regex.indexIn(iterateur.filePath());
+            QString chemin = regex.capturedTexts().at(1);
+            Fichier* fichier = new Fichier(chemin, this);
+            m_Fichiers->insert(fichier->getID(), fichier);
+        }
+
+        m_Ouvert = true;
+        return true;
     }
+    return false;
 }
 
-void Projet::Fermer()
+bool Projet::Sauvegarder()
 {
-    QMapIterator<int, Fichier*> iterateur(*m_Fichiers);
-    while (iterateur.hasNext())
+    if (m_Ouvert)
     {
-        iterateur.next();
-        iterateur.value()->Fermer();
+        QMapIterator<int, Fichier*> iterateur(*m_Fichiers);
+        while (iterateur.hasNext())
+        {
+            iterateur.next();
+            iterateur.value()->Sauvegarder();
+        }
+        return true;
     }
+    return false;
+}
+
+bool Projet::Fermer()
+{
+    if (m_Ouvert)
+    {
+        QMapIterator<int, Fichier*> iterateur(*m_Fichiers);
+        while (iterateur.hasNext())
+        {
+            iterateur.next();
+            iterateur.value()->Fermer();
+        }
+        m_Ouvert = false;
+        return true;
+    }
+    return false;
 }
 
 void Projet::AjouterFichier(Fichier* fichier)

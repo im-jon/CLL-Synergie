@@ -13,21 +13,23 @@ class Projet : public QObject
 public:
     explicit Projet(QString nom, QObject *parent = 0);
 
-    void Fermer();
-    void Sauvegarder();
+    bool Creer();
+    bool Ouvrir();
+    bool Fermer();
+    bool Sauvegarder();
     QString getNom();
     QString getChemin();
     Fichier* getFichier(int id);
     QMap<int, Fichier*>* getFichiers();
 
 private:
-    void Initialiser();
     void AjouterFichier(Fichier* fichier);
     void EnleverFichier(int id);
 
     QString m_Nom;
     QString m_Chemin;
     QMap<int, Fichier*>* m_Fichiers;
+    bool m_Ouvert;
 
 signals:
 

@@ -16,20 +16,8 @@ Serveur::Serveur(QObject *parent) :
 
     connect (m_Ecouteur, SIGNAL(newConnection()), this, SLOT(slNouveauClient()));
 
-    QDir dossierProjets("Projets");
-    if (dossierProjets.exists())
-    {
-        if (dossierProjets.entryList(QDir::AllDirs | QDir::NoDotAndDotDot).count() == 0)
-        {
-            Console::Instance()->Imprimer("Le répertoire de projets est vide");
-        }
-    }
-    else
-    {
-        QDir().mkdir("Projets");
-    }
-
     m_Projet = new Projet("Projet1", this);
+    m_Projet->Ouvrir();
 }
 
 bool Serveur::Demarrer()
@@ -56,19 +44,6 @@ bool Serveur::Arreter()
 
     Console::Instance()->Imprimer("Le serveur est incapable de se déconnecter");
     return false;
-}
-
-bool Serveur::NouveauProjet(QString nom)
-{
-    QDir dossierProjets("Projets");
-    if (!dossierProjets.exists())
-    {
-        if (!QDir().mkdir("Projets"))
-        {
-            return false;
-        }
-    }
-    return dossierProjets.mkdir(nom);
 }
 
 Depaqueteur* Serveur::getDepaqueteur()

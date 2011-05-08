@@ -44,7 +44,7 @@ QsciLexer* Utils::TrouverLexer(QString extension)
 
 void Utils::InitialiserExtensions()
 {
-    m_Extensions = new QMap<QsciLexer*, QStringList>();
+    m_Extensions = new QMap<QsciLexer*, QStringList>;
 
     m_Extensions->insert(new QsciLexerCPP, QStringList() << "cpp" << "h" << "cxx" << "hxx" << "c++"); // C++
     m_Extensions->insert(new QsciLexerCSharp, QStringList() << "cs");
