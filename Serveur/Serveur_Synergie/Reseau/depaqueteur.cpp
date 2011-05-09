@@ -38,6 +38,9 @@ void Depaqueteur::Interpreter(Client* client, QDataStream& stream)
         case 10:
             Reception_DonneesRecues(client, stream);
             break;
+        case 11:
+            Reception_MessageChat(client, stream);
+            break;
         default:
             Console::Instance()->Imprimer("Réception d'un paquet inconnu #" + QString::number(id));
             break;
@@ -106,4 +109,13 @@ void Depaqueteur::Reception_DonneesRecues(Client* client, QDataStream& stream)
     {
         client->EnvoyerPaquet(new PaquetDonnees(transfer));
     }
+}
+
+void Depaqueteur::Reception_MessageChat(Client *client, QDataStream &stream)
+{
+    QString message;
+
+    stream >> message;
+
+    Serveur::Instance()->getChat()->NouveauMessage(client, message);
 }

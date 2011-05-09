@@ -9,6 +9,9 @@
 #include "Reseau/Paquets/basepaquet.h"
 #include "fichier.h"
 #include "projet.h"
+#include "chat.h"
+
+class Chat;
 
 class Serveur : public QObject
 {
@@ -21,6 +24,8 @@ public:
     Depaqueteur* getDepaqueteur();
     Projet* getProjet();
     Clients* getClients();
+    Chat* getChat();
+
 private:
     explicit Serveur(QObject* parent = 0);
 
@@ -30,6 +35,8 @@ private:
     Clients* m_Clients;
     QTcpServer* m_Ecouteur;
     Depaqueteur* m_Depaqueteur;
+    Chat* m_Chat;
+
 
 signals:
 

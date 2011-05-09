@@ -13,6 +13,7 @@ Serveur::Serveur(QObject *parent) :
     m_Clients = new Clients(this);
     m_Ecouteur = new QTcpServer(this);
     m_Depaqueteur = new Depaqueteur(this);
+    m_Chat = new Chat(this);
 
     connect (m_Ecouteur, SIGNAL(newConnection()), this, SLOT(slNouveauClient()));
 
@@ -85,4 +86,9 @@ Serveur* Serveur::Instance()
     }
 
     return m_Instance;
+}
+
+Chat* Serveur::getChat()
+{
+    return m_Chat;
 }
