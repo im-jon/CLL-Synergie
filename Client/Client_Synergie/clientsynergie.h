@@ -49,6 +49,7 @@ public slots:
     void slEffacementTexte(int id, int pos, int longeur);
     void slEnvoiTexteChat(QString Texte);
     void slReponseCheckSum(int id);
+    void slFermerFichier(int id);
 
 };
 

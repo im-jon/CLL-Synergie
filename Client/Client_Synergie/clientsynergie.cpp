@@ -4,6 +4,7 @@
 #include "Reseau/Paquets/paqueteffacementtexte.h"
 #include "Reseau/Paquets/paquetenvoichat.h"
 #include "Reseau/Paquets/paquetreponsechecksum.h"
+#include "Reseau/Paquets/paquetfermerfichier.h"
 
 ClientSynergie* ClientSynergie::m_Instance = 0;
 
@@ -111,4 +112,9 @@ void ClientSynergie::slEnvoiTexteChat(QString Texte)
 void ClientSynergie::slReponseCheckSum(int id)
 {
     m_Connexion->EnvoyerPaquet(new paquetReponseCheckSum(id));
+}
+
+void ClientSynergie::slFermerFichier(int id)
+{
+    m_Connexion->EnvoyerPaquet(new PaquetFermerFichier(id));
 }

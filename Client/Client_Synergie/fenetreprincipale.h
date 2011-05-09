@@ -62,6 +62,7 @@ signals :
     void siEffacementTexte(int id, int pos, int longeur);
     void siEnvoiTexteChat(QString);
     void siReponseCheckSum(int id);
+    void siFermerFichier(int id);
 
 };
 

@@ -36,6 +36,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     connect (this, SIGNAL(siEffacementTexte(int, int, int)), ClientSynergie::Instance(), SLOT(slEffacementTexte(int, int, int)));
     connect (this,SIGNAL(siEnvoiTexteChat(QString)),ClientSynergie::Instance(),SLOT(slEnvoiTexteChat(QString)));
     connect (this,SIGNAL(siReponseCheckSum(int)),ClientSynergie::Instance(),SLOT(slReponseCheckSum(int)));
+    connect (this, SIGNAL(siFermerFichier(int)),ClientSynergie::Instance(),SLOT(slFermerFichier(int)));
 }
 
 FenetrePrincipale::~FenetrePrincipale()
@@ -104,6 +105,7 @@ void FenetrePrincipale::on_tabFeuilles_currentChanged(int index)
 void FenetrePrincipale::on_tabFeuilles_tabCloseRequested(int index)
 {
     QsciScintilla* editeur = (QsciScintilla*)ui->tabFeuilles->widget(index);
+    emit(siFermerFichier(m_FeuillesOuvertes->key(editeur)->getID()));
     m_FeuillesOuvertes->remove(m_FeuillesOuvertes->key(editeur));
     delete editeur;
 }
@@ -195,9 +197,11 @@ void FenetrePrincipale::on_txtLigneConv_returnPressed()
 
 void FenetrePrincipale::slCheckSum(int id, int longueur)
 {
-    qDebug() << "Long serv:" << longueur << " - Long client:" << getEditeur(id)->length();
-    if(longueur != getEditeur(id)->length())
+    if (getEditeur(id))
     {
-        emit(siReponseCheckSum(id));
+        if (longueur != getEditeur(id)->length())
+        {
+            emit(siReponseCheckSum(id));
+        }
     }
 }
