@@ -2,6 +2,7 @@
 #include "Reseau/Paquets/paquetchangernom.h"
 #include "Reseau/Paquets/paquetinsertiontexte.h"
 #include "Reseau/Paquets/paqueteffacementtexte.h"
+#include "Reseau/Paquets/paquetenvoichat.h"
 
 ClientSynergie* ClientSynergie::m_Instance = 0;
 
@@ -70,6 +71,12 @@ Depaqueteur* ClientSynergie::getDepaqueteur()
     return m_Connexion->getDepaqueteur();
 }
 
+QString ClientSynergie::getNom()
+{
+    return m_Nom;
+}
+
+//Slots relier a l'interface graphique
 void ClientSynergie::slInsertionTexte(int id, int pos, QString texte)
 {
     m_Connexion->EnvoyerPaquet(new PaquetInsertionTexte(id, pos, texte));
@@ -78,6 +85,11 @@ void ClientSynergie::slInsertionTexte(int id, int pos, QString texte)
 void ClientSynergie::slEffacementTexte(int id, int pos, int longeur)
 {
     m_Connexion->EnvoyerPaquet(new PaquetEffacementTexte(id, pos, longeur));
+}
+
+void ClientSynergie::slEnvoiTexteChat(QString Texte)
+{
+    m_Connexion->EnvoyerPaquet(new PaquetEnvoiChat(Texte));
 }
 
 void ClientSynergie::ConnexionCollegue(Collegue *collegue)

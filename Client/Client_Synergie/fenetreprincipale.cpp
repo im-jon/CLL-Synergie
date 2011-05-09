@@ -33,6 +33,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
 
     connect (this, SIGNAL(siInsertionTexte(int, int, QString)), ClientSynergie::Instance(), SLOT(slInsertionTexte(int, int, QString)));
     connect (this, SIGNAL(siEffacementTexte(int, int, int)), ClientSynergie::Instance(), SLOT(slEffacementTexte(int, int, int)));
+    connect (this,SIGNAL(siEnvoiTexteChat(QString)),ClientSynergie::Instance(),SLOT(slEnvoiTexteChat(QString)));
 }
 
 FenetrePrincipale::~FenetrePrincipale()
@@ -173,11 +174,19 @@ void FenetrePrincipale::slEffacementTexteServeur(int id, int position, int longe
 
 void FenetrePrincipale::slMessageChat(Collegue* collegue, QString message)
 {
-    QString ligne = "\n" + collegue->getNom() + " : " + message;
+    QString ligne = collegue->getNom() + " : " + message;
     ui->txtConversation->append(ligne);
 }
 
 void FenetrePrincipale::slAjoutFeuille(Feuille *feuille)
 {
     AjouterFeuille(feuille);
+}
+
+void FenetrePrincipale::on_txtLigneConv_returnPressed()
+{
+    QString Texte = ui->txtLigneConv->displayText();
+    emit(siEnvoiTexteChat(Texte));
+    ui->txtLigneConv->clear();
+    ui->txtConversation->append(ClientSynergie::Instance()->getNom() + " : " + Texte);
 }
