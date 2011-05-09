@@ -50,6 +50,10 @@ void Depaqueteur::Interpreter(QDataStream& stream)
         case 16:
             Reception_MessageChat(stream);
             break;
+        case 17:
+            Reception_Nettoyer(stream);
+            break;
+
         default:
             qDebug() << "Réception d'un paquet inconnu #" << id;
             break;
@@ -183,4 +187,11 @@ void Depaqueteur::Reception_CheckSum(QDataStream& stream)
     stream >> longueur;
 
     emit (siCheckSum(id,longueur));
+}
+
+void Depaqueteur::Reception_Nettoyer(QDataStream &stream)
+{
+    int id;
+    stream >> id;
+    emit (siNettoyer(id));
 }

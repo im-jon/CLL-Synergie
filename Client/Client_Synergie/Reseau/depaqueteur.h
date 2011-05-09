@@ -23,6 +23,7 @@ private:
     void Reception_EffacementTexte(QDataStream& stream);
     void Reception_MessageChat(QDataStream& stream);
     void Reception_CheckSum(QDataStream& stream);
+    void Reception_Nettoyer(QDataStream& stream);
 
 signals:
     void siListeCollegues(QStringList* noms);
@@ -33,6 +34,7 @@ signals:
     void siEffacementTexte(int id, int position, int longeur);
     void siMessageChat(Collegue* collegue, QString message);
     void siCheckSum(int id,int longueur);
+    void siNettoyer(int id);
 
 public slots:
 };
