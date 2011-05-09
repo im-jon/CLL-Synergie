@@ -17,6 +17,7 @@ private:
     void Reception_DonneesRecues(Client* client, QDataStream& stream);
     void Reception_InsertionTexte(Client* client, QDataStream& stream);
     void Reception_EffacementTexte(Client* client, QDataStream& stream);
+    void Reception_MessageChat(Client* client, QDataStream& stream);
 
 signals:
 

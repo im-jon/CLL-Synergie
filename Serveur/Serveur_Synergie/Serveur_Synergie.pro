@@ -34,7 +34,9 @@ SOURCES += main.cpp\
     clients.cpp \
     serveur.cpp \
     Reseau/Paquets/basepaquet.cpp \
-    Reseau/depaqueteur.cpp
+    Reseau/depaqueteur.cpp \
+    Reseau/Paquets/paquetmessagechat.cpp \
+    chat.cpp
 
 HEADERS  += fenetreprincipale.h \
     Console/console.h \
@@ -59,6 +61,8 @@ HEADERS  += fenetreprincipale.h \
     clients.h \
     serveur.h \
     Reseau/Paquets/basepaquet.h \
-    Reseau/depaqueteur.h
+    Reseau/depaqueteur.h \
+    Reseau/Paquets/paquetmessagechat.h \
+    chat.h
 
 FORMS    += fenetreprincipale.ui
