@@ -3962,7 +3962,7 @@ void Editor::ClearAll() {
 	{
 		UndoGroup ug(pdoc);
 		if (0 != pdoc->Length()) {
-                        pdoc->DeleteCharsMecha(0, pdoc->Length());
+			pdoc->DeleteChars(0, pdoc->Length());
 		}
 		if (!pdoc->IsReadOnly()) {
 			cs.Clear();
@@ -7211,7 +7211,6 @@ sptr_t Editor::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam) {
                         pdoc->InsertCStringMecha(insertPos, sz);
                         if (newCurrent > insertPos)
                                 newCurrent += istrlen(sz);
-                        SetEmptySelection(newCurrent);
                         return 0;
                 }
 
