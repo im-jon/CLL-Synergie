@@ -35,11 +35,17 @@ void Depaqueteur::Interpreter(Client* client, QDataStream& stream)
         case 7:
             Reception_OuvrirFichier(client, stream);
             break;
+        case 8:
+            Reception_MauvaiseReponse(client, stream);
+            break;
         case 10:
             Reception_DonneesRecues(client, stream);
             break;
         case 11:
             Reception_MessageChat(client, stream);
+            break;
+        case 12:
+            Reception_FermerFichier(client, stream);
             break;
         default:
             Console::Instance()->Imprimer("Réception d'un paquet inconnu #" + QString::number(id));
@@ -118,4 +124,27 @@ void Depaqueteur::Reception_MessageChat(Client *client, QDataStream &stream)
     stream >> message;
 
     Serveur::Instance()->getChat()->NouveauMessage(client, message);
+}
+
+void Depaqueteur::Reception_MauvaiseReponse(Client *client, QDataStream &stream)
+{
+    int id;
+    Fichier* fichier;
+
+    stream >> id;
+
+    fichier = Serveur::Instance()->getProjet()->getFichier(id);
+
+    Serveur::Instance()->getVerificateur()->MauvaiseReponse(client, fichier);
+}
+
+void Depaqueteur::Reception_FermerFichier(Client *client, QDataStream &stream)
+{
+    int id;
+    Fichier* fichier;
+
+    stream >> id;
+
+    fichier = Serveur::Instance()->getProjet()->getFichier(id);
+    client->FermerFichier(fichier);
 }

@@ -22,6 +22,7 @@ public:
     void EnvoyerPaquet(BasePaquet* paquet);
     void OuvrirFichier(Fichier* fichier);
     void FermerFichier(Fichier* fichier);
+    void EnvoyerFichier(Fichier* fichier);
     void FinTransfer(int id);
 
     QString getNom();
@@ -29,12 +30,13 @@ public:
     int getID();
     Transfer* getTransfer(int index);
     QList<Fichier*>* getFichiers();
+    int getMauvaisesReponses();
 
     void setNom(QString nom);
+    void setMauvaisesReponses(int valeur);
 
 private:
     void LirePaquet();
-    void EnvoyerFichier(Fichier* fichier);
 
     static int GenerateurID;
 
@@ -43,6 +45,7 @@ private:
     QTcpSocket* m_Socket;
     QMap<int, Transfer*>* m_Transfers;
     QList<Fichier*>* m_FichiersOuverts;
+    int m_MauvaisesReponses;
 
 signals:
     void siDeconnexion(Client* client);

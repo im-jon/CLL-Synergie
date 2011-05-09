@@ -111,11 +111,21 @@ QList<Fichier*>* Client::getFichiers()
     return m_FichiersOuverts;
 }
 
+int Client::getMauvaisesReponses()
+{
+    return m_MauvaisesReponses;
+}
+
 void Client::setNom(QString nom)
 {
     m_Nom = nom;
 
     Console::Instance()->Imprimer(getIP() + " change de nom pour " + nom);
+}
+
+void Client::setMauvaisesReponses(int valeur)
+{
+    m_MauvaisesReponses = valeur;
 }
 
 void Client::slPretALire()

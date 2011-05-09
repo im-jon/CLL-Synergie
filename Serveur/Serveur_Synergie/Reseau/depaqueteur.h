@@ -18,6 +18,8 @@ private:
     void Reception_InsertionTexte(Client* client, QDataStream& stream);
     void Reception_EffacementTexte(Client* client, QDataStream& stream);
     void Reception_MessageChat(Client* client, QDataStream& stream);
+    void Reception_MauvaiseReponse(Client* client, QDataStream& stream);
+    void Reception_FermerFichier(Client* client, QDataStream& stream);
 
 signals:
 

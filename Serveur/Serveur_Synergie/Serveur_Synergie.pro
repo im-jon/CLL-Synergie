@@ -36,7 +36,10 @@ SOURCES += main.cpp\
     Reseau/Paquets/basepaquet.cpp \
     Reseau/depaqueteur.cpp \
     Reseau/Paquets/paquetmessagechat.cpp \
-    chat.cpp
+    chat.cpp \
+    verificateur.cpp \
+    Reseau/Paquets/paquetverification.cpp \
+    Reseau/Paquets/paquetnettoyerfichier.cpp
 
 HEADERS  += fenetreprincipale.h \
     Console/console.h \
@@ -63,6 +66,9 @@ HEADERS  += fenetreprincipale.h \
     Reseau/Paquets/basepaquet.h \
     Reseau/depaqueteur.h \
     Reseau/Paquets/paquetmessagechat.h \
-    chat.h
+    chat.h \
+    verificateur.h \
+    Reseau/Paquets/paquetverification.h \
+    Reseau/Paquets/paquetnettoyerfichier.h
 
 FORMS    += fenetreprincipale.ui
