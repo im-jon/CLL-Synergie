@@ -29,13 +29,9 @@ void Fichier::Fermer()
 
 void Fichier::Sauvegarder()
 {
-    if (m_Modifications > 0)
-    {
         QTextStream stream(m_Fichier);
         stream << m_Contenu;
-
         m_Modifications = 0;
-    }
 }
 
 void Fichier::ChargerContenu()
