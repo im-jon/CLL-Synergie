@@ -24,6 +24,8 @@ public:
     QString* getContenu();
     QList<Client*>* getClients();
     int getID();
+    int longeur();
+    int nombreClients();
 
 private:
     static int GenerateurID;

@@ -10,6 +10,7 @@
 #include "fichier.h"
 #include "projet.h"
 #include "chat.h"
+#include "verificateur.h"
 
 class Chat;
 
@@ -25,6 +26,7 @@ public:
     Projet* getProjet();
     Clients* getClients();
     Chat* getChat();
+    Verificateur* getVerificateur();
 
 private:
     explicit Serveur(QObject* parent = 0);
@@ -36,6 +38,7 @@ private:
     QTcpServer* m_Ecouteur;
     Depaqueteur* m_Depaqueteur;
     Chat* m_Chat;
+    Verificateur* m_Verificateur;
 
 
 signals:

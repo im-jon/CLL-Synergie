@@ -14,6 +14,7 @@ Serveur::Serveur(QObject *parent) :
     m_Ecouteur = new QTcpServer(this);
     m_Depaqueteur = new Depaqueteur(this);
     m_Chat = new Chat(this);
+    m_Verificateur = new Verificateur(this);
 
     connect (m_Ecouteur, SIGNAL(newConnection()), this, SLOT(slNouveauClient()));
 
@@ -25,6 +26,7 @@ bool Serveur::Demarrer()
 {
     if (m_Ecouteur->listen(QHostAddress::Any, 9001))
     {
+        m_Verificateur->Demarrer();
         Console::Instance()->Imprimer("Le serveur est en ligne");
         return true;
     }
@@ -37,6 +39,7 @@ bool Serveur::Arreter()
     if (m_Ecouteur->isListening())
     {
         m_Ecouteur->close();
+        m_Verificateur->Arreter();
         Console::Instance()->Imprimer("Le serveur est hors ligne");
         return true;
     }
@@ -60,6 +63,11 @@ Projet* Serveur::getProjet()
 Clients* Serveur::getClients()
 {
     return m_Clients;
+}
+
+Verificateur* Serveur::getVerificateur()
+{
+    return m_Verificateur;
 }
 
 void Serveur::slNouveauClient()

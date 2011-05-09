@@ -136,3 +136,13 @@ QList<Client*>* Fichier::getClients()
 {
     return m_Clients;
 }
+
+int Fichier::longeur()
+{
+    return m_Contenu.length();
+}
+
+int Fichier::nombreClients()
+{
+    return m_Clients->count();
+}
