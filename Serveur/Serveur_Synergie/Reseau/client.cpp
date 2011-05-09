@@ -75,14 +75,17 @@ void Client::FermerFichier(Fichier *fichier)
     m_FichiersOuverts->removeOne(fichier);
 }
 
-void Client::EnvoyerFichier(Fichier* fichier)
+void Client::EnvoyerFichier(Fichier* fichier, bool onglet)
 {
     Transfer* transfer = new Transfer(fichier, this);
     m_Transfers->insert(fichier->getID(), transfer);
 
     connect (transfer, SIGNAL(siFin(int)), this, SLOT(slFinTransfer(int)));
 
-    EnvoyerPaquet(new PaquetOuvertureFichier(fichier));
+    if (onglet)
+    {
+        EnvoyerPaquet(new PaquetOuvertureFichier(fichier));
+    }
     EnvoyerPaquet(new PaquetDonnees(transfer));
 }
 

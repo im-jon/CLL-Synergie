@@ -22,7 +22,7 @@ public:
     void EnvoyerPaquet(BasePaquet* paquet);
     void OuvrirFichier(Fichier* fichier);
     void FermerFichier(Fichier* fichier);
-    void EnvoyerFichier(Fichier* fichier);
+    void EnvoyerFichier(Fichier* fichier, bool onglet = true);
     void FinTransfer(int id);
 
     QString getNom();
