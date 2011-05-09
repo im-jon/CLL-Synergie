@@ -26,6 +26,7 @@ public:
     Collegue* getCollegue(int id);
     int getFeuille(Feuille* feuille);
     Feuille* getFeuille(int id);
+    QString getNom();
 
 private:
     explicit ClientSynergie(QObject *parent = 0);
@@ -46,6 +47,9 @@ signals:
 public slots:
     void slInsertionTexte(int id, int pos, QString texte);
     void slEffacementTexte(int id, int pos, int longeur);
+    void slEnvoiTexteChat(QString Texte);
+    void slReponseCheckSum(int id);
+    void slFermerFichier(int id);
 
 };
 

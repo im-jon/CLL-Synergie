@@ -30,9 +30,13 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siInsertionTexte(int, int, QString)), this, SLOT(slInsertionTexteServeur(int, int, QString)));
     connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siEffacementTexte(int, int, int)), this, SLOT(slEffacementTexteServeur(int, int, int)));
     connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siMessageChat(Collegue*, QString)), this, SLOT(slMessageChat(Collegue*, QString)));
+    connect (ClientSynergie::Instance()->getDepaqueteur(),SIGNAL(siCheckSum(int,int)),this,SLOT(slCheckSum(int,int)));
 
     connect (this, SIGNAL(siInsertionTexte(int, int, QString)), ClientSynergie::Instance(), SLOT(slInsertionTexte(int, int, QString)));
     connect (this, SIGNAL(siEffacementTexte(int, int, int)), ClientSynergie::Instance(), SLOT(slEffacementTexte(int, int, int)));
+    connect (this,SIGNAL(siEnvoiTexteChat(QString)),ClientSynergie::Instance(),SLOT(slEnvoiTexteChat(QString)));
+    connect (this,SIGNAL(siReponseCheckSum(int)),ClientSynergie::Instance(),SLOT(slReponseCheckSum(int)));
+    connect (this, SIGNAL(siFermerFichier(int)),ClientSynergie::Instance(),SLOT(slFermerFichier(int)));
 }
 
 FenetrePrincipale::~FenetrePrincipale()
@@ -101,6 +105,7 @@ void FenetrePrincipale::on_tabFeuilles_currentChanged(int index)
 void FenetrePrincipale::on_tabFeuilles_tabCloseRequested(int index)
 {
     QsciScintilla* editeur = (QsciScintilla*)ui->tabFeuilles->widget(index);
+    emit(siFermerFichier(m_FeuillesOuvertes->key(editeur)->getID()));
     m_FeuillesOuvertes->remove(m_FeuillesOuvertes->key(editeur));
     delete editeur;
 }
@@ -173,11 +178,30 @@ void FenetrePrincipale::slEffacementTexteServeur(int id, int position, int longe
 
 void FenetrePrincipale::slMessageChat(Collegue* collegue, QString message)
 {
-    QString ligne = "\n" + collegue->getNom() + " : " + message;
+    QString ligne = collegue->getNom() + " : " + message;
     ui->txtConversation->append(ligne);
 }
 
 void FenetrePrincipale::slAjoutFeuille(Feuille *feuille)
 {
     AjouterFeuille(feuille);
+}
+
+void FenetrePrincipale::on_txtLigneConv_returnPressed()
+{
+    QString Texte = ui->txtLigneConv->displayText();
+    emit(siEnvoiTexteChat(Texte));
+    ui->txtLigneConv->clear();
+    ui->txtConversation->append(ClientSynergie::Instance()->getNom() + " : " + Texte);
+}
+
+void FenetrePrincipale::slCheckSum(int id, int longueur)
+{
+    if (getEditeur(id))
+    {
+        if (longueur != getEditeur(id)->length())
+        {
+            emit(siReponseCheckSum(id));
+        }
+    }
 }

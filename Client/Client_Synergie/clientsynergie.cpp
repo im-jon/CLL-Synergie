@@ -2,6 +2,9 @@
 #include "Reseau/Paquets/paquetchangernom.h"
 #include "Reseau/Paquets/paquetinsertiontexte.h"
 #include "Reseau/Paquets/paqueteffacementtexte.h"
+#include "Reseau/Paquets/paquetenvoichat.h"
+#include "Reseau/Paquets/paquetreponsechecksum.h"
+#include "Reseau/Paquets/paquetfermerfichier.h"
 
 ClientSynergie* ClientSynergie::m_Instance = 0;
 
@@ -70,14 +73,9 @@ Depaqueteur* ClientSynergie::getDepaqueteur()
     return m_Connexion->getDepaqueteur();
 }
 
-void ClientSynergie::slInsertionTexte(int id, int pos, QString texte)
+QString ClientSynergie::getNom()
 {
-    m_Connexion->EnvoyerPaquet(new PaquetInsertionTexte(id, pos, texte));
-}
-
-void ClientSynergie::slEffacementTexte(int id, int pos, int longeur)
-{
-    m_Connexion->EnvoyerPaquet(new PaquetEffacementTexte(id, pos, longeur));
+    return m_Nom;
 }
 
 void ClientSynergie::ConnexionCollegue(Collegue *collegue)
@@ -95,4 +93,28 @@ void ClientSynergie::DeconnexionCollegue(int id)
     emit (siDeconnexionCollegue(collegue));
 }
 
+//Slots relier a l'interface graphique
+void ClientSynergie::slInsertionTexte(int id, int pos, QString texte)
+{
+    m_Connexion->EnvoyerPaquet(new PaquetInsertionTexte(id, pos, texte));
+}
 
+void ClientSynergie::slEffacementTexte(int id, int pos, int longeur)
+{
+    m_Connexion->EnvoyerPaquet(new PaquetEffacementTexte(id, pos, longeur));
+}
+
+void ClientSynergie::slEnvoiTexteChat(QString Texte)
+{
+    m_Connexion->EnvoyerPaquet(new PaquetEnvoiChat(Texte));
+}
+
+void ClientSynergie::slReponseCheckSum(int id)
+{
+    m_Connexion->EnvoyerPaquet(new paquetReponseCheckSum(id));
+}
+
+void ClientSynergie::slFermerFichier(int id)
+{
+    m_Connexion->EnvoyerPaquet(new PaquetFermerFichier(id));
+}
