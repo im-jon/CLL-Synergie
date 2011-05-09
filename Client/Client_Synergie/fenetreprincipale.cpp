@@ -31,6 +31,8 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siEffacementTexte(int, int, int)), this, SLOT(slEffacementTexteServeur(int, int, int)));
     connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siMessageChat(Collegue*, QString)), this, SLOT(slMessageChat(Collegue*, QString)));
     connect (ClientSynergie::Instance()->getDepaqueteur(),SIGNAL(siCheckSum(int,int)),this,SLOT(slCheckSum(int,int)));
+    connect (ClientSynergie::Instance()->getDepaqueteur(),SIGNAL(siNettoyer(int)),this,SLOT(slNettoyer(int)));
+
 
     connect (this, SIGNAL(siInsertionTexte(int, int, QString)), ClientSynergie::Instance(), SLOT(slInsertionTexte(int, int, QString)));
     connect (this, SIGNAL(siEffacementTexte(int, int, int)), ClientSynergie::Instance(), SLOT(slEffacementTexte(int, int, int)));
@@ -204,4 +206,9 @@ void FenetrePrincipale::slCheckSum(int id, int longueur)
             emit(siReponseCheckSum(id));
         }
     }
+}
+
+void FenetrePrincipale::slNettoyer(int id)
+{
+    getEditeur(id)->clear();
 }

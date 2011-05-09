@@ -54,6 +54,7 @@ private slots:
     void slEffacementTexteServeur(int id, int position, int longeur);
     void slMessageChat(Collegue* collegue, QString message);
     void slCheckSum(int id, int longueur);
+    void slNettoyer(int id);
 
     void on_txtLigneConv_returnPressed();
 
