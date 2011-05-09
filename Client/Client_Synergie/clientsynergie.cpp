@@ -3,6 +3,7 @@
 #include "Reseau/Paquets/paquetinsertiontexte.h"
 #include "Reseau/Paquets/paqueteffacementtexte.h"
 #include "Reseau/Paquets/paquetenvoichat.h"
+#include "Reseau/Paquets/paquetreponsechecksum.h"
 
 ClientSynergie* ClientSynergie::m_Instance = 0;
 
@@ -76,6 +77,21 @@ QString ClientSynergie::getNom()
     return m_Nom;
 }
 
+void ClientSynergie::ConnexionCollegue(Collegue *collegue)
+{
+    m_Collegues->insert(collegue->getID(), collegue);
+
+    emit (siConnexionCollegue(collegue));
+}
+
+void ClientSynergie::DeconnexionCollegue(int id)
+{
+    Collegue* collegue = m_Collegues->value(id);
+    m_Collegues->remove(id);
+
+    emit (siDeconnexionCollegue(collegue));
+}
+
 //Slots relier a l'interface graphique
 void ClientSynergie::slInsertionTexte(int id, int pos, QString texte)
 {
@@ -92,19 +108,7 @@ void ClientSynergie::slEnvoiTexteChat(QString Texte)
     m_Connexion->EnvoyerPaquet(new PaquetEnvoiChat(Texte));
 }
 
-void ClientSynergie::ConnexionCollegue(Collegue *collegue)
+void ClientSynergie::slReponseCheckSum(int id)
 {
-    m_Collegues->insert(collegue->getID(), collegue);
-
-    emit (siConnexionCollegue(collegue));
+    m_Connexion->EnvoyerPaquet(new paquetReponseCheckSum(id));
 }
-
-void ClientSynergie::DeconnexionCollegue(int id)
-{
-    Collegue* collegue = m_Collegues->value(id);
-    m_Collegues->remove(id);
-
-    emit (siDeconnexionCollegue(collegue));
-}
-
-

@@ -30,10 +30,12 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siInsertionTexte(int, int, QString)), this, SLOT(slInsertionTexteServeur(int, int, QString)));
     connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siEffacementTexte(int, int, int)), this, SLOT(slEffacementTexteServeur(int, int, int)));
     connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siMessageChat(Collegue*, QString)), this, SLOT(slMessageChat(Collegue*, QString)));
+    connect (ClientSynergie::Instance()->getDepaqueteur(),SIGNAL(siCheckSum(int,int)),this,SLOT(slCheckSum(int,int)));
 
     connect (this, SIGNAL(siInsertionTexte(int, int, QString)), ClientSynergie::Instance(), SLOT(slInsertionTexte(int, int, QString)));
     connect (this, SIGNAL(siEffacementTexte(int, int, int)), ClientSynergie::Instance(), SLOT(slEffacementTexte(int, int, int)));
     connect (this,SIGNAL(siEnvoiTexteChat(QString)),ClientSynergie::Instance(),SLOT(slEnvoiTexteChat(QString)));
+    connect (this,SIGNAL(siReponseCheckSum(int)),ClientSynergie::Instance(),SLOT(slReponseCheckSum(int)));
 }
 
 FenetrePrincipale::~FenetrePrincipale()
@@ -189,4 +191,13 @@ void FenetrePrincipale::on_txtLigneConv_returnPressed()
     emit(siEnvoiTexteChat(Texte));
     ui->txtLigneConv->clear();
     ui->txtConversation->append(ClientSynergie::Instance()->getNom() + " : " + Texte);
+}
+
+void FenetrePrincipale::slCheckSum(int id, int longueur)
+{
+    qDebug() << "Long serv:" << longueur << " - Long client:" << getEditeur(id)->length();
+    if(longueur != getEditeur(id)->length())
+    {
+        emit(siReponseCheckSum(id));
+    }
 }

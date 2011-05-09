@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     Reseau/Paquets/paquetenvoichat.cpp \
     feuille.cpp \
     Reseau/Paquets/paquetouvrirfeuille.cpp \
-    Reseau/depaqueteur.cpp
+    Reseau/depaqueteur.cpp \
+    Reseau/Paquets/paquetreponsechecksum.cpp
 
 HEADERS  += fenetreprincipale.h \
     Reseau/connexion.h \
@@ -41,7 +42,8 @@ HEADERS  += fenetreprincipale.h \
     Reseau/Paquets/paquetenvoichat.h \
     feuille.h \
     Reseau/Paquets/paquetouvrirfeuille.h \
-    Reseau/depaqueteur.h
+    Reseau/depaqueteur.h \
+    Reseau/Paquets/paquetreponsechecksum.h
 
 FORMS    += fenetreprincipale.ui \
     dlgconnexion.ui

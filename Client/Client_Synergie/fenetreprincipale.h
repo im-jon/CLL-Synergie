@@ -53,6 +53,7 @@ private slots:
     void slInsertionTexteServeur(int id, int position, QString texte);
     void slEffacementTexteServeur(int id, int position, int longeur);
     void slMessageChat(Collegue* collegue, QString message);
+    void slCheckSum(int id, int longueur);
 
     void on_txtLigneConv_returnPressed();
 
@@ -60,6 +61,7 @@ signals :
     void siInsertionTexte(int,int,QString);
     void siEffacementTexte(int id, int pos, int longeur);
     void siEnvoiTexteChat(QString);
+    void siReponseCheckSum(int id);
 
 };
 
