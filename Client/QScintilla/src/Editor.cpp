@@ -3962,7 +3962,7 @@ void Editor::ClearAll() {
 	{
 		UndoGroup ug(pdoc);
 		if (0 != pdoc->Length()) {
-			pdoc->DeleteChars(0, pdoc->Length());
+                        pdoc->DeleteCharsMecha(0, pdoc->Length());
 		}
 		if (!pdoc->IsReadOnly()) {
 			cs.Clear();
