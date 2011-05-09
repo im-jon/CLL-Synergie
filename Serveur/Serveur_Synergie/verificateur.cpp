@@ -55,7 +55,7 @@ void Verificateur::MauvaiseReponse(Client *client, Fichier *fichier)
     if (client->getMauvaisesReponses() > Seuil)
     {
         client->EnvoyerPaquet(new PaquetNettoyerFichier(fichier));
-        client->EnvoyerFichier(fichier);
+        client->EnvoyerFichier(fichier, false);
         client->setMauvaisesReponses(0);
     }
 }
