@@ -29,15 +29,15 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siDonnees(int, QString)), this, SLOT(slNouvelleDonnees(int, QString)));
     connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siInsertionTexte(int, int, QString)), this, SLOT(slInsertionTexteServeur(int, int, QString)));
     connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siEffacementTexte(int, int, int)), this, SLOT(slEffacementTexteServeur(int, int, int)));
-    connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siMessageChat(Collegue*, QString)), this, SLOT(slMessageChat(Collegue*, QString)));
-    connect (ClientSynergie::Instance()->getDepaqueteur(),SIGNAL(siCheckSum(int,int)),this,SLOT(slCheckSum(int,int)));
-    connect (ClientSynergie::Instance()->getDepaqueteur(),SIGNAL(siNettoyer(int)),this,SLOT(slNettoyer(int)));
+    connect (ClientSynergie::Instance()->getChat(), SIGNAL(siMessageRecu(Collegue*,QString)), this, SLOT(slMessageChat(Collegue*, QString)));
+    connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siVerification(int, int)), this, SLOT(slVerification(int,int)));
+    connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siNettoyer(int)), this,SLOT(slNettoyer(int)));
 
 
     connect (this, SIGNAL(siInsertionTexte(int, int, QString)), ClientSynergie::Instance(), SLOT(slInsertionTexte(int, int, QString)));
     connect (this, SIGNAL(siEffacementTexte(int, int, int)), ClientSynergie::Instance(), SLOT(slEffacementTexte(int, int, int)));
-    connect (this,SIGNAL(siEnvoiTexteChat(QString)),ClientSynergie::Instance(),SLOT(slEnvoiTexteChat(QString)));
-    connect (this,SIGNAL(siReponseCheckSum(int)),ClientSynergie::Instance(),SLOT(slReponseCheckSum(int)));
+    connect (this, SIGNAL(siEnvoiTexteChat(QString)), ClientSynergie::Instance()->getChat(), SLOT(slEnvoyer(QString)));
+    connect (this, SIGNAL(siMauvaiseSynchro(int)), ClientSynergie::Instance(), SLOT(slMauvaiseSynchro(int)));
     connect (this, SIGNAL(siFermerFichier(int)),ClientSynergie::Instance(),SLOT(slFermerFichier(int)));
 }
 
@@ -99,15 +99,15 @@ void FenetrePrincipale::on_tabFeuilles_currentChanged(int index)
         {
             ui->lblLangage->setText(lexer->language());
         }
-
-        // Envoyer le paquet pour changer la feuille active.
     }
 }
 
 void FenetrePrincipale::on_tabFeuilles_tabCloseRequested(int index)
 {
     QsciScintilla* editeur = (QsciScintilla*)ui->tabFeuilles->widget(index);
+
     emit(siFermerFichier(m_FeuillesOuvertes->key(editeur)->getID()));
+
     m_FeuillesOuvertes->remove(m_FeuillesOuvertes->key(editeur));
     delete editeur;
 }
@@ -140,7 +140,7 @@ void FenetrePrincipale::slOuvrirFichier(int id)
 void FenetrePrincipale::slNouvelleDonnees(int id, QString contenu)
 {
     QsciScintilla* editeur = getEditeur(id);
-    editeur->insertAtPosMecha(contenu, editeur->length() - 1);
+    editeur->insertAtPosMecha(contenu, editeur->length() - 1); // Changer pour un append ?
 }
 
 void FenetrePrincipale::slInsertionTexteEditeur(int position, QString texte)
@@ -148,16 +148,6 @@ void FenetrePrincipale::slInsertionTexteEditeur(int position, QString texte)
     int id = m_FeuillesOuvertes->key((QsciScintilla*)ui->tabFeuilles->currentWidget())->getID();
 
     emit (siInsertionTexte(id, position, texte));
-}
-
-QsciScintilla* FenetrePrincipale::getEditeur(int id)
-{
-    return getEditeur(ClientSynergie::Instance()->getFeuille(id));
-}
-
-QsciScintilla* FenetrePrincipale::getEditeur(Feuille* feuille)
-{
-    return m_FeuillesOuvertes->value(feuille);
 }
 
 void FenetrePrincipale::slInsertionTexteServeur(int id, int position, QString texte)
@@ -191,19 +181,20 @@ void FenetrePrincipale::slAjoutFeuille(Feuille *feuille)
 
 void FenetrePrincipale::on_txtLigneConv_returnPressed()
 {
-    QString Texte = ui->txtLigneConv->displayText();
-    emit(siEnvoiTexteChat(Texte));
+    QString message = ui->txtLigneConv->text();
+    ui->txtConversation->append(ClientSynergie::Instance()->getNom() + " : " + message);
     ui->txtLigneConv->clear();
-    ui->txtConversation->append(ClientSynergie::Instance()->getNom() + " : " + Texte);
+
+   emit(siEnvoiTexteChat(message));
 }
 
-void FenetrePrincipale::slCheckSum(int id, int longueur)
+void FenetrePrincipale::slVerification(int id, int longueur)
 {
     if (getEditeur(id))
     {
         if (longueur != getEditeur(id)->length())
         {
-            emit(siReponseCheckSum(id));
+            emit(siMauvaiseSynchro(id));
         }
     }
 }
@@ -211,4 +202,14 @@ void FenetrePrincipale::slCheckSum(int id, int longueur)
 void FenetrePrincipale::slNettoyer(int id)
 {
     getEditeur(id)->clear();
+}
+
+QsciScintilla* FenetrePrincipale::getEditeur(int id)
+{
+    return getEditeur(ClientSynergie::Instance()->getFeuille(id));
+}
+
+QsciScintilla* FenetrePrincipale::getEditeur(Feuille* feuille)
+{
+    return m_FeuillesOuvertes->value(feuille);
 }

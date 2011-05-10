@@ -3,32 +3,16 @@
 #include "Reseau/Paquets/paquetinsertiontexte.h"
 #include "Reseau/Paquets/paqueteffacementtexte.h"
 #include "Reseau/Paquets/paquetenvoichat.h"
-#include "Reseau/Paquets/paquetreponsechecksum.h"
+#include "Reseau/Paquets/paquetmauvaisesynchro.h"
 #include "Reseau/Paquets/paquetfermerfichier.h"
 
 ClientSynergie* ClientSynergie::m_Instance = 0;
-
-ClientSynergie* ClientSynergie::Instance()
-{
-    static QMutex mutex;
-    if (!m_Instance)
-    {
-        mutex.lock();
-
-        if (!m_Instance)
-        {
-            m_Instance = new ClientSynergie;
-        }
-        mutex.unlock();
-    }
-
-    return m_Instance;
-}
 
 ClientSynergie::ClientSynergie(QObject *parent) :
     QObject(parent)
 {
     m_Connexion = new Connexion(this);
+    m_Chat = new Chat(this);
     m_Feuilles = new QMap<int, Feuille*>;
     m_Collegues = new QMap<int, Collegue*>;
 }
@@ -66,6 +50,11 @@ void ClientSynergie::Renommer(QString nom)
 Connexion* ClientSynergie::getConnexion()
 {
     return m_Connexion;
+}
+
+Chat* ClientSynergie::getChat()
+{
+    return m_Chat;
 }
 
 Depaqueteur* ClientSynergie::getDepaqueteur()
@@ -109,12 +98,29 @@ void ClientSynergie::slEnvoiTexteChat(QString Texte)
     m_Connexion->EnvoyerPaquet(new PaquetEnvoiChat(Texte));
 }
 
-void ClientSynergie::slReponseCheckSum(int id)
+void ClientSynergie::slMauvaiseSynchro(int id)
 {
-    m_Connexion->EnvoyerPaquet(new paquetReponseCheckSum(id));
+    m_Connexion->EnvoyerPaquet(new paquetMauvaiseSynchro(id));
 }
 
 void ClientSynergie::slFermerFichier(int id)
 {
     m_Connexion->EnvoyerPaquet(new PaquetFermerFichier(id));
+}
+
+ClientSynergie* ClientSynergie::Instance()
+{
+    static QMutex mutex;
+    if (!m_Instance)
+    {
+        mutex.lock();
+
+        if (!m_Instance)
+        {
+            m_Instance = new ClientSynergie;
+        }
+        mutex.unlock();
+    }
+
+    return m_Instance;
 }

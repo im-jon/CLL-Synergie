@@ -8,6 +8,7 @@
 #include "Reseau/depaqueteur.h"
 #include "collegue.h"
 #include "feuille.h"
+#include "chat.h"
 
 class ClientSynergie : public QObject
 {
@@ -22,6 +23,7 @@ public:
     void DeconnexionCollegue(int id);
 
     Connexion* getConnexion();
+    Chat* getChat();
     Depaqueteur* getDepaqueteur();
     Collegue* getCollegue(int id);
     int getFeuille(Feuille* feuille);
@@ -35,6 +37,7 @@ private:
 
     QString m_Nom;
     Connexion* m_Connexion;
+    Chat* m_Chat;
     QMap<int, Feuille*>* m_Feuilles;
     QMap<int, Collegue*>* m_Collegues;
 
@@ -48,7 +51,7 @@ public slots:
     void slInsertionTexte(int id, int pos, QString texte);
     void slEffacementTexte(int id, int pos, int longeur);
     void slEnvoiTexteChat(QString Texte);
-    void slReponseCheckSum(int id);
+    void slMauvaiseSynchro(int id);
     void slFermerFichier(int id);
 
 };

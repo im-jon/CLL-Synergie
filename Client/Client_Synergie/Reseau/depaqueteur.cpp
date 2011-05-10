@@ -42,7 +42,7 @@ void Depaqueteur::Interpreter(QDataStream& stream)
             Reception_OuvertureFichier(stream);
             break;
         case 13:
-            Reception_CheckSum(stream);
+            Reception_Verification(stream);
             break;
         case 15:
             Reception_Donnees(stream);
@@ -175,10 +175,10 @@ void Depaqueteur::Reception_MessageChat(QDataStream& stream)
 
     Collegue* collegue = ClientSynergie::Instance()->getCollegue(id);
 
-    emit (siMessageChat(collegue, message));
+    ClientSynergie::Instance()->getChat()->MessageRecu(collegue, message);
 }
 
-void Depaqueteur::Reception_CheckSum(QDataStream& stream)
+void Depaqueteur::Reception_Verification(QDataStream& stream)
 {
     int id;
     int longueur;
@@ -186,12 +186,14 @@ void Depaqueteur::Reception_CheckSum(QDataStream& stream)
     stream >> id;
     stream >> longueur;
 
-    emit (siCheckSum(id,longueur));
+    emit (siVerification(id, longueur));
 }
 
 void Depaqueteur::Reception_Nettoyer(QDataStream &stream)
 {
     int id;
+
     stream >> id;
+
     emit (siNettoyer(id));
 }

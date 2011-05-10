@@ -26,8 +26,9 @@ SOURCES += main.cpp\
     feuille.cpp \
     Reseau/Paquets/paquetouvrirfeuille.cpp \
     Reseau/depaqueteur.cpp \
-    Reseau/Paquets/paquetreponsechecksum.cpp \
-    Reseau/Paquets/paquetfermerfichier.cpp
+    Reseau/Paquets/paquetfermerfichier.cpp \
+    Reseau/Paquets/paquetmauvaisesynchro.cpp \
+    chat.cpp
 
 HEADERS  += fenetreprincipale.h \
     Reseau/connexion.h \
@@ -44,8 +45,9 @@ HEADERS  += fenetreprincipale.h \
     feuille.h \
     Reseau/Paquets/paquetouvrirfeuille.h \
     Reseau/depaqueteur.h \
-    Reseau/Paquets/paquetreponsechecksum.h \
-    Reseau/Paquets/paquetfermerfichier.h
+    Reseau/Paquets/paquetfermerfichier.h \
+    Reseau/Paquets/paquetmauvaisesynchro.h \
+    chat.h
 
 FORMS    += fenetreprincipale.ui \
     dlgconnexion.ui

@@ -22,7 +22,7 @@ private:
     void Reception_Texte(QDataStream& stream);
     void Reception_EffacementTexte(QDataStream& stream);
     void Reception_MessageChat(QDataStream& stream);
-    void Reception_CheckSum(QDataStream& stream);
+    void Reception_Verification(QDataStream& stream);
     void Reception_Nettoyer(QDataStream& stream);
 
 signals:
@@ -32,8 +32,7 @@ signals:
     void siDonnees(int id, QString donnees);
     void siInsertionTexte(int id, int position, QString texte);
     void siEffacementTexte(int id, int position, int longeur);
-    void siMessageChat(Collegue* collegue, QString message);
-    void siCheckSum(int id,int longueur);
+    void siVerification(int id, int longueur);
     void siNettoyer(int id);
 
 public slots:
