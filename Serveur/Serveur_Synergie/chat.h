@@ -2,8 +2,10 @@
 #define CHAT_H
 
 #include <QObject>
+#include <QList>
 #include "Reseau/client.h"
 #include "serveur.h"
+#include "message.h"
 
 class Chat : public QObject
 {
@@ -11,7 +13,11 @@ class Chat : public QObject
 public:
     explicit Chat(QObject *parent = 0);
 
-    void NouveauMessage(Client* auteur, QString message);
+    void NouveauMessage(Message* message);
+    QList<Message*>* getMessages();
+
+private:
+    QList<Message*>* m_Messages;
 
 signals:
 

@@ -1,8 +1,8 @@
 #include "paquetmessagechat.h"
 
-PaquetMessageChat::PaquetMessageChat(Client* auteur, QString message) :
+PaquetMessageChat::PaquetMessageChat(Message* message) :
     BasePaquet(16)
 {
-    *m_Stream << auteur->getID();
-    *m_Stream << message;
+    *m_Stream << message->getAuteur()->getID();
+    *m_Stream << message->getContenu();
 }

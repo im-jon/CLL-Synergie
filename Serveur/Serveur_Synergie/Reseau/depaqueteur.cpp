@@ -1,12 +1,10 @@
 #include "depaqueteur.h"
 #include <QDataStream>
 #include "Console/console.h"
-#include "Paquets/paquetenvoicollegues.h"
-#include "Paquets/paquetlistefichiers.h"
 #include "Paquets/paquetouverturefichier.h"
 #include "Paquets/paquetdonnees.h"
 #include "Paquets/paquetinsertiontexte.h"
-#include "Paquets/paquetconnexioncollegue.h"
+#include "Paquets/paquetmessagechat.h"
 #include "serveur.h"
 #include "fichier.h"
 
@@ -24,7 +22,7 @@ void Depaqueteur::Interpreter(Client* client, QDataStream& stream)
     switch (id)
     {
         case 1:
-            Reception_ChangerNom(client, stream);
+            Reception_Authentification(client, stream);
             break;
         case 2:
             Reception_InsertionTexte(client, stream);
@@ -53,17 +51,13 @@ void Depaqueteur::Interpreter(Client* client, QDataStream& stream)
     }
 }
 
-void Depaqueteur::Reception_ChangerNom(Client* client, QDataStream& stream)
+void Depaqueteur::Reception_Authentification(Client* client, QDataStream& stream)
 {
     QString nom;
 
     stream >> nom;
 
-    client->setNom(nom);
-
-    client->EnvoyerPaquet(new PaquetEnvoiCollegues());
-    client->EnvoyerPaquet(new PaquetListeFichiers());
-    Serveur::Instance()->getClients()->EnvoyerPaquetATous(new PaquetConnexionCollegue(client), client);
+    client->Authentifier(nom);
 }
 
 void Depaqueteur::Reception_InsertionTexte(Client* client, QDataStream& stream)
@@ -119,11 +113,14 @@ void Depaqueteur::Reception_DonneesRecues(Client* client, QDataStream& stream)
 
 void Depaqueteur::Reception_MessageChat(Client *client, QDataStream &stream)
 {
-    QString message;
+    Message* message;
+    QString contenu;
 
-    stream >> message;
+    stream >> contenu;
 
-    Serveur::Instance()->getChat()->NouveauMessage(client, message);
+    message = new Message(client, contenu, this);
+
+    Serveur::Instance()->getChat()->NouveauMessage(message);
 }
 
 void Depaqueteur::Reception_MauvaiseReponse(Client *client, QDataStream &stream)

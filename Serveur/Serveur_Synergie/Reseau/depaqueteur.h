@@ -12,7 +12,7 @@ public:
     void Interpreter(Client* client, QDataStream& stream);
 
 private:
-    void Reception_ChangerNom(Client* client, QDataStream& stream);
+    void Reception_Authentification(Client* client, QDataStream& stream);
     void Reception_OuvrirFichier(Client* client, QDataStream& stream);
     void Reception_DonneesRecues(Client* client, QDataStream& stream);
     void Reception_InsertionTexte(Client* client, QDataStream& stream);

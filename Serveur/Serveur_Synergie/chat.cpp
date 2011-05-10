@@ -4,11 +4,17 @@
 Chat::Chat(QObject *parent) :
     QObject(parent)
 {
+    m_Messages = new QList<Message*>;
 }
 
-void Chat::NouveauMessage(Client *auteur, QString message)
+void Chat::NouveauMessage(Message* message)
 {
+    m_Messages->append(message);
     Serveur::Instance()->getClients()->EnvoyerPaquetATous(
-                new PaquetMessageChat(auteur, message),
-                auteur);
+                new PaquetMessageChat(message), message->getAuteur());
+}
+
+QList<Message*>* Chat::getMessages()
+{
+    return m_Messages;
 }

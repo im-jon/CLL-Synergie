@@ -14,7 +14,6 @@ SOURCES += main.cpp\
         fenetreprincipale.cpp \
     Reseau/connexion.cpp \
     Reseau/Paquets/basepaquet.cpp \
-    Reseau/Paquets/paquetchangernom.cpp \
     dlgconnexion.cpp \
     utils.cpp \
     Reseau/Paquets/paquetreceptiondonnees.cpp \
@@ -28,12 +27,12 @@ SOURCES += main.cpp\
     Reseau/depaqueteur.cpp \
     Reseau/Paquets/paquetfermerfichier.cpp \
     Reseau/Paquets/paquetmauvaisesynchro.cpp \
-    chat.cpp
+    chat.cpp \
+    Reseau/Paquets/paquetauthentification.cpp
 
 HEADERS  += fenetreprincipale.h \
     Reseau/connexion.h \
     Reseau/Paquets/basepaquet.h \
-    Reseau/Paquets/paquetchangernom.h \
     dlgconnexion.h \
     utils.h \
     Reseau/Paquets/paquetreceptiondonnees.h \
@@ -47,7 +46,8 @@ HEADERS  += fenetreprincipale.h \
     Reseau/depaqueteur.h \
     Reseau/Paquets/paquetfermerfichier.h \
     Reseau/Paquets/paquetmauvaisesynchro.h \
-    chat.h
+    chat.h \
+    Reseau/Paquets/paquetauthentification.h
 
 FORMS    += fenetreprincipale.ui \
     dlgconnexion.ui

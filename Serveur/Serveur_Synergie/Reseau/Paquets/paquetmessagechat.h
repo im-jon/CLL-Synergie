@@ -3,11 +3,12 @@
 
 #include "basepaquet.h"
 #include "../client.h"
+#include "../../message.h"
 
 class PaquetMessageChat : public BasePaquet
 {
 public:
-    PaquetMessageChat(Client* auteur, QString message);
+    PaquetMessageChat(Message* message);
 };
 
 #endif // PAQUETMESSAGECHAT_H

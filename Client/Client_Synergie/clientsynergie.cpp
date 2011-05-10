@@ -1,5 +1,5 @@
 #include "clientsynergie.h"
-#include "Reseau/Paquets/paquetchangernom.h"
+#include "Reseau/Paquets/paquetauthentification.h"
 #include "Reseau/Paquets/paquetinsertiontexte.h"
 #include "Reseau/Paquets/paqueteffacementtexte.h"
 #include "Reseau/Paquets/paquetenvoichat.h"
@@ -44,7 +44,7 @@ void ClientSynergie::Renommer(QString nom)
 {
     m_Nom = nom;
 
-    m_Connexion->EnvoyerPaquet(new PaquetChangerNom(nom));
+    m_Connexion->EnvoyerPaquet(new PaquetAuthentification(nom));
 }
 
 Connexion* ClientSynergie::getConnexion()
@@ -82,7 +82,7 @@ void ClientSynergie::DeconnexionCollegue(int id)
     emit (siDeconnexionCollegue(collegue));
 }
 
-//Slots relier a l'interface graphique
+//Slots reliées a l'interface graphique
 void ClientSynergie::slInsertionTexte(int id, int pos, QString texte)
 {
     m_Connexion->EnvoyerPaquet(new PaquetInsertionTexte(id, pos, texte));

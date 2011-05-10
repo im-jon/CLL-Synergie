@@ -11,7 +11,7 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        fenetreprincipale.cpp \
+        UI/fenetreprincipale.cpp \
     Console/console.cpp \
     Console/Commandes/basecommande.cpp \
     Console/Commandes/aide.cpp \
@@ -39,9 +39,10 @@ SOURCES += main.cpp\
     chat.cpp \
     verificateur.cpp \
     Reseau/Paquets/paquetverification.cpp \
-    Reseau/Paquets/paquetnettoyerfichier.cpp
+    Reseau/Paquets/paquetnettoyerfichier.cpp \
+    message.cpp
 
-HEADERS  += fenetreprincipale.h \
+HEADERS  += UI/fenetreprincipale.h \
     Console/console.h \
     Console/Commandes/basecommande.h \
     Console/Commandes/aide.h \
@@ -69,6 +70,7 @@ HEADERS  += fenetreprincipale.h \
     chat.h \
     verificateur.h \
     Reseau/Paquets/paquetverification.h \
-    Reseau/Paquets/paquetnettoyerfichier.h
+    Reseau/Paquets/paquetnettoyerfichier.h \
+    message.h
 
-FORMS    += fenetreprincipale.ui
+FORMS    += UI/fenetreprincipale.ui

@@ -6,6 +6,9 @@
 #include "Paquets/paquetouverturefichier.h"
 #include "Paquets/basepaquet.h"
 #include "Paquets/paquetdonnees.h"
+#include "Paquets/paquetenvoicollegues.h"
+#include "Paquets/paquetlistefichiers.h"
+#include "Paquets/paquetconnexioncollegue.h"
 
 int Client::GenerateurID = 1;
 
@@ -45,6 +48,16 @@ void Client::LirePaquet()
     {
         LirePaquet();
     }
+}
+
+void Client::Authentifier(QString nom)
+{
+    m_Nom = nom;
+
+    EnvoyerPaquet(new PaquetEnvoiCollegues());
+    EnvoyerPaquet(new PaquetListeFichiers());
+
+    Serveur::Instance()->getClients()->EnvoyerPaquetATous(new PaquetConnexionCollegue(this), this);
 }
 
 void Client::Deconnecter()

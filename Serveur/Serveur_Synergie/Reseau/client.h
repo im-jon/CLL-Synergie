@@ -18,6 +18,7 @@ class Client : public QObject
 public:
     explicit Client(QTcpSocket* socket, QObject *parent = 0);
 
+    void Authentifier(QString nom);
     void Deconnecter();
     void EnvoyerPaquet(BasePaquet* paquet);
     void OuvrirFichier(Fichier* fichier);
