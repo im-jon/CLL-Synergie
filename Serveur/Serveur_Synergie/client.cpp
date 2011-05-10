@@ -10,7 +10,8 @@
 #include "Reseau/Paquets/paquetlistefichiers.h"
 #include "Reseau/Paquets/paquetconnexioncollegue.h"
 
-int Client::GenerateurID = 1;
+// Sert à attribuer automatiquement des ID aux clients.
+int Client::GenerateurID = 0;
 
 Client::Client(QTcpSocket* socket, QObject* parent) :
     QObject(parent)
@@ -28,6 +29,7 @@ void Client::EnvoyerPaquet(BasePaquet* paquet)
     m_Connexion->Envoyer(paquet);
 }
 
+// Attention, un client connecté n'est pas nécéssairement authentifié!
 void Client::Authentifier(QString nom)
 {
     m_Nom = nom;
@@ -35,6 +37,9 @@ void Client::Authentifier(QString nom)
     EnvoyerPaquet(new PaquetEnvoiCollegues());
     EnvoyerPaquet(new PaquetListeFichiers());
 
+    // À faire : Envoyer les 10-15 derniers messages du chat.
+
+    // Indique aux autres clients que ce client est connecté & authentifié.
     Serveur::Instance()->getClients()->EnvoyerPaquetATous(new PaquetConnexionCollegue(this), this);
 }
 
@@ -66,6 +71,7 @@ void Client::FermerFichier(Fichier *fichier)
     m_FichiersOuverts->removeOne(fichier);
 }
 
+// Le paramètre onglet détermine si l'on ouvre un nouvel onglet côté client.
 void Client::EnvoyerFichier(Fichier* fichier, bool onglet)
 {
     Transfer* transfer = new Transfer(fichier, this);
@@ -108,13 +114,6 @@ QList<Fichier*>* Client::getFichiers()
 int Client::getMauvaisesReponses()
 {
     return m_MauvaisesReponses;
-}
-
-void Client::setNom(QString nom)
-{
-    m_Nom = nom;
-
-    Console::Instance()->Imprimer(m_Connexion->getIP() + " change de nom pour " + nom);
 }
 
 void Client::setMauvaisesReponses(int valeur)

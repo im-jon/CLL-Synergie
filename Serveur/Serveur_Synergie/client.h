@@ -35,7 +35,6 @@ public:
     QList<Fichier*>* getFichiers();
     int getMauvaisesReponses();
 
-    void setNom(QString nom);
     void setMauvaisesReponses(int valeur);
 
 private:
@@ -46,6 +45,7 @@ private:
     Connexion* m_Connexion;
     QMap<int, Transfer*>* m_Transfers;
     QList<Fichier*>* m_FichiersOuverts;
+    // Le nombre de mauvaises réponses est proportionnel aux chances que le client soit désynchronisé avec le serveur.
     int m_MauvaisesReponses;
 
 signals:

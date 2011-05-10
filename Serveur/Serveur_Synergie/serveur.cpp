@@ -10,10 +10,10 @@ Serveur* Serveur::m_Instance = 0;
 Serveur::Serveur(QObject *parent) :
     QObject(parent)
 {
+    m_Chat = new Chat(this);
     m_Clients = new Clients(this);
     m_Ecouteur = new QTcpServer(this);
     m_Depaqueteur = new Depaqueteur(this);
-    m_Chat = new Chat(this);
     m_Verificateur = new Verificateur(this);
 
     connect (m_Ecouteur, SIGNAL(newConnection()), this, SLOT(slNouveauClient()));
@@ -70,6 +70,11 @@ Verificateur* Serveur::getVerificateur()
     return m_Verificateur;
 }
 
+Chat* Serveur::getChat()
+{
+    return m_Chat;
+}
+
 void Serveur::slNouveauClient()
 {
     Client* client = new Client(m_Ecouteur->nextPendingConnection(), this);
@@ -94,9 +99,4 @@ Serveur* Serveur::Instance()
     }
 
     return m_Instance;
-}
-
-Chat* Serveur::getChat()
-{
-    return m_Chat;
 }

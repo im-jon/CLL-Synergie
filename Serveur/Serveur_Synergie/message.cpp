@@ -7,6 +7,11 @@ Message::Message(Client* auteur, QString contenu, QObject *parent) :
     m_Contenu = contenu;
 }
 
+void Message::Archiver()
+{
+    // À faire (si on à le temps)
+}
+
 Client* Message::getAuteur()
 {
     return m_Auteur;

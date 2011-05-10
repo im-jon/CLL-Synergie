@@ -9,7 +9,7 @@ class Message : public QObject
     Q_OBJECT
 public:
     explicit Message(Client* auteur, QString contenu, QObject *parent = 0);
-
+    void Archiver();
     Client* getAuteur();
     QString getContenu();
 

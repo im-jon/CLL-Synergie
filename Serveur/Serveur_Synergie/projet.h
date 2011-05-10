@@ -17,6 +17,7 @@ public:
     bool Ouvrir();
     bool Fermer();
     bool Sauvegarder();
+
     QString getNom();
     QString getChemin();
     Fichier* getFichier(int id);
