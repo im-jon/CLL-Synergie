@@ -2,8 +2,8 @@
 #define PAQUETMESSAGECHAT_H
 
 #include "basepaquet.h"
-#include "../client.h"
-#include "../../message.h"
+#include "client.h"
+#include "message.h"
 
 class PaquetMessageChat : public BasePaquet
 {

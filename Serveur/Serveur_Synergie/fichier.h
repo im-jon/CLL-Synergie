@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QList>
 #include <QFile>
-#include "Reseau/client.h"
+#include "client.h"
 
 class Client;
 

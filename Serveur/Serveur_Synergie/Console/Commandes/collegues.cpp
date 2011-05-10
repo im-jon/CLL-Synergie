@@ -21,7 +21,7 @@ QString Collegues::Executer(const QStringList& arguments)
         while (iterateur.hasNext())
         {
             iterateur.next();
-            retour = retour % "\n" % QString::number(iterateur.value()->getID()) % " - " % iterateur.value()->getNom() % " (" % iterateur.value()->getIP() % ")";
+            retour = retour % "\n" % QString::number(iterateur.value()->getID()) % " - " % iterateur.value()->getNom() % " (" % iterateur.value()->getConnexion()->getIP() % ")";
         }
     }
     else

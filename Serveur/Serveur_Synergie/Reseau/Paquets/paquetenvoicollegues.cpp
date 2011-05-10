@@ -1,6 +1,6 @@
 #include "paquetenvoicollegues.h"
 #include <QMapIterator>
-#include "Reseau/client.h"
+#include "client.h"
 #include "serveur.h"
 #include <QDebug>
 

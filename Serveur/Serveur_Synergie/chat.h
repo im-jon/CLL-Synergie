@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QList>
-#include "Reseau/client.h"
+#include "client.h"
 #include "serveur.h"
 #include "message.h"
 

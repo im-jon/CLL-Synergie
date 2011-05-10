@@ -2,7 +2,7 @@
 #define PAQUETCONNEXIONCOLLEGUE_H
 
 #include "basepaquet.h"
-#include "Reseau/client.h"
+#include "client.h"
 
 class PaquetConnexionCollegue : public BasePaquet
 {

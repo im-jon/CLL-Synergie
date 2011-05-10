@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QMap>
-#include "Reseau/client.h"
+#include "client.h"
 
 class Clients : public QObject
 {

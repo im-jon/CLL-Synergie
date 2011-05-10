@@ -2,7 +2,7 @@
 #define MESSAGE_H
 
 #include <QObject>
-#include "Reseau/client.h"
+#include "client.h"
 
 class Message : public QObject
 {

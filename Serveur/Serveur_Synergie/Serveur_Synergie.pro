@@ -16,7 +16,7 @@ SOURCES += main.cpp\
     Console/Commandes/basecommande.cpp \
     Console/Commandes/aide.cpp \
     Console/Commandes/vider.cpp \
-    Reseau/client.cpp \
+    client.cpp \
     Console/Commandes/demarrer.cpp \
     Reseau/Paquets/paquetenvoicollegues.cpp \
     Console/Commandes/collegues.cpp \
@@ -40,14 +40,15 @@ SOURCES += main.cpp\
     verificateur.cpp \
     Reseau/Paquets/paquetverification.cpp \
     Reseau/Paquets/paquetnettoyerfichier.cpp \
-    message.cpp
+    message.cpp \
+    Reseau/connexion.cpp
 
 HEADERS  += UI/fenetreprincipale.h \
     Console/console.h \
     Console/Commandes/basecommande.h \
     Console/Commandes/aide.h \
     Console/Commandes/vider.h \
-    Reseau/client.h \
+    client.h \
     Console/Commandes/demarrer.h \
     Reseau/Paquets/paquetenvoicollegues.h \
     Console/Commandes/collegues.h \
@@ -71,6 +72,7 @@ HEADERS  += UI/fenetreprincipale.h \
     verificateur.h \
     Reseau/Paquets/paquetverification.h \
     Reseau/Paquets/paquetnettoyerfichier.h \
-    message.h
+    message.h \
+    Reseau/connexion.h
 
 FORMS    += UI/fenetreprincipale.ui

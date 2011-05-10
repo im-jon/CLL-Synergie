@@ -75,7 +75,7 @@ void Serveur::slNouveauClient()
     Client* client = new Client(m_Ecouteur->nextPendingConnection(), this);
     m_Clients->AjouterClient(client);
 
-    Console::Instance()->Imprimer(client->getIP() + " est en ligne");
+    Console::Instance()->Imprimer(client->getConnexion()->getIP() + " est en ligne");
 }
 
 // Fonction pour le Singleton.
