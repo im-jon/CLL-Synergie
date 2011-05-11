@@ -18,6 +18,8 @@ void Depaqueteur::Interpreter(QDataStream& stream)
 
     stream >> id;
 
+    qDebug()<<id;
+
     switch (id)
     {
         case 1:
@@ -147,6 +149,7 @@ void Depaqueteur::Reception_Texte(QDataStream& stream)
     stream >> id;
     stream >> position;
     stream >> texte;
+
 
     emit (siInsertionTexte(id, position, texte));
 
