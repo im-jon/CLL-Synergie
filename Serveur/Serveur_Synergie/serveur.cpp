@@ -40,6 +40,7 @@ bool Serveur::Arreter()
     {
         m_Ecouteur->close();
         m_Verificateur->Arreter();
+        m_Chat->Arreter();
         Console::Instance()->Imprimer("Le serveur est hors ligne");
         return true;
     }

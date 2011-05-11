@@ -1,13 +1,19 @@
 #include "chat.h"
 #include "Reseau/Paquets/paquetmessagechat.h"
 
-const int Seuil = 100; // Nombre de messages maximum que la liste peut contenir.
+const int Seuil = 2; // Nombre de messages maximum que la liste peut contenir.
 
 Chat::Chat(QObject *parent) :
     QObject(parent)
 {
     m_Messages = new QList<Message*>;
     m_Archiveur = new Archiveur(this);
+}
+
+void Chat::Arreter()
+{
+    m_Archiveur->Archiver(m_Messages);
+    m_Archiveur->Arreter();
 }
 
 void Chat::NouveauMessage(Message* message)
