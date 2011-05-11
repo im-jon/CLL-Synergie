@@ -13,13 +13,14 @@ class Archiveur : public QObject
 public:
     explicit Archiveur(QObject *parent = 0);
 
+    void Demarrer();
     void Arreter();
     void Archiver(Message* message);
     void Archiver(QList<Message*>* messages);
 
 private:
-    void Initialiser();
-
+    bool m_Actif;
+    QString m_NomFichier;
     QDir* m_Repertoire;
     QFile* m_FichierActuel;
     QTextStream* m_Stream;

@@ -26,7 +26,9 @@ bool Serveur::Demarrer()
 {
     if (m_Ecouteur->listen(QHostAddress::Any, 9001))
     {
-        //m_Verificateur->Demarrer();
+        m_Verificateur->Demarrer();
+        m_Chat->Demarrer();
+
         Console::Instance()->Imprimer("Le serveur est en ligne");
         return true;
     }
@@ -39,8 +41,10 @@ bool Serveur::Arreter()
     if (m_Ecouteur->isListening())
     {
         m_Ecouteur->close();
+
         m_Verificateur->Arreter();
         m_Chat->Arreter();
+
         Console::Instance()->Imprimer("Le serveur est hors ligne");
         return true;
     }

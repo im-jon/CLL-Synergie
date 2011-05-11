@@ -14,6 +14,7 @@ class Chat : public QObject
 public:
     explicit Chat(QObject *parent = 0);
 
+    void Demarrer();
     void Arreter();
     void NouveauMessage(Message* message);
     QList<Message*>* getMessages();
@@ -21,6 +22,7 @@ public:
 
 
 private:
+    bool m_Actif;
     QList<Message*>* m_Messages;
     Archiveur* m_Archiveur;
 
