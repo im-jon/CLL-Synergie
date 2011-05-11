@@ -26,7 +26,7 @@ Client::Client(QTcpSocket* socket, QObject* parent) :
 
 void Client::EnvoyerPaquet(BasePaquet* paquet)
 {
-    m_Connexion->Envoyer(paquet);
+    m_Connexion->EnvoyerPaquet(paquet);
 }
 
 // Attention, un client connecté n'est pas nécéssairement authentifié!

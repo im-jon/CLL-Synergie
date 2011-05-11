@@ -40,7 +40,7 @@ void Verificateur::Verifier()
             Client* client;
             foreach (client, *fichier->getClients())
             {
-                if (client->getTransfers()->count() == 0)
+                if (!client->getTransfer(fichier->getID()))
                 {
                     client->EnvoyerPaquet(new PaquetVerification(fichier));
                 }

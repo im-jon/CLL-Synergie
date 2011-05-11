@@ -13,7 +13,7 @@ Depaqueteur::Depaqueteur(QObject* parent) :
 {
 }
 
-void Depaqueteur::Interpreter(Client* client, QDataStream& stream)
+void Depaqueteur::Depaqueter(Client* client, QDataStream& stream)
 {
     quint8 id;
 

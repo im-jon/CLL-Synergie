@@ -9,7 +9,7 @@ class Depaqueteur : public QObject
     Q_OBJECT
 public:
     explicit Depaqueteur(QObject* parent = 0);
-    void Interpreter(Client* client, QDataStream& stream);
+    void Depaqueter(Client* client, QDataStream& stream);
 
 private:
     void Reception_Authentification(Client* client, QDataStream& stream);

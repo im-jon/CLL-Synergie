@@ -29,8 +29,10 @@ void Fichier::Fermer()
 
 void Fichier::Sauvegarder()
 {
+        m_Fichier->open(QFile::WriteOnly | QFile::Truncate);
         QTextStream stream(m_Fichier);
         stream << m_Contenu;
+        m_Fichier->close();
         m_Modifications = 0;
 }
 
@@ -43,7 +45,6 @@ void Fichier::ChargerContenu()
         QTextStream* stream = new QTextStream(m_Fichier);
         m_Contenu = stream->readAll();
         m_Fichier->close();
-        m_Fichier->open(QFile::WriteOnly|QFile::Truncate);
         m_Charge = true;
     }
 }

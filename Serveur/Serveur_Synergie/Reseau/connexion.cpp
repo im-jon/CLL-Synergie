@@ -22,19 +22,19 @@ void Connexion::Lire()
 
     buffer = m_Socket->read(taille);
 
-    Serveur::Instance()->getDepaqueteur()->Interpreter(m_Client, stream);
+    // On va dépaqueter le paquet que nous venons de lire.
+    Serveur::Instance()->getDepaqueteur()->Depaqueter(m_Client, stream);
 
+    // Au cas ou des données ont été reçues entre-temps, on ne vas pas attendre que slPretALire soit invoqué.
     if (m_Socket->bytesAvailable() > 0)
     {
         Lire();
     }
 }
 
-void Connexion::Envoyer(BasePaquet* paquet)
+void Connexion::EnvoyerPaquet(BasePaquet* paquet)
 {
-   m_Socket->waitForBytesWritten();
-   m_Socket->write(paquet->getBuffer());
-   m_Socket->waitForBytesWritten();
+    EnvoyerBytes(paquet->getBuffer());
 }
 
 void Connexion::EnvoyerBytes(QByteArray donnees)
