@@ -127,7 +127,7 @@ void FenetrePrincipale::slOuvrirFichier(int id)
         editeur->setLexer(lexer);
         editeur->lexer()->setFont(QFont("Monospace", 9));
     }
-    editeur->setAutoIndent(true);
+    //editeur->setAutoIndent(true);
 
     int index = ui->tabFeuilles->addTab(editeur, feuille->getNom());
     ui->tabFeuilles->setCurrentIndex(index);

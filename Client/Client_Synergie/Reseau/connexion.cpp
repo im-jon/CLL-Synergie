@@ -1,6 +1,6 @@
 #include "connexion.h"
 #include <QMutex>
-#include "Paquets/paquetchangernom.h"
+#include "Paquets/paquetauthentification.h"
 
 Connexion::Connexion(QObject *parent) :
     QObject(parent)
