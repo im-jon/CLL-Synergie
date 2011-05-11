@@ -9,7 +9,7 @@
 #include "Reseau/Paquets/basepaquet.h"
 #include "fichier.h"
 #include "projet.h"
-#include "chat.h"
+#include "Chat/chat.h"
 #include "verificateur.h"
 
 class Chat;

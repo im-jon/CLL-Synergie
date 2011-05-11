@@ -1,6 +1,6 @@
 #include "connexion.h"
 #include <QMutex>
-#include "Paquets/paquetchangernom.h"
+#include "Paquets/paquetauthentification.h"
 
 Connexion::Connexion(QObject *parent) :
     QObject(parent)
@@ -38,6 +38,7 @@ void Connexion::LirePaquet()
 void Connexion::EnvoyerPaquet(BasePaquet* paquet)
 {
     m_Socket->write(paquet->getBuffer());
+    m_Socket->waitForBytesWritten();
 }
 
 Depaqueteur* Connexion::getDepaqueteur()

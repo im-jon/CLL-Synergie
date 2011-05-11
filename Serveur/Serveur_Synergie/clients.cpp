@@ -22,13 +22,17 @@ void Clients::EnleverClient(Client *client)
 
 void Clients::EnvoyerPaquetATous(BasePaquet* paquet, Client* exception)
 {
+    QByteArray ba;
+    QByteArray buffer = paquet->getBuffer();
+    memcpy(&ba, &buffer, sizeof(buffer));
+
     QMapIterator<int, Client*> iterateur(*m_Clients);
     while (iterateur.hasNext())
     {
         iterateur.next();
         if (iterateur.value() != exception)
         {
-            iterateur.value()->EnvoyerPaquet(paquet);
+            iterateur.value()->EnvoyerBytes(ba);
         }
     }
 }
@@ -43,14 +47,19 @@ QMap<int, Client*>* Clients::getClients()
     return m_Clients;
 }
 
-void Clients::EnvoyerPaquetAListe(QList<Client *>* clients, BasePaquet *paquet, Client *exception)
+void Clients::EnvoyerPaquetAListe(QList<Client *>* clients, BasePaquet* paquet, Client* exception)
 {
     Client* client;
+
+    QByteArray ba;
+    QByteArray buffer = paquet->getBuffer();
+    memcpy(&ba, &buffer, sizeof(buffer));
+
     foreach (client, *clients)
     {
         if (client != exception)
         {
-            client->EnvoyerPaquet(paquet);
+            client->EnvoyerBytes(ba);
         }
     }
 }

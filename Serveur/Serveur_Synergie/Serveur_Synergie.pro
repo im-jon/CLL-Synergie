@@ -36,12 +36,13 @@ SOURCES += main.cpp\
     Reseau/Paquets/basepaquet.cpp \
     Reseau/depaqueteur.cpp \
     Reseau/Paquets/paquetmessagechat.cpp \
-    chat.cpp \
+    Chat/chat.cpp \
     verificateur.cpp \
     Reseau/Paquets/paquetverification.cpp \
     Reseau/Paquets/paquetnettoyerfichier.cpp \
-    message.cpp \
-    Reseau/connexion.cpp
+    Chat/message.cpp \
+    Reseau/connexion.cpp \
+    Chat/archiveur.cpp
 
 HEADERS  += UI/fenetreprincipale.h \
     Console/console.h \
@@ -68,11 +69,12 @@ HEADERS  += UI/fenetreprincipale.h \
     Reseau/Paquets/basepaquet.h \
     Reseau/depaqueteur.h \
     Reseau/Paquets/paquetmessagechat.h \
-    chat.h \
+    Chat/chat.h \
     verificateur.h \
     Reseau/Paquets/paquetverification.h \
     Reseau/Paquets/paquetnettoyerfichier.h \
-    message.h \
-    Reseau/connexion.h
+    Chat/message.h \
+    Reseau/connexion.h \
+    Chat/archiveur.h
 
 FORMS    += UI/fenetreprincipale.ui

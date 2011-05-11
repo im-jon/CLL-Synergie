@@ -3,7 +3,7 @@
 
 #include "basepaquet.h"
 #include "client.h"
-#include "message.h"
+#include "Chat/message.h"
 
 class PaquetMessageChat : public BasePaquet
 {

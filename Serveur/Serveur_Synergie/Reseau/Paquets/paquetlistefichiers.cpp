@@ -1,6 +1,5 @@
 #include "paquetlistefichiers.h"
 #include "serveur.h"
-#include <QDebug>
 #include "fichier.h"
 
 PaquetListeFichiers::PaquetListeFichiers()

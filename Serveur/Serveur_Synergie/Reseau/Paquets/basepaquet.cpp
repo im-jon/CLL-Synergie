@@ -1,5 +1,4 @@
 #include "basepaquet.h"
-#include <QDebug>
 
 BasePaquet::BasePaquet(qint8 id)
 {

@@ -86,6 +86,11 @@ void Client::EnvoyerFichier(Fichier* fichier, bool onglet)
     EnvoyerPaquet(new PaquetDonnees(transfer));
 }
 
+void Client::EnvoyerBytes(QByteArray donnees)
+{
+    m_Connexion->EnvoyerBytes(donnees);
+}
+
 QString Client::getNom()
 {
     return m_Nom;
@@ -104,6 +109,11 @@ Connexion* Client::getConnexion()
 Transfer* Client::getTransfer(int id)
 {
     return m_Transfers->value(id);
+}
+
+QMap<int, Transfer*>* Client::getTransfers()
+{
+    return m_Transfers;
 }
 
 QList<Fichier*>* Client::getFichiers()

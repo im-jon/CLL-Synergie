@@ -23,6 +23,7 @@ public:
     void Authentifier(QString nom);
     void Deconnecter();
     void EnvoyerPaquet(BasePaquet* paquet);
+    void EnvoyerBytes(QByteArray donnees);
     void OuvrirFichier(Fichier* fichier);
     void FermerFichier(Fichier* fichier);
     void EnvoyerFichier(Fichier* fichier, bool onglet = true);
@@ -32,6 +33,7 @@ public:
     int getID();
     Connexion* getConnexion();
     Transfer* getTransfer(int index);
+    QMap<int, Transfer*>* getTransfers();
     QList<Fichier*>* getFichiers();
     int getMauvaisesReponses();
 

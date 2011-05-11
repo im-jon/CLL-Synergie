@@ -32,8 +32,15 @@ void Connexion::Lire()
 
 void Connexion::Envoyer(BasePaquet* paquet)
 {
+   m_Socket->waitForBytesWritten();
    m_Socket->write(paquet->getBuffer());
    m_Socket->waitForBytesWritten();
+}
+
+void Connexion::EnvoyerBytes(QByteArray donnees)
+{
+    m_Socket->write(donnees);
+    m_Socket->waitForBytesWritten();
 }
 
 void Connexion::Fermer()

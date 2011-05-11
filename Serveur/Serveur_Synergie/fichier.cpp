@@ -82,7 +82,6 @@ void Fichier::EnleverClient(Client *client)
 void Fichier::InsererTexte(QString texte, int position, Client* auteur)
 {
     m_Contenu.insert(position, texte);
-
     Clients::EnvoyerPaquetAListe(
                 m_Clients,
                 new PaquetInsertionTexte(this, texte, position),

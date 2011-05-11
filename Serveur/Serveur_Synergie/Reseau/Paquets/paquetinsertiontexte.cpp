@@ -1,7 +1,7 @@
 #include "paquetinsertiontexte.h"
 
 PaquetInsertionTexte::PaquetInsertionTexte(Fichier* fichier, QString texte, int position) :
-    BasePaquet(5)
+    BasePaquet((qint8)5)
 {
     *m_Stream << fichier->getID();
     *m_Stream << position;

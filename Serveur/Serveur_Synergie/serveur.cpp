@@ -26,7 +26,7 @@ bool Serveur::Demarrer()
 {
     if (m_Ecouteur->listen(QHostAddress::Any, 9001))
     {
-        m_Verificateur->Demarrer();
+        //m_Verificateur->Demarrer();
         Console::Instance()->Imprimer("Le serveur est en ligne");
         return true;
     }

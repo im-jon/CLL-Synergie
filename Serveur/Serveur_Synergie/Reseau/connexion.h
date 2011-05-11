@@ -15,6 +15,7 @@ public:
     explicit Connexion(QTcpSocket* socket, Client* client);
     void Lire();
     void Envoyer(BasePaquet* paquet);
+    void EnvoyerBytes(QByteArray donnees);
     void Fermer();
 
     QString getIP();

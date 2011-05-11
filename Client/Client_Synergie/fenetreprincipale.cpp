@@ -140,7 +140,7 @@ void FenetrePrincipale::slOuvrirFichier(int id)
 void FenetrePrincipale::slNouvelleDonnees(int id, QString contenu)
 {
     QsciScintilla* editeur = getEditeur(id);
-    editeur->insertAtPosMecha(contenu, editeur->length() - 1); // Changer pour un append ?
+    editeur->insertAtPosMecha(contenu, editeur->text().length()); // Changer pour un append ?
 }
 
 void FenetrePrincipale::slInsertionTexteEditeur(int position, QString texte)
