@@ -127,7 +127,7 @@ void FenetrePrincipale::slOuvrirFichier(int id)
         editeur->setLexer(lexer);
         editeur->lexer()->setFont(QFont("Monospace", 9));
     }
-    //editeur->setAutoIndent(true);
+    editeur->setAutoIndent(true);
 
     int index = ui->tabFeuilles->addTab(editeur, feuille->getNom());
     ui->tabFeuilles->setCurrentIndex(index);
@@ -182,10 +182,13 @@ void FenetrePrincipale::slAjoutFeuille(Feuille *feuille)
 void FenetrePrincipale::on_txtLigneConv_returnPressed()
 {
     QString message = ui->txtLigneConv->text();
-    ui->txtConversation->append(ClientSynergie::Instance()->getNom() + " : " + message);
-    ui->txtLigneConv->clear();
+    if (!message.isEmpty())
+    {
+        ui->txtConversation->append(ClientSynergie::Instance()->getNom() + " : " + message);
+        ui->txtLigneConv->clear();
 
-   emit(siEnvoiTexteChat(message));
+       emit(siEnvoiTexteChat(message));
+    }
 }
 
 void FenetrePrincipale::slVerification(int id, int longueur)
