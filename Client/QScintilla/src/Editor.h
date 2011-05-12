@@ -374,13 +374,13 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	void DrawAnnotation(Surface *surface, ViewStyle &vsDraw, int line, int xStart,
         PRectangle rcLine, LineLayout *ll, int subLine);
 	void DrawLine(Surface *surface, ViewStyle &vsDraw, int line, int lineVisible, int xStart,
-		PRectangle rcLine, LineLayout *ll, int subLine);
+                PRectangle rcLine, LineLayout *ll, int subLine, bool locked);
 	void DrawBlockCaret(Surface *surface, ViewStyle &vsDraw, LineLayout *ll, int subLine,
 		int xStart, int offset, int posCaret, PRectangle rcCaret, ColourAllocated caretColour);
 	void DrawCarets(Surface *surface, ViewStyle &vsDraw, int line, int xStart,
 		PRectangle rcLine, LineLayout *ll, int subLine);
 	void RefreshPixMaps(Surface *surfaceWindow);
-	void Paint(Surface *surfaceWindow, PRectangle rcArea);
+        void Paint(Surface *surfaceWindow, PRectangle rcArea, QList<int>* positions);
 	long FormatRange(bool draw, Sci_RangeToFormat *pfr);
 	int TextWidth(int style, const char *text);
 

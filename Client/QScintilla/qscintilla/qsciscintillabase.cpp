@@ -104,6 +104,10 @@ QsciScintillaBase::QsciScintillaBase(QWidget *parent)
     triple_click.setSingleShot(true);
 
     sci = new ScintillaQt(this);
+    positions = new QList<int>;
+    positions->append(16);
+    positions->append(67);
+    positions->append(5);
 
     SendScintilla(SCI_SETCARETPERIOD, QApplication::cursorFlashTime() / 2);
 
@@ -131,6 +135,11 @@ QsciScintillaBase::~QsciScintillaBase()
     poolList.removeAt(poolList.indexOf(this));
 
     delete sci;
+}
+
+QList<int>* QsciScintillaBase::getPositions()
+{
+    return positions;
 }
 
 

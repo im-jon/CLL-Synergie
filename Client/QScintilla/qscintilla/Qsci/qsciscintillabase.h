@@ -53,6 +53,7 @@ class QMimeData;
 QT_END_NAMESPACE
 
 class ScintillaQt;
+class Point;
 
 
 //! \brief The QsciScintillaBase class implements the Scintilla editor widget
@@ -3091,6 +3092,8 @@ protected:
     //! \internal Re-implemented to handle scrolling.
     virtual void scrollContentsBy(int dx, int dy);
 
+    virtual QList<int>* getPositions();
+
 private slots:
     void handleTimer();
     void handleVSb(int value);
@@ -3104,6 +3107,7 @@ private:
     ScintillaQt *sci;
     QPoint triple_click_at;
     QTimer triple_click;
+    QList<int>* positions;
 
     void acceptAction(QDropEvent *e);
 

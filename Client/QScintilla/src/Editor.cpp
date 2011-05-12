@@ -2596,7 +2596,7 @@ void Editor::DrawAnnotation(Surface *surface, ViewStyle &vsDraw, int line, int x
 }
 
 void Editor::DrawLine(Surface *surface, ViewStyle &vsDraw, int line, int lineVisible, int xStart,
-        PRectangle rcLine, LineLayout *ll, int subLine) {
+        PRectangle rcLine, LineLayout *ll, int subLine, bool locked) {
 
 	PRectangle rcSegment = rcLine;
 
@@ -3070,7 +3070,12 @@ void Editor::DrawLine(Surface *surface, ViewStyle &vsDraw, int line, int lineVis
 				marksMasked >>= 1;
 			}
 		}
-	}
+        }
+
+        if (locked)
+        {
+            SimpleAlphaRectangle(surface, rcSegment, ColourAllocated(ColourDesired(255, 0, 0).AsLong()), 80);
+        }
 }
 
 void Editor::DrawBlockCaret(Surface *surface, ViewStyle &vsDraw, LineLayout *ll, int subLine,
@@ -3284,7 +3289,7 @@ void Editor::DrawCarets(Surface *surface, ViewStyle &vsDraw, int lineDoc, int xS
 	}
 }
 
-void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea) {
+void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea, QList<int>* positions) {
 	//Platform::DebugPrintf("Paint:%1d (%3d,%3d) ... (%3d,%3d)\n",
 	//	paintingAllText, rcArea.left, rcArea.top, rcArea.right, rcArea.bottom);
 
@@ -3413,7 +3418,7 @@ void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea) {
 				LayoutLine(lineDoc, surface, vs, ll, wrapWidth);
 				lineDocPrevious = lineDoc;
 			}
-			//durLayout += et.Duration(true);
+                        //durLayout += et.Duration(true);
 
 			if (ll) {
 				ll->containsCaret = lineDoc == lineCaret;
@@ -3433,7 +3438,14 @@ void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea) {
 				        highlightGuideColumn * vs.spaceWidth);
 
 				// Draw the line
-                                DrawLine(surface, vs, lineDoc, visibleLine, xStart, rcLine, ll, subLine);
+
+                                bool locked = false;
+                                if (positions->contains(lineDoc))
+                                {
+                                    locked = true;
+                                }
+
+                                DrawLine(surface, vs, lineDoc, visibleLine, xStart, rcLine, ll, subLine, locked);
 				//durPaint += et.Duration(true);
 
 				// Restore the previous styles for the brace highlights in case layout is in cache.
@@ -3692,7 +3704,7 @@ long Editor::FormatRange(bool draw, Sci_RangeToFormat *pfr) {
 					if (draw) {
 						rcLine.top = ypos;
 						rcLine.bottom = ypos + vsPrint.lineHeight;
-						DrawLine(surface, vsPrint, lineDoc, visibleLine, xStart, rcLine, &ll, iwl);
+                                                DrawLine(surface, vsPrint, lineDoc, visibleLine, xStart, rcLine, &ll, iwl, 0);
 					}
 					ypos += vsPrint.lineHeight;
 				}
