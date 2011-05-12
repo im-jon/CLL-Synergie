@@ -7,7 +7,7 @@
 
 Serveur* Serveur::m_Instance = 0;
 
-Serveur::Serveur(QObject *parent) :
+Serveur::Serveur(QObject* parent) :
     QObject(parent)
 {
     m_Chat = new Chat(this);

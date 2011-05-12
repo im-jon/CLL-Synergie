@@ -17,6 +17,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     ui(new Ui::FenetrePrincipale)
 {
     ui->setupUi(this);
+    this->showMaximized();
 
     m_Collegues = new QMap<Collegue*, QListWidgetItem*>;
     m_Feuilles = new QMap<Feuille*, QTreeWidgetItem*>;
