@@ -4,7 +4,10 @@
 #include "Console/console.h"
 #include "Reseau/Paquets/paquetinsertiontexte.h"
 #include "Reseau/Paquets/paqueteffacementtexte.h"
+#include "Reseau/Paquets/paquetchangerligne.h"
+#include "Reseau/Paquets/paquetouvrirfeuille.h"
 #include "serveur.h"
+#include "curseur.h"
 
 const int Seuil = 100;
 
@@ -16,6 +19,7 @@ Fichier::Fichier(QString chemin, QObject *parent) :
     m_ID = GenerateurID;
     m_Chemin = chemin;
     m_Clients = new QList<Client*>;
+    m_Curseurs = new QMap<Client*, Curseur*>;
     m_Charge = false;
 
     GenerateurID++;
@@ -67,11 +71,18 @@ void Fichier::AjouterClient(Client *client)
     }
 
     m_Clients->append(client);
+    m_Curseurs->insert(client, new Curseur(client));
+
+    Clients::EnvoyerPaquetAListe(
+                m_Clients,
+                new PaquetOuvrirFeuille(client, this),
+                client);
 }
 
 void Fichier::EnleverClient(Client *client)
 {
     m_Clients->removeOne(client);
+    m_Curseurs->remove(client);
 
     if (m_Clients->count() == 0)
     {
@@ -113,6 +124,15 @@ void Fichier::NouvelleModification()
     }
 }
 
+void Fichier::ChangerLigneCurseur(Client *client, int ligne)
+{
+    m_Curseurs->value(client)->setLigne(ligne);
+    Clients::EnvoyerPaquetAListe(
+                m_Clients,
+                new PaquetChangerLigne(client, this),
+                client);
+}
+
 QString Fichier::getChemin()
 {
     return m_Chemin;
@@ -131,6 +151,11 @@ QString* Fichier::getContenu()
 QList<Client*>* Fichier::getClients()
 {
     return m_Clients;
+}
+
+Curseur* Fichier::getCurseur(Client* client)
+{
+    return m_Curseurs->value(client);
 }
 
 int Fichier::longeur()

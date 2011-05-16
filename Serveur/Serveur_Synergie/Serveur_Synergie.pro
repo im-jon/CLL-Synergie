@@ -42,7 +42,10 @@ SOURCES += main.cpp\
     Reseau/Paquets/paquetnettoyerfichier.cpp \
     Chat/message.cpp \
     Reseau/connexion.cpp \
-    Chat/archiveur.cpp
+    Chat/archiveur.cpp \
+    Reseau/Paquets/paquetchangerligne.cpp \
+    Reseau/Paquets/paquetouvrirfeuille.cpp \
+    curseur.cpp
 
 HEADERS  += UI/fenetreprincipale.h \
     Console/console.h \
@@ -75,6 +78,9 @@ HEADERS  += UI/fenetreprincipale.h \
     Reseau/Paquets/paquetnettoyerfichier.h \
     Chat/message.h \
     Reseau/connexion.h \
-    Chat/archiveur.h
+    Chat/archiveur.h \
+    Reseau/Paquets/paquetchangerligne.h \
+    Reseau/Paquets/paquetouvrirfeuille.h \
+    curseur.h
 
 FORMS    += UI/fenetreprincipale.ui

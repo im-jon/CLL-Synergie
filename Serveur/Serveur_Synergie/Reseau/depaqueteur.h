@@ -20,6 +20,7 @@ private:
     void Reception_MessageChat(Client* client, QDataStream& stream);
     void Reception_MauvaiseReponse(Client* client, QDataStream& stream);
     void Reception_FermerFichier(Client* client, QDataStream& stream);
+    void Reception_ChangementLigne(Client* client, QDataStream& stream);
 
 signals:
 

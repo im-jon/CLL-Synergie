@@ -45,6 +45,9 @@ void Depaqueteur::Depaqueter(Client* client, QDataStream& stream)
         case 12:
             Reception_FermerFichier(client, stream);
             break;
+        case 20:
+            Reception_ChangementLigne(client, stream);
+            break;
         default:
             Console::Instance()->Imprimer("Réception d'un paquet inconnu #" + QString::number(id));
             break;
@@ -144,4 +147,19 @@ void Depaqueteur::Reception_FermerFichier(Client *client, QDataStream &stream)
 
     fichier = Serveur::Instance()->getProjet()->getFichier(id);
     client->FermerFichier(fichier);
+}
+
+void Depaqueteur::Reception_ChangementLigne(Client *client, QDataStream &stream)
+{
+    int id;
+    Fichier* fichier;
+    int ligne;
+
+    stream >> id;
+    stream >> ligne;
+
+    fichier = Serveur::Instance()->getProjet()->getFichier(id);
+    fichier->ChangerLigneCurseur(client, ligne);
+
+
 }
