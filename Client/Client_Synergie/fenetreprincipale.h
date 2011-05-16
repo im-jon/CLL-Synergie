@@ -55,6 +55,9 @@ private slots:
     void slMessageChat(Collegue* collegue, QString message);
     void slVerification(int id, int longueur);
     void slNettoyer(int id);
+    void slFeuilleOuverte(int,int);
+    void slChangementLigne(int,int,int);
+    void slLigneChangee(int);
 
     void on_txtLigneConv_returnPressed();
 
@@ -64,6 +67,7 @@ signals :
     void siEnvoiTexteChat(QString);
     void siMauvaiseSynchro(int id);
     void siFermerFichier(int id);
+    void siLigneChangee(int feuille, int ligne);
 
 };
 

@@ -24,6 +24,8 @@ private:
     void Reception_MessageChat(QDataStream& stream);
     void Reception_Verification(QDataStream& stream);
     void Reception_Nettoyer(QDataStream& stream);
+    void Reception_FeuillesOuvertes(QDataStream& stream);
+    void Reception_ChangementLigne(QDataStream& stream);
 
 signals:
     void siListeCollegues(QStringList* noms);
@@ -34,6 +36,8 @@ signals:
     void siEffacementTexte(int id, int position, int longeur);
     void siVerification(int id, int longueur);
     void siNettoyer(int id);
+    void siFeuilleOuverte(int idClient,int idFeuille);
+    void siChangementLigne(int idClient,int idFeuille,int ligne);
 
 public slots:
 };

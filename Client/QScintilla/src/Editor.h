@@ -8,6 +8,8 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+#include "../qscintilla/curseur.h"
+
 
 #ifdef SCI_NAMESPACE
 namespace Scintilla {
@@ -374,13 +376,13 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	void DrawAnnotation(Surface *surface, ViewStyle &vsDraw, int line, int xStart,
         PRectangle rcLine, LineLayout *ll, int subLine);
 	void DrawLine(Surface *surface, ViewStyle &vsDraw, int line, int lineVisible, int xStart,
-                PRectangle rcLine, LineLayout *ll, int subLine, bool locked);
+                PRectangle rcLine, LineLayout *ll, int subLine, Curseur* curseur);
 	void DrawBlockCaret(Surface *surface, ViewStyle &vsDraw, LineLayout *ll, int subLine,
 		int xStart, int offset, int posCaret, PRectangle rcCaret, ColourAllocated caretColour);
 	void DrawCarets(Surface *surface, ViewStyle &vsDraw, int line, int xStart,
 		PRectangle rcLine, LineLayout *ll, int subLine);
 	void RefreshPixMaps(Surface *surfaceWindow);
-        void Paint(Surface *surfaceWindow, PRectangle rcArea, QList<int>* positions);
+        void Paint(Surface *surfaceWindow, PRectangle rcArea, QMap<int, Curseur*>* curseurs);
 	long FormatRange(bool draw, Sci_RangeToFormat *pfr);
 	int TextWidth(int style, const char *text);
 

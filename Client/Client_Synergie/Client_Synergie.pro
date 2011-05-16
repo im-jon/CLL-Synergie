@@ -28,7 +28,8 @@ SOURCES += main.cpp\
     Reseau/Paquets/paquetfermerfichier.cpp \
     Reseau/Paquets/paquetmauvaisesynchro.cpp \
     chat.cpp \
-    Reseau/Paquets/paquetauthentification.cpp
+    Reseau/Paquets/paquetauthentification.cpp \
+    Reseau/Paquets/paquetlignechangee.cpp
 
 HEADERS  += fenetreprincipale.h \
     Reseau/connexion.h \
@@ -47,7 +48,8 @@ HEADERS  += fenetreprincipale.h \
     Reseau/Paquets/paquetfermerfichier.h \
     Reseau/Paquets/paquetmauvaisesynchro.h \
     chat.h \
-    Reseau/Paquets/paquetauthentification.h
+    Reseau/Paquets/paquetauthentification.h \
+    Reseau/Paquets/paquetlignechangee.h
 
 FORMS    += fenetreprincipale.ui \
     dlgconnexion.ui

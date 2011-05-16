@@ -5,6 +5,7 @@
 #include "Reseau/Paquets/paquetenvoichat.h"
 #include "Reseau/Paquets/paquetmauvaisesynchro.h"
 #include "Reseau/Paquets/paquetfermerfichier.h"
+#include "Reseau/Paquets/paquetlignechangee.h"
 
 ClientSynergie* ClientSynergie::m_Instance = 0;
 
@@ -108,6 +109,12 @@ void ClientSynergie::slFermerFichier(int id)
     m_Connexion->EnvoyerPaquet(new PaquetFermerFichier(id));
 }
 
+void ClientSynergie::slLigneChangee(int feuille, int ligne)
+{
+    m_Connexion->EnvoyerPaquet(new paquetLigneChangee(feuille,ligne));
+}
+
+//Instance
 ClientSynergie* ClientSynergie::Instance()
 {
     static QMutex mutex;

@@ -11,6 +11,7 @@
 #include "utils.h"
 #include "clientsynergie.h"
 #include <QList>
+#include <../QScintilla/qscintilla/curseur.h>
 
 FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     QMainWindow(parent),
@@ -33,6 +34,8 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     connect (ClientSynergie::Instance()->getChat(), SIGNAL(siMessageRecu(Collegue*,QString)), this, SLOT(slMessageChat(Collegue*, QString)));
     connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siVerification(int, int)), this, SLOT(slVerification(int,int)));
     connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siNettoyer(int)), this,SLOT(slNettoyer(int)));
+    connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siFeuilleOuverte(int,int)), this,SLOT(slFeuilleOuverte(int,int)));
+    connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siChangementLigne(int,int,int)), this,SLOT(slChangementLigne(int,int,int)));
 
 
     connect (this, SIGNAL(siInsertionTexte(int, int, QString)), ClientSynergie::Instance(), SLOT(slInsertionTexte(int, int, QString)));
@@ -40,6 +43,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     connect (this, SIGNAL(siEnvoiTexteChat(QString)), ClientSynergie::Instance()->getChat(), SLOT(slEnvoyer(QString)));
     connect (this, SIGNAL(siMauvaiseSynchro(int)), ClientSynergie::Instance(), SLOT(slMauvaiseSynchro(int)));
     connect (this, SIGNAL(siFermerFichier(int)),ClientSynergie::Instance(),SLOT(slFermerFichier(int)));
+    connect (this, SIGNAL(siLigneChangee(int,int)),ClientSynergie::Instance(),SLOT(slLigneChangee(int,int)));
 }
 
 FenetrePrincipale::~FenetrePrincipale()
@@ -65,6 +69,7 @@ void FenetrePrincipale::AjouterFeuille(Feuille *feuille)
 void FenetrePrincipale::slConnexionCollegues(Collegue *collegue)
 {
     AjouterCollegue(collegue);
+
 }
 
 void FenetrePrincipale::slDeconnexionCollegues(Collegue* collegue)
@@ -136,6 +141,7 @@ void FenetrePrincipale::slOuvrirFichier(int id)
 
     connect (editeur, SIGNAL(textInserted(int, QString)), this, SLOT(slInsertionTexteEditeur(int, QString)));
     connect (editeur, SIGNAL(textDeleted(int, int)), this, SLOT(slEffacementTexteEditeur(int, int)));
+    connect (editeur, SIGNAL(lineChanged(int)),this, SLOT (slLigneChangee(int)));
 }
 
 void FenetrePrincipale::slNouvelleDonnees(int id, QString contenu)
@@ -216,4 +222,22 @@ QsciScintilla* FenetrePrincipale::getEditeur(int id)
 QsciScintilla* FenetrePrincipale::getEditeur(Feuille* feuille)
 {
     return m_FeuillesOuvertes->value(feuille);
+}
+
+void FenetrePrincipale::slFeuilleOuverte(int idClient,int idFeuille)
+{
+    QsciScintilla* editeur = getEditeur(idFeuille);
+    editeur->curseurs->insert(idClient,new Curseur(idClient,0,new QColor(255,0,0)));
+}
+
+void FenetrePrincipale::slChangementLigne(int idClient, int idFeuille, int Ligne)
+{
+    QsciScintilla* editeur = getEditeur(idFeuille);
+    editeur->curseurs->value(idClient)->setLigne(Ligne);
+}
+
+void FenetrePrincipale::slLigneChangee(int ligne)
+{
+    QsciScintilla* editeur = (QsciScintilla*)sender();
+    emit siLigneChangee(m_FeuillesOuvertes->key(editeur)->getID(),ligne);
 }

@@ -38,6 +38,7 @@
 #include "Selection.h"
 #include "PositionCache.h"
 #include "Editor.h"
+#include <QMapIterator>
 
 #ifdef SCI_NAMESPACE
 using namespace Scintilla;
@@ -2596,7 +2597,7 @@ void Editor::DrawAnnotation(Surface *surface, ViewStyle &vsDraw, int line, int x
 }
 
 void Editor::DrawLine(Surface *surface, ViewStyle &vsDraw, int line, int lineVisible, int xStart,
-        PRectangle rcLine, LineLayout *ll, int subLine, bool locked) {
+        PRectangle rcLine, LineLayout *ll, int subLine, Curseur* curseur) {
 
 	PRectangle rcSegment = rcLine;
 
@@ -3072,9 +3073,12 @@ void Editor::DrawLine(Surface *surface, ViewStyle &vsDraw, int line, int lineVis
 		}
         }
 
-        if (locked)
+        if (curseur != 0)
         {
-            SimpleAlphaRectangle(surface, rcSegment, ColourAllocated(ColourDesired(255, 0, 0).AsLong()), 80);
+            SimpleAlphaRectangle(surface, rcSegment, ColourAllocated(ColourDesired(
+                                                                         curseur->getCouleur()->red(),
+                                                                         curseur->getCouleur()->green(),
+                                                                         curseur->getCouleur()->blue()).AsLong()), 80);
         }
 }
 
@@ -3289,7 +3293,7 @@ void Editor::DrawCarets(Surface *surface, ViewStyle &vsDraw, int lineDoc, int xS
 	}
 }
 
-void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea, QList<int>* positions) {
+void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea, QMap<int, Curseur*>* curseurs) {
 	//Platform::DebugPrintf("Paint:%1d (%3d,%3d) ... (%3d,%3d)\n",
 	//	paintingAllText, rcArea.left, rcArea.top, rcArea.right, rcArea.bottom);
 
@@ -3439,13 +3443,18 @@ void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea, QList<int>* positi
 
 				// Draw the line
 
-                                bool locked = false;
-                                if (positions->contains(lineDoc))
+                                Curseur* curseur = 0;
+                                QMapIterator<int, Curseur*> iterateur(*curseurs);
+                                while (iterateur.hasNext())
                                 {
-                                    locked = true;
+                                    iterateur.next();
+                                    if (lineDoc == iterateur.value()->getLigne())
+                                    {
+                                        curseur = iterateur.value();
+                                    }
                                 }
 
-                                DrawLine(surface, vs, lineDoc, visibleLine, xStart, rcLine, ll, subLine, locked);
+                                DrawLine(surface, vs, lineDoc, visibleLine, xStart, rcLine, ll, subLine, curseur);
 				//durPaint += et.Duration(true);
 
 				// Restore the previous styles for the brace highlights in case layout is in cache.

@@ -53,6 +53,7 @@ public slots:
     void slEnvoiTexteChat(QString Texte);
     void slMauvaiseSynchro(int id);
     void slFermerFichier(int id);
+    void slLigneChangee(int feuille, int ligne);
 
 };
 

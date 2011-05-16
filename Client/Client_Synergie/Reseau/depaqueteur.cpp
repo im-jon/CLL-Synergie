@@ -55,7 +55,12 @@ void Depaqueteur::Interpreter(QDataStream& stream)
         case 17:
             Reception_Nettoyer(stream);
             break;
-
+        case 18:
+            Reception_ChangementLigne(stream);
+            break;
+        case 19:
+            Reception_FeuillesOuvertes(stream);
+            break;
         default:
             qDebug() << "Réception d'un paquet inconnu #" << id;
             break;
@@ -199,4 +204,28 @@ void Depaqueteur::Reception_Nettoyer(QDataStream &stream)
     stream >> id;
 
     emit (siNettoyer(id));
+}
+
+void Depaqueteur::Reception_FeuillesOuvertes(QDataStream& stream)
+{
+    int idClient;
+    int idFeuille;
+
+    stream >> idClient;
+    stream >> idFeuille;
+
+    emit(siFeuilleOuverte(idClient,idFeuille));
+
+}
+
+void Depaqueteur::Reception_ChangementLigne(QDataStream &stream)
+{
+    int idClient;
+    int idFeuille;
+    int Ligne;
+    stream >> idClient;
+    stream >> idFeuille;
+    stream >> Ligne;
+
+    emit (siChangementLigne(idClient,idFeuille,Ligne));
 }

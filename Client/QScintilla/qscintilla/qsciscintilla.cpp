@@ -3189,6 +3189,7 @@ void QsciScintilla::handleUpdateUI(int)
         if (oldline != line)
         {
             SendScintilla(SCI_EMPTYUNDOBUFFER);
+            emit lineChanged(line);
         }
 
         emit cursorPositionChanged(line, col);

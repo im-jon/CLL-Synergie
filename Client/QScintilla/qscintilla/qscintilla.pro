@@ -65,6 +65,7 @@ isEmpty(qsci.path) {
 INSTALLS += header trans qsci target
 
 HEADERS = \
+        curseur.h \
 	./Qsci/qsciglobal.h \
 	./Qsci/qsciscintilla.h \
 	./Qsci/qsciscintillabase.h \
@@ -158,6 +159,7 @@ HEADERS = \
 	../src/XPM.h
 
 SOURCES = \
+        curseur.cpp \
 	qsciscintilla.cpp \
 	qsciscintillabase.cpp \
 	qsciabstractapis.cpp \

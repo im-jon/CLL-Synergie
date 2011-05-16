@@ -41,6 +41,8 @@ extern "C++" {
 
 #include <qpoint.h>
 #include <qtimer.h>
+#include <QMap>
+#include "../curseur.h"
 
 #include "qsciglobal.h"
 
@@ -75,6 +77,7 @@ class QSCINTILLA_EXPORT QsciScintillaBase : public QAbstractScrollArea
     Q_OBJECT
 
 public:
+    QMap<int, Curseur*>* curseurs;
     //! The low-level Scintilla API is implemented as a set of messages each of
     //! which takes up to two parameters (\a wParam and \a lParam) and
     //! optionally return a value. This enum defines all the possible messages.
@@ -3092,8 +3095,6 @@ protected:
     //! \internal Re-implemented to handle scrolling.
     virtual void scrollContentsBy(int dx, int dy);
 
-    virtual QList<int>* getPositions();
-
 private slots:
     void handleTimer();
     void handleVSb(int value);
@@ -3107,7 +3108,6 @@ private:
     ScintillaQt *sci;
     QPoint triple_click_at;
     QTimer triple_click;
-    QList<int>* positions;
 
     void acceptAction(QDropEvent *e);
 

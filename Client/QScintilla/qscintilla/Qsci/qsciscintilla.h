@@ -1717,6 +1717,7 @@ public slots:
     virtual void zoomTo(int size);
 
 signals:
+    void lineChanged(int line);
     //! This signal is emitted whenever the cursor position changes.  \a line
     //! contains the line number and \a index contains the character index
     //! within the line.
