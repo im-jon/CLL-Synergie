@@ -7,7 +7,7 @@
 class PaquetEffacementTexte : public BasePaquet
 {
 public:
-    PaquetEffacementTexte(Fichier* fichier, int position, int longeur);
+    PaquetEffacementTexte(Client* auteur, Fichier* fichier, int position, int longeur);
 };
 
 #endif // PAQUETEFFACEMENTTEXTE_H

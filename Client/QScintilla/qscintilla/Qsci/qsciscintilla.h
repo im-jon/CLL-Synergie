@@ -71,7 +71,14 @@ class QSCINTILLA_EXPORT QsciScintilla : public QsciScintillaBase
 {
     Q_OBJECT
 
-public:
+public:  
+    void setCurseurPosition(int idCurseur, int position);
+    void setCurseurPosition(Curseur* curseur, int position);
+    void deplacerCurseur(int idCurseur, int offset);
+    void ajouterCurseur(Curseur* curseur);
+    void enleverCurseur(int idCurseur);
+    bool ligneBloquee(int ligne);
+
     //! This enum defines the different auto-indentation styles.
     enum {
         //! A line is automatically indented to match the previous line.

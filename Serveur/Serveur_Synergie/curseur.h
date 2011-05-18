@@ -10,15 +10,12 @@ class Curseur
 public:
     Curseur(Client* client);
 
-    int getLigne();
-    int getIndex();
-    void setLigne(int ligne);
-    void setIndex(int index);
+    int getPosition();
+    void setPosition(int position);
 
 private:
     Client* m_Client;
-    int m_Ligne;
-    int m_Index;
+    int m_Position;
 };
 
 #endif // CURSEUR_H

@@ -5,22 +5,12 @@ Curseur::Curseur(Client* client)
     m_Client = client;
 }
 
-int Curseur::getIndex()
+int Curseur::getPosition()
 {
-    return m_Index;
+    return m_Position;
 }
 
-int Curseur::getLigne()
+void Curseur::setPosition(int position)
 {
-    return m_Ligne;
-}
-
-void Curseur::setLigne(int ligne)
-{
-    m_Ligne = ligne;
-}
-
-void Curseur::setIndex(int index)
-{
-    m_Index = index;
+    m_Position = position;
 }

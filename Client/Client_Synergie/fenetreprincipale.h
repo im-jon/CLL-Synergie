@@ -25,8 +25,9 @@ public:
     explicit FenetrePrincipale(QWidget *parent = 0);
     ~FenetrePrincipale();
 
-    QsciScintilla* getEditeur(int id);
+    QsciScintilla* getEditeur(int idFeuille);
     QsciScintilla* getEditeur(Feuille* feuille);
+
 
 private:
     void AjouterCollegue(Collegue* collegue);
@@ -42,32 +43,38 @@ private slots:
     void on_treeProjet_itemDoubleClicked(QTreeWidgetItem* item, int column);
     void on_tabFeuilles_currentChanged(int index);
     void on_tabFeuilles_tabCloseRequested(int index);
+    void on_txtLigneConv_returnPressed();
+
     void slInsertionTexteEditeur(int position, QString texte);
-    void slEffacementTexteEditeur(int pos, int longeur);
+    void slEffacementTexteEditeur(int position, int longeur);
+
+    void slInsertionTexteServeur(int idCollegue, int idFeuille, int position, QString texte);
+    void slEffacementTexteServeur(int idAuteur, int idFeuille, int position, int longeur);
+
+    void slAjoutFeuille(Feuille* feuille);
+    void slOuvrirFeuille(int idFeuille);
+
+    void slNettoyerFeuille(int idFeuille);
+    void slNouvelleDonnees(int idFeuille, QString contenu);
+    void slVerification(int idFeuille, int longueur);
 
     void slConnexionCollegues(Collegue* collegue);
     void slDeconnexionCollegues(Collegue* collegue);
-    void slAjoutFeuille(Feuille* feuille);
-    void slOuvrirFichier(int id);
-    void slNouvelleDonnees(int id, QString contenu);
-    void slInsertionTexteServeur(int id, int position, QString texte);
-    void slEffacementTexteServeur(int id, int position, int longeur);
-    void slMessageChat(Collegue* collegue, QString message);
-    void slVerification(int id, int longueur);
-    void slNettoyer(int id);
-    void slFeuilleOuverte(int,int);
-    void slChangementLigne(int,int,int);
-    void slLigneChangee(int);
 
-    void on_txtLigneConv_returnPressed();
+    void slCollegueOuvertureFeuille(Collegue* collegue, int idFeuille, int position);
+    void slCollegueFermetureFeuille(int idCollegue, int idFeuille);
+
+    void slMessageChat(Collegue* collegue, QString message);
+
 
 signals :
-    void siInsertionTexte(int,int,QString);
-    void siEffacementTexte(int id, int pos, int longeur);
+    void siInsertionTexte(int idFeuille, int position, QString texte);
+    void siEffacementTexte(int idFeuille, int position, int longeur);
+
+    void siFermerFeuille(int idFeuille);
+    void siVerification(int idFeuille, bool reponse);
+
     void siEnvoiTexteChat(QString);
-    void siMauvaiseSynchro(int id);
-    void siFermerFichier(int id);
-    void siLigneChangee(int feuille, int ligne);
 
 };
 

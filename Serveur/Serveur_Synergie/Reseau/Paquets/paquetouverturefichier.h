@@ -7,7 +7,7 @@
 class PaquetOuvertureFichier : public BasePaquet
 {
 public:
-    PaquetOuvertureFichier(Fichier* fichier);
+    PaquetOuvertureFichier(Client* client, Fichier* fichier);
 };
 
 #endif // PAQUETOUVERTUREFICHIER_H

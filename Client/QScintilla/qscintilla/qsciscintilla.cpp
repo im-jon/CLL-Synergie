@@ -37,6 +37,7 @@
 #include <qcolor.h>
 #include <qiodevice.h>
 #include <qpoint.h>
+#include <QDebug>
 
 #include "Qsci/qsciabstractapis.h"
 #include "Qsci/qscicommandset.h"
@@ -76,7 +77,6 @@ QsciScintilla::QsciScintilla(QWidget *parent)
 {
     connect(this,SIGNAL(SCN_MODIFYATTEMPTRO()),
              SIGNAL(modificationAttempted()));
-
     connect(this,SIGNAL(SCN_MODIFIED(int,int,const char *,int,int,int,int,int,int,int)),
              SLOT(handleModified(int,int,const char *,int,int,int,int,int,int,int)));
     connect(this,SIGNAL(SCN_CALLTIPCLICK(int)),
@@ -149,6 +149,49 @@ QsciScintilla::~QsciScintilla()
     delete stdCmds;
 }
 
+void QsciScintilla::setCurseurPosition(int idCurseur, int position)
+{
+    Curseur* curseur;
+    curseur = curseurs->value(idCurseur);
+
+    setCurseurPosition(curseur, position);
+}
+
+void QsciScintilla::setCurseurPosition(Curseur *curseur, int position)
+{
+    lockedLines->removeAll(curseur->getLigne());
+
+    curseur->setPosition(position);
+    int ligne, index;
+    lineIndexFromPosition(position, &ligne, &index);
+    curseur->setLigne(ligne);
+    curseur->setIndex(index);
+
+    lockedLines->append(ligne);
+}
+
+void QsciScintilla::deplacerCurseur(int idCurseur, int offset)
+{
+    Curseur* curseur;
+    curseur = curseurs->value(idCurseur);
+
+    setCurseurPosition(curseur, curseur->getPosition() + offset);
+}
+
+void QsciScintilla::ajouterCurseur(Curseur* curseur)
+{
+    curseurs->insert(curseur->getID(), curseur);
+}
+
+void QsciScintilla::enleverCurseur(int idCurseur)
+{
+    curseurs->remove(idCurseur);
+}
+
+bool QsciScintilla::ligneBloquee(int ligne)
+{
+    return lockedLines->contains(ligne);
+}
 
 // Return the current text colour.
 QColor QsciScintilla::color() const
@@ -3189,9 +3232,9 @@ void QsciScintilla::handleUpdateUI(int)
         if (oldline != line)
         {
             SendScintilla(SCI_EMPTYUNDOBUFFER);
-            emit lineChanged(line);
         }
 
+        emit lineChanged(line);
         emit cursorPositionChanged(line, col);
     }
 

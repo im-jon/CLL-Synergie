@@ -104,7 +104,9 @@ QsciScintillaBase::QsciScintillaBase(QWidget *parent)
     triple_click.setSingleShot(true);
 
     sci = new ScintillaQt(this);
+
     curseurs = new QMap<int, Curseur*>;
+    lockedLines = new QList<int>;
 
     SendScintilla(SCI_SETCARETPERIOD, QApplication::cursorFlashTime() / 2);
 
@@ -132,6 +134,11 @@ QsciScintillaBase::~QsciScintillaBase()
     poolList.removeAt(poolList.indexOf(this));
 
     delete sci;
+}
+
+QMap<int, Curseur*>* QsciScintillaBase::getCurseurs()
+{
+    return curseurs;
 }
 
 

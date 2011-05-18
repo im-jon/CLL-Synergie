@@ -7,7 +7,7 @@
 class PaquetInsertionTexte : public BasePaquet
 {
 public:
-    PaquetInsertionTexte(Fichier* fichier, QString texte, int position);
+    PaquetInsertionTexte(Client* auteur, Fichier* fichier, QString texte, int position);
 };
 
 #endif // PAQUETINSERTIONTEXTE_H

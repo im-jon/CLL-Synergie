@@ -25,11 +25,11 @@ SOURCES += main.cpp\
     feuille.cpp \
     Reseau/Paquets/paquetouvrirfeuille.cpp \
     Reseau/depaqueteur.cpp \
-    Reseau/Paquets/paquetfermerfichier.cpp \
-    Reseau/Paquets/paquetmauvaisesynchro.cpp \
     chat.cpp \
     Reseau/Paquets/paquetauthentification.cpp \
-    Reseau/Paquets/paquetlignechangee.cpp
+    Reseau/Paquets/paquetlignechangee.cpp \
+    Reseau/Paquets/paquetreponseverification.cpp \
+    Reseau/Paquets/paquetfermerfeuille.cpp
 
 HEADERS  += fenetreprincipale.h \
     Reseau/connexion.h \
@@ -45,11 +45,11 @@ HEADERS  += fenetreprincipale.h \
     feuille.h \
     Reseau/Paquets/paquetouvrirfeuille.h \
     Reseau/depaqueteur.h \
-    Reseau/Paquets/paquetfermerfichier.h \
-    Reseau/Paquets/paquetmauvaisesynchro.h \
     chat.h \
     Reseau/Paquets/paquetauthentification.h \
-    Reseau/Paquets/paquetlignechangee.h
+    Reseau/Paquets/paquetlignechangee.h \
+    Reseau/Paquets/paquetreponseverification.h \
+    Reseau/Paquets/paquetfermerfeuille.h
 
 FORMS    += fenetreprincipale.ui \
     dlgconnexion.ui

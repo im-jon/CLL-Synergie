@@ -38,7 +38,6 @@ void Connexion::LirePaquet()
 void Connexion::EnvoyerPaquet(BasePaquet* paquet)
 {
     m_Socket->write(paquet->getBuffer());
-    m_Socket->waitForBytesWritten();
 }
 
 Depaqueteur* Connexion::getDepaqueteur()

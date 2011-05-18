@@ -9,6 +9,7 @@
 #include "Reseau/connexion.h"
 #include <QMap>
 #include <QList>
+#include <QColor>
 
 class Transfer;
 class Fichier;
@@ -20,7 +21,7 @@ class Client : public QObject
 public:
     explicit Client(QTcpSocket* socket, QObject *parent = 0);
 
-    void Authentifier(QString nom);
+    void Authentifier(QString nom, QColor couleur);
     void Deconnecter();
     void EnvoyerPaquet(BasePaquet* paquet);
     void EnvoyerBytes(QByteArray donnees);
@@ -36,6 +37,7 @@ public:
     QMap<int, Transfer*>* getTransfers();
     QList<Fichier*>* getFichiers();
     int getMauvaisesReponses();
+    QColor getCouleur();
 
     void setMauvaisesReponses(int valeur);
 
@@ -44,9 +46,11 @@ private:
 
     int m_ID;
     QString m_Nom;
+    QColor m_Couleur;
     Connexion* m_Connexion;
     QMap<int, Transfer*>* m_Transfers;
     QList<Fichier*>* m_FichiersOuverts;
+
     // Le nombre de mauvaises réponses est proportionnel aux chances que le client soit désynchronisé avec le serveur.
     int m_MauvaisesReponses;
 

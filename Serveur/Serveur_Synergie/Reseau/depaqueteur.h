@@ -2,6 +2,7 @@
 #define DEPAQUETEUR_H
 
 #include <QObject>
+#include <QColor>
 #include "client.h"
 
 class Depaqueteur : public QObject
@@ -18,9 +19,8 @@ private:
     void Reception_InsertionTexte(Client* client, QDataStream& stream);
     void Reception_EffacementTexte(Client* client, QDataStream& stream);
     void Reception_MessageChat(Client* client, QDataStream& stream);
-    void Reception_MauvaiseReponse(Client* client, QDataStream& stream);
+    void Reception_ReponseVerification(Client* client, QDataStream& stream);
     void Reception_FermerFichier(Client* client, QDataStream& stream);
-    void Reception_ChangementLigne(Client* client, QDataStream& stream);
 
 signals:
 

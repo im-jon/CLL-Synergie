@@ -5,4 +5,5 @@ PaquetConnexionCollegue::PaquetConnexionCollegue(Client* client) :
 {
     *m_Stream << client->getID();
     *m_Stream << client->getNom();
+    *m_Stream << client->getCouleur();
 }

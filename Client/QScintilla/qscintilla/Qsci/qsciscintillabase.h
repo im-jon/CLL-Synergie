@@ -56,6 +56,7 @@ QT_END_NAMESPACE
 
 class ScintillaQt;
 class Point;
+class Curseur;
 
 
 //! \brief The QsciScintillaBase class implements the Scintilla editor widget
@@ -77,7 +78,7 @@ class QSCINTILLA_EXPORT QsciScintillaBase : public QAbstractScrollArea
     Q_OBJECT
 
 public:
-    QMap<int, Curseur*>* curseurs;
+    QMap<int, Curseur*>* getCurseurs();
     //! The low-level Scintilla API is implemented as a set of messages each of
     //! which takes up to two parameters (\a wParam and \a lParam) and
     //! optionally return a value. This enum defines all the possible messages.
@@ -3018,6 +3019,9 @@ signals:
     void SCN_ZOOM();
 
 protected:
+    QMap<int, Curseur*>* curseurs;
+    QList<int>* lockedLines;
+
     //! Returns true if the contents of a MIME data object can be decoded and
     //! inserted into the document.  It is called during drag and paste
     //! operations.

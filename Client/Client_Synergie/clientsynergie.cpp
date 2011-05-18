@@ -3,8 +3,8 @@
 #include "Reseau/Paquets/paquetinsertiontexte.h"
 #include "Reseau/Paquets/paqueteffacementtexte.h"
 #include "Reseau/Paquets/paquetenvoichat.h"
-#include "Reseau/Paquets/paquetmauvaisesynchro.h"
-#include "Reseau/Paquets/paquetfermerfichier.h"
+#include "Reseau/Paquets/paquetreponseverification.h"
+#include "Reseau/Paquets/paquetfermerfeuille.h"
 #include "Reseau/Paquets/paquetlignechangee.h"
 
 ClientSynergie* ClientSynergie::m_Instance = 0;
@@ -21,6 +21,11 @@ ClientSynergie::ClientSynergie(QObject *parent) :
 bool ClientSynergie::Connecter(QString adresse, int port)
 {
     return m_Connexion->Connecter(adresse, port);
+}
+
+void ClientSynergie::Authentifier()
+{
+    m_Connexion->EnvoyerPaquet(new PaquetAuthentification(m_Nom, m_Couleur));
 }
 
 void ClientSynergie::AjouterFeuille(QString nom, int id)
@@ -41,13 +46,6 @@ Collegue* ClientSynergie::getCollegue(int id)
     return m_Collegues->value(id);
 }
 
-void ClientSynergie::Renommer(QString nom)
-{
-    m_Nom = nom;
-
-    m_Connexion->EnvoyerPaquet(new PaquetAuthentification(nom));
-}
-
 Connexion* ClientSynergie::getConnexion()
 {
     return m_Connexion;
@@ -66,6 +64,21 @@ Depaqueteur* ClientSynergie::getDepaqueteur()
 QString ClientSynergie::getNom()
 {
     return m_Nom;
+}
+
+QColor ClientSynergie::getCouleur()
+{
+    return m_Couleur;
+}
+
+void ClientSynergie::setNom(QString nom)
+{
+    m_Nom = nom;
+}
+
+void ClientSynergie::setCouleur(QColor couleur)
+{
+    m_Couleur = couleur;
 }
 
 void ClientSynergie::ConnexionCollegue(Collegue *collegue)
@@ -99,19 +112,19 @@ void ClientSynergie::slEnvoiTexteChat(QString Texte)
     m_Connexion->EnvoyerPaquet(new PaquetEnvoiChat(Texte));
 }
 
-void ClientSynergie::slMauvaiseSynchro(int id)
+void ClientSynergie::slVerification(int id, bool reponse)
 {
-    m_Connexion->EnvoyerPaquet(new paquetMauvaiseSynchro(id));
+    m_Connexion->EnvoyerPaquet(new PaquetReponseVerification(id, reponse));
 }
 
 void ClientSynergie::slFermerFichier(int id)
 {
-    m_Connexion->EnvoyerPaquet(new PaquetFermerFichier(id));
+    m_Connexion->EnvoyerPaquet(new PaquetFermerFeuille(id));
 }
 
 void ClientSynergie::slLigneChangee(int feuille, int ligne)
 {
-    m_Connexion->EnvoyerPaquet(new paquetLigneChangee(feuille,ligne));
+    m_Connexion->EnvoyerPaquet(new PaquetLigneChangee(feuille, ligne));
 }
 
 //Instance

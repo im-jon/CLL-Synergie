@@ -43,9 +43,9 @@ SOURCES += main.cpp\
     Chat/message.cpp \
     Reseau/connexion.cpp \
     Chat/archiveur.cpp \
-    Reseau/Paquets/paquetchangerligne.cpp \
     Reseau/Paquets/paquetouvrirfeuille.cpp \
-    curseur.cpp
+    curseur.cpp \
+    Reseau/Paquets/paquetfermerfeuille.cpp
 
 HEADERS  += UI/fenetreprincipale.h \
     Console/console.h \
@@ -79,8 +79,8 @@ HEADERS  += UI/fenetreprincipale.h \
     Chat/message.h \
     Reseau/connexion.h \
     Chat/archiveur.h \
-    Reseau/Paquets/paquetchangerligne.h \
     Reseau/Paquets/paquetouvrirfeuille.h \
-    curseur.h
+    curseur.h \
+    Reseau/Paquets/paquetfermerfeuille.h
 
 FORMS    += UI/fenetreprincipale.ui

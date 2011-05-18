@@ -3075,10 +3075,10 @@ void Editor::DrawLine(Surface *surface, ViewStyle &vsDraw, int line, int lineVis
 
         if (curseur != 0)
         {
-            SimpleAlphaRectangle(surface, rcSegment, ColourAllocated(ColourDesired(
-                                                                         curseur->getCouleur()->red(),
-                                                                         curseur->getCouleur()->green(),
-                                                                         curseur->getCouleur()->blue()).AsLong()), 80);
+            SimpleAlphaRectangle(surface, rcSegment, curseur->getCouleur(), 40);
+            rcSegment.left = xStart + XFromPosition(curseur->getPosition());
+            rcSegment.right = rcSegment.left + 1;
+            surface->FillRectangle(rcSegment, curseur->getCouleur());
         }
 }
 
@@ -3126,6 +3126,7 @@ void Editor::DrawBlockCaret(Surface *surface, ViewStyle &vsDraw, LineLayout *ll,
 	}
 
 	// We now know what to draw, update the caret drawing rectangle
+
 	rcCaret.left = ll->positions[offsetFirstChar] - ll->positions[lineStart] + xStart;
 	rcCaret.right = ll->positions[offsetFirstChar+numCharsToDraw] - ll->positions[lineStart] + xStart;
 
@@ -3216,7 +3217,7 @@ void Editor::DrawCarets(Surface *surface, ViewStyle &vsDraw, int lineDoc, int xS
 	bool drawDrag = posDrag.IsValid();
 	if (hideSelection && !drawDrag)
 		return;
-	const int posLineStart = pdoc->LineStart(lineDoc);
+        const int posLineStart = pdoc->LineStart(lineDoc);
 	// For each selection draw
 	for (size_t r=0; (r<sel.Count()) || drawDrag; r++) {
 		const bool mainCaret = r == sel.Main();
@@ -3448,7 +3449,7 @@ void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea, QMap<int, Curseur*
                                 while (iterateur.hasNext())
                                 {
                                     iterateur.next();
-                                    if (lineDoc == iterateur.value()->getLigne())
+                                    if (lineDoc == pdoc->LineFromPosition(iterateur.value()->getPosition()))
                                     {
                                         curseur = iterateur.value();
                                     }

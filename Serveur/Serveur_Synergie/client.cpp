@@ -30,9 +30,10 @@ void Client::EnvoyerPaquet(BasePaquet* paquet)
 }
 
 // Attention, un client connecté n'est pas nécéssairement authentifié!
-void Client::Authentifier(QString nom)
+void Client::Authentifier(QString nom, QColor couleur)
 {
     m_Nom = nom;
+    m_Couleur = couleur;
 
     EnvoyerPaquet(new PaquetEnvoiCollegues());
     EnvoyerPaquet(new PaquetListeFichiers());
@@ -53,15 +54,15 @@ void Client::Deconnecter()
         FermerFichier(fichier);
     }
 
-    emit (siDeconnexion(this));
+    emit siDeconnexion(this);
 
     Console::Instance()->Imprimer(m_Nom + " est déconnecté");
 }
 
 void Client::OuvrirFichier(Fichier* fichier)
 {
-    fichier->AjouterClient(this);
     m_FichiersOuverts->append(fichier);
+    fichier->AjouterClient(this);
     EnvoyerFichier(fichier);
 }
 
@@ -81,7 +82,7 @@ void Client::EnvoyerFichier(Fichier* fichier, bool onglet)
 
     if (onglet)
     {
-        EnvoyerPaquet(new PaquetOuvertureFichier(fichier));
+        EnvoyerPaquet(new PaquetOuvertureFichier(this, fichier));
     }
     EnvoyerPaquet(new PaquetDonnees(transfer));
 }
@@ -124,6 +125,11 @@ QList<Fichier*>* Client::getFichiers()
 int Client::getMauvaisesReponses()
 {
     return m_MauvaisesReponses;
+}
+
+QColor Client::getCouleur()
+{
+    return m_Couleur;
 }
 
 void Client::setMauvaisesReponses(int valeur)

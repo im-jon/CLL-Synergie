@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QSettings>
+#include <QColorDialog>
 
 namespace Ui {
     class dlgConnexion;
@@ -18,9 +19,13 @@ public:
 
 private:
     Ui::dlgConnexion *ui;
+    QColor m_Couleur;
+    void MAJBoutonCouleur();
 
 private slots:
     void on_buttonBox_accepted();
+    void on_btnCouleur_clicked();
+    void slCouleurChoisie(QColor couleur);
 };
 
 #endif // DLGCONNEXION_H

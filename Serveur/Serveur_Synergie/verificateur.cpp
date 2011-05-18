@@ -5,8 +5,8 @@
 #include "Reseau/Paquets/paquetnettoyerfichier.h"
 #include <QMapIterator>
 
-const int Seuil = 3; // Le seuil de mauvaises réponses.
-const int Intervalle = 1000; // En millisecondes.
+const int Seuil = 5; // Le seuil de mauvaises réponses.
+const int Intervalle = 1000; // Fréquence des reqûetes de vérification en millisecondes.
 
 Verificateur::Verificateur(QObject *parent) :
     QObject(parent)
@@ -49,14 +49,25 @@ void Verificateur::Verifier()
     }
 }
 
-void Verificateur::MauvaiseReponse(Client *client, Fichier *fichier)
+void Verificateur::ReceptionReponse(bool reponse, Client *client, Fichier *fichier)
 {
-    client->setMauvaisesReponses(client->getMauvaisesReponses() + 1);
-    if (client->getMauvaisesReponses() >= Seuil)
+    if (reponse == true)
     {
-        client->EnvoyerPaquet(new PaquetNettoyerFichier(fichier));
-        client->EnvoyerFichier(fichier, false);
-        client->setMauvaisesReponses(0);
+        if (client->getMauvaisesReponses() > 0)
+        {
+            client->setMauvaisesReponses(0);
+        }
+    }
+    else
+    {
+        client->setMauvaisesReponses(client->getMauvaisesReponses() + 1);
+
+        if (client->getMauvaisesReponses() >= Seuil)
+        {
+            client->EnvoyerPaquet(new PaquetNettoyerFichier(fichier));
+            client->EnvoyerFichier(fichier, false);
+            client->setMauvaisesReponses(0);
+        }
     }
 }
 

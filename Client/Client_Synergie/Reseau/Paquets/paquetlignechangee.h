@@ -2,10 +2,10 @@
 #define PAQUETLIGNECHANGEE_H
 #include "basepaquet.h"
 
-class paquetLigneChangee : public BasePaquet
+class PaquetLigneChangee : public BasePaquet
 {
 public:
-     paquetLigneChangee(int,int);
+     PaquetLigneChangee(int feuille, int ligne);
 };
 
 #endif // PAQUETLIGNECHANGEE_H

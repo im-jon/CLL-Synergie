@@ -13,7 +13,7 @@ public:
 
     void Demarrer();
     void Arreter();
-    void MauvaiseReponse(Client* client, Fichier* fichier);
+    void ReceptionReponse(bool reponse, Client* client, Fichier* fichier);
 
 private:
     QTimer* m_Timer;

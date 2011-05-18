@@ -15,5 +15,6 @@ PaquetEnvoiCollegues::PaquetEnvoiCollegues() :
         iterateur.next();
         *m_Stream << iterateur.value()->getID();
         *m_Stream << iterateur.value()->getNom();
+        *m_Stream << iterateur.value()->getCouleur();
     }
 }

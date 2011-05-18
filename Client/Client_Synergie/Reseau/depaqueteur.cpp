@@ -1,6 +1,7 @@
 #include "depaqueteur.h"
 #include <QDataStream>
 #include <QDebug>
+#include <QColor>
 #include <QStringList>
 #include "connexion.h"
 #include "clientsynergie.h"
@@ -18,7 +19,7 @@ void Depaqueteur::Interpreter(QDataStream& stream)
 
     stream >> id;
 
-    qDebug()<<id;
+    qDebug() << id;
 
     switch (id)
     {
@@ -35,13 +36,13 @@ void Depaqueteur::Interpreter(QDataStream& stream)
             Reception_DeconnexionCollegue(stream);
             break;
         case 5:
-            Reception_Texte(stream);
+            Reception_InsertionTexte(stream);
             break;
         case 7:
             Reception_EffacementTexte(stream);
             break;
         case 10:
-            Reception_OuvertureFichier(stream);
+            Reception_OuvertureFeuille(stream);
             break;
         case 13:
             Reception_Verification(stream);
@@ -55,11 +56,11 @@ void Depaqueteur::Interpreter(QDataStream& stream)
         case 17:
             Reception_Nettoyer(stream);
             break;
-        case 18:
-            Reception_ChangementLigne(stream);
-            break;
         case 19:
-            Reception_FeuillesOuvertes(stream);
+            Reception_CollegueOuvertureFeuille(stream);
+            break;
+        case 20:
+            Reception_CollegueFermetureFeuille(stream);
             break;
         default:
             qDebug() << "Réception d'un paquet inconnu #" << id;
@@ -77,11 +78,13 @@ void Depaqueteur::Reception_ListeCollegues(QDataStream& stream)
     {
         int id;
         QString nom;
+        QColor couleur;
 
         stream >> id;
         stream >> nom;
+        stream >> couleur;
 
-        ClientSynergie::Instance()->ConnexionCollegue(new Collegue(id, nom, this));
+        ClientSynergie::Instance()->ConnexionCollegue(new Collegue(id, nom, couleur, this));
     }
 }
 
@@ -107,11 +110,13 @@ void Depaqueteur::Reception_ConnexionCollegue(QDataStream& stream)
 {
     int id;
     QString nom;
+    QColor couleur;
 
     stream >> id;
     stream >> nom;
+    stream >> couleur;
 
-    ClientSynergie::Instance()->ConnexionCollegue(new Collegue(id, nom, this));
+    ClientSynergie::Instance()->ConnexionCollegue(new Collegue(id, nom, couleur, this));
 }
 
 void Depaqueteur::Reception_DeconnexionCollegue(QDataStream& stream)
@@ -123,13 +128,29 @@ void Depaqueteur::Reception_DeconnexionCollegue(QDataStream& stream)
     ClientSynergie::Instance()->DeconnexionCollegue(id);
 }
 
-void Depaqueteur::Reception_OuvertureFichier(QDataStream& stream)
+void Depaqueteur::Reception_OuvertureFeuille(QDataStream& stream)
 {
     int id;
+    int nombre;
 
     stream >> id;
+    stream >> nombre;
 
-    emit (siOuvrirFichier(id));
+    emit siOuvrirFichier(id);
+
+    int idCollegue;
+    int position;
+    Collegue* collegue;
+    for (int i = 0; i < nombre; i++)
+    {
+
+        stream >> idCollegue;
+        stream >> position;
+
+        collegue = ClientSynergie::Instance()->getCollegue(idCollegue);
+
+        emit siCollegueOuvertureFeuille(collegue, id, position);
+    }
 }
 
 void Depaqueteur::Reception_Donnees(QDataStream& stream)
@@ -142,35 +163,37 @@ void Depaqueteur::Reception_Donnees(QDataStream& stream)
 
     ClientSynergie::Instance()->getConnexion()->EnvoyerPaquet(new PaquetReceptionDonnees(id));
 
-    emit(siDonnees(id, donnees));
+    emit siDonnees(id, donnees);
 }
 
-void Depaqueteur::Reception_Texte(QDataStream& stream)
+void Depaqueteur::Reception_InsertionTexte(QDataStream& stream)
 {
-    int id;
+    int idAuteur;
+    int idFeuille;
     int position;
     QString texte;
 
-    stream >> id;
+    stream >> idAuteur;
+    stream >> idFeuille;
     stream >> position;
     stream >> texte;
 
-
-    emit (siInsertionTexte(id, position, texte));
-
+    emit siInsertionTexte(idAuteur, idFeuille, position, texte);
 }
 
 void Depaqueteur::Reception_EffacementTexte(QDataStream& stream)
 {
-    int id;
+    int idAuteur;
+    int idFeuille;
     int position;
     int longeur;
 
-    stream >> id;
+    stream >> idAuteur;
+    stream >> idFeuille;
     stream >> position;
     stream >> longeur;
 
-    emit (siEffacementTexte(id, position, longeur));
+    emit siEffacementTexte(idAuteur, idFeuille, position, longeur);
 }
 
 void Depaqueteur::Reception_MessageChat(QDataStream& stream)
@@ -194,7 +217,7 @@ void Depaqueteur::Reception_Verification(QDataStream& stream)
     stream >> id;
     stream >> longueur;
 
-    emit (siVerification(id, longueur));
+    emit siVerification(id, longueur);
 }
 
 void Depaqueteur::Reception_Nettoyer(QDataStream &stream)
@@ -203,29 +226,29 @@ void Depaqueteur::Reception_Nettoyer(QDataStream &stream)
 
     stream >> id;
 
-    emit (siNettoyer(id));
+    emit siNettoyer(id);
 }
 
-void Depaqueteur::Reception_FeuillesOuvertes(QDataStream& stream)
+void Depaqueteur::Reception_CollegueOuvertureFeuille(QDataStream& stream)
 {
-    int idClient;
+    int idCollegue;
     int idFeuille;
 
-    stream >> idClient;
+    stream >> idCollegue;
     stream >> idFeuille;
 
-    emit(siFeuilleOuverte(idClient,idFeuille));
+    Collegue* collegue = ClientSynergie::Instance()->getCollegue(idCollegue);
 
+    emit siCollegueOuvertureFeuille(collegue, idFeuille, -1);
 }
 
-void Depaqueteur::Reception_ChangementLigne(QDataStream &stream)
+void Depaqueteur::Reception_CollegueFermetureFeuille(QDataStream &stream)
 {
-    int idClient;
+    int idCollegue;
     int idFeuille;
-    int Ligne;
-    stream >> idClient;
-    stream >> idFeuille;
-    stream >> Ligne;
 
-    emit (siChangementLigne(idClient,idFeuille,Ligne));
+    stream >> idCollegue;
+    stream >> idFeuille;
+
+    emit siCollegueFermetureFeuille(idCollegue, idFeuille);
 }

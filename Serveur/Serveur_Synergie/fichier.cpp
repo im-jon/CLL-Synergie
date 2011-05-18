@@ -4,8 +4,8 @@
 #include "Console/console.h"
 #include "Reseau/Paquets/paquetinsertiontexte.h"
 #include "Reseau/Paquets/paqueteffacementtexte.h"
-#include "Reseau/Paquets/paquetchangerligne.h"
 #include "Reseau/Paquets/paquetouvrirfeuille.h"
+#include "Reseau/Paquets/paquetfermerfeuille.h"
 #include "serveur.h"
 #include "curseur.h"
 
@@ -88,17 +88,24 @@ void Fichier::EnleverClient(Client *client)
     {
         Fermer();
     }
+    else
+    {
+        Clients::EnvoyerPaquetAListe(
+                    m_Clients,
+                    new PaquetFermerFeuille(client, this),
+                    client);
+    }
 }
 
-// On pourrais merger les deux prochaines méthodes
 void Fichier::InsererTexte(QString texte, int position, Client* auteur)
 {
     m_Contenu.insert(position, texte);
     Clients::EnvoyerPaquetAListe(
                 m_Clients,
-                new PaquetInsertionTexte(this, texte, position),
+                new PaquetInsertionTexte(auteur, this, texte, position),
                 auteur);
 
+    getCurseur(auteur)->setPosition(position + texte.length());
     NouvelleModification();
 }
 
@@ -108,9 +115,10 @@ void Fichier::EffacerTexte(int position, int longeur, Client *auteur)
 
     Clients::EnvoyerPaquetAListe(
                 m_Clients,
-                new PaquetEffacementTexte(this, position, longeur),
+                new PaquetEffacementTexte(auteur, this, position, longeur),
                 auteur);
 
+    getCurseur(auteur)->setPosition(position - longeur);
     NouvelleModification();
 }
 
@@ -122,15 +130,6 @@ void Fichier::NouvelleModification()
     {
         Sauvegarder();
     }
-}
-
-void Fichier::ChangerLigneCurseur(Client *client, int ligne)
-{
-    m_Curseurs->value(client)->setLigne(ligne);
-    Clients::EnvoyerPaquetAListe(
-                m_Clients,
-                new PaquetChangerLigne(client, this),
-                client);
 }
 
 QString Fichier::getChemin()

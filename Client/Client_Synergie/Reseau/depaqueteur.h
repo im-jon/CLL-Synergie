@@ -17,27 +17,27 @@ private:
     void Reception_ListeFichiers(QDataStream& stream);
     void Reception_ConnexionCollegue(QDataStream& stream);
     void Reception_DeconnexionCollegue(QDataStream& stream);
-    void Reception_OuvertureFichier(QDataStream& stream);
+    void Reception_OuvertureFeuille(QDataStream& stream);
     void Reception_Donnees(QDataStream& stream);
-    void Reception_Texte(QDataStream& stream);
+    void Reception_InsertionTexte(QDataStream& stream);
     void Reception_EffacementTexte(QDataStream& stream);
     void Reception_MessageChat(QDataStream& stream);
     void Reception_Verification(QDataStream& stream);
     void Reception_Nettoyer(QDataStream& stream);
-    void Reception_FeuillesOuvertes(QDataStream& stream);
-    void Reception_ChangementLigne(QDataStream& stream);
+    void Reception_CollegueOuvertureFeuille(QDataStream& stream);
+    void Reception_CollegueFermetureFeuille(QDataStream& stream);
 
 signals:
     void siListeCollegues(QStringList* noms);
     void siListeFichiers(QStringList* noms);
     void siOuvrirFichier(int id);
     void siDonnees(int id, QString donnees);
-    void siInsertionTexte(int id, int position, QString texte);
-    void siEffacementTexte(int id, int position, int longeur);
+    void siInsertionTexte(int idAuteur, int idFeuille, int position, QString texte);
+    void siEffacementTexte(int idAuteur, int idFeuille, int position, int longeur);
     void siVerification(int id, int longueur);
     void siNettoyer(int id);
-    void siFeuilleOuverte(int idClient,int idFeuille);
-    void siChangementLigne(int idClient,int idFeuille,int ligne);
+    void siCollegueOuvertureFeuille(Collegue* collegue, int idFeuille, int position);
+    void siCollegueFermetureFeuille(int idCollegue, int idFeuille);
 
 public slots:
 };
