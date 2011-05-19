@@ -1,5 +1,6 @@
 #include "serveur.h"
 #include "Console/console.h"
+#include "clients.h"
 #include "Reseau/Paquets/paquetenvoicollegues.h"
 #include "Reseau/Paquets/paquetconnexioncollegue.h"
 #include <QDir>
@@ -19,6 +20,7 @@ Serveur::Serveur(QObject* parent) :
     connect (m_Ecouteur, SIGNAL(newConnection()), this, SLOT(slNouveauClient()));
 
     m_Projet = new Projet("Projet1", this);
+    m_Projet->Creer();
     m_Projet->Ouvrir();
 }
 

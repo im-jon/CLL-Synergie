@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QTcpServer>
 #include <QMap>
-#include "clients.h"
 #include "Reseau/depaqueteur.h"
 #include "Reseau/Paquets/basepaquet.h"
 #include "fichier.h"
