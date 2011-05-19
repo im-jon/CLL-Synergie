@@ -60,3 +60,11 @@ void Utils::InitialiserExtensions()
     m_Extensions->insert(new QsciLexerXML, QStringList() << "xml");
 }
 
+QString Utils::getCouleurStyle(QColor couleur)
+{
+    return QString("rgb(%1,%2,%3)")
+            .arg(couleur.red())
+            .arg(couleur.green())
+            .arg(couleur.blue());
+}
+

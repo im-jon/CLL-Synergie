@@ -32,6 +32,8 @@ public:
 private:
     void AjouterCollegue(Collegue* collegue);
     void AjouterFeuille(Feuille* feuille);
+    void laverListeCollegues();
+    void MAJPositionListeCollegue(QsciScintilla* editeur, Collegue* collegue, int position);
 
     Ui::FenetrePrincipale *ui;
     QMap<Collegue*, QListWidgetItem*>* m_Collegues;
@@ -47,6 +49,8 @@ private slots:
 
     void slInsertionTexteEditeur(int position, QString texte);
     void slEffacementTexteEditeur(int position, int longeur);
+    void slLignesChangeesEditeur();
+    void slChangementTexteEditeur();
 
     void slInsertionTexteServeur(int idCollegue, int idFeuille, int position, QString texte);
     void slEffacementTexteServeur(int idAuteur, int idFeuille, int position, int longeur);
@@ -65,6 +69,17 @@ private slots:
     void slCollegueFermetureFeuille(int idCollegue, int idFeuille);
 
     void slMessageChat(Collegue* collegue, QString message);
+    void slMessageGeneral(QString message);
+
+    void on_actionCopier_triggered();
+    void on_actionColler_triggered();
+    void on_actionCouper_triggered();
+    void on_actionEffacer_triggered();
+    void on_actionAnnuler_triggered();
+    void on_actionRevenir_triggered();
+    void on_actionSe_d_connecter_triggered();
+    void on_actionQuitter_triggered();
+    void on_actionAutoCompletion_triggered();
 
 
 signals :

@@ -14,6 +14,7 @@ public:
     explicit Connexion(QObject *parent = 0);
 
     bool Connecter(QString, int);
+    void Deconnecter();
     void EnvoyerPaquet(BasePaquet* paquet);
     Depaqueteur* getDepaqueteur();
 

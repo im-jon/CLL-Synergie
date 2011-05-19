@@ -8,6 +8,7 @@ class Utils
 {
 public:
     static QsciLexer* TrouverLexer(QString extension);
+    static QString getCouleurStyle(QColor couleur);
 
 private:
     static void InitialiserExtensions();

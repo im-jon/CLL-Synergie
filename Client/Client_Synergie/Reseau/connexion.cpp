@@ -17,6 +17,12 @@ bool Connexion::Connecter(QString addr, int port)
     return m_Socket->waitForConnected(1000);
 }
 
+void Connexion::Deconnecter()
+{
+    m_Socket->disconnectFromHost();
+    m_Socket->close();
+}
+
 void Connexion::LirePaquet()
 {
     int taille;

@@ -19,3 +19,8 @@ void Chat::MessageRecu(Collegue* auteur, QString message)
 {
     emit (siMessageRecu(auteur, message));
 }
+
+void Chat::MessageGeneral(QString message)
+{
+    emit (siMessageGeneral(message));
+}

@@ -6,6 +6,7 @@
 #include "Reseau/Paquets/paquetreponseverification.h"
 #include "Reseau/Paquets/paquetfermerfeuille.h"
 #include "Reseau/Paquets/paquetlignechangee.h"
+#include "utils.h"
 
 ClientSynergie* ClientSynergie::m_Instance = 0;
 
@@ -84,7 +85,10 @@ void ClientSynergie::setCouleur(QColor couleur)
 void ClientSynergie::ConnexionCollegue(Collegue *collegue)
 {
     m_Collegues->insert(collegue->getID(), collegue);
-
+    m_Chat->MessageGeneral(QString("<i><span style=\"color: " + Utils::getCouleurStyle(collegue->getCouleur()) + " \">")
+                           + collegue->getNom()
+                           + "</span>"
+                           + " est en ligne</i>");
     emit (siConnexionCollegue(collegue));
 }
 
@@ -92,7 +96,10 @@ void ClientSynergie::DeconnexionCollegue(int id)
 {
     Collegue* collegue = m_Collegues->value(id);
     m_Collegues->remove(id);
-
+    m_Chat->MessageGeneral(QString("<i><span style=\"color: " + Utils::getCouleurStyle(collegue->getCouleur()) + " \">")
+                           + collegue->getNom()
+                           + "</span>"
+                           + " est hors ligne</i>");
     emit (siDeconnexionCollegue(collegue));
 }
 

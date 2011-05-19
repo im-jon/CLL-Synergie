@@ -35,7 +35,7 @@ void Client::Authentifier(QString nom, QColor couleur)
     m_Nom = nom;
     m_Couleur = couleur;
 
-    EnvoyerPaquet(new PaquetEnvoiCollegues());
+    EnvoyerPaquet(new PaquetEnvoiCollegues(this));
     EnvoyerPaquet(new PaquetListeFichiers());
 
     // À faire : Envoyer les 10-15 derniers messages du chat.

@@ -5,5 +5,12 @@
         <file alias="utilisateurs.png">Ressources/Icones/users.png</file>
         <file alias="dossiers.png">Ressources/Icones/folders-stack.png</file>
         <file alias="feuille.png">Ressources/Icones/document-code.png</file>
+        <file>Ressources/Icones/arrow-turn-000-left.png</file>
+        <file>Ressources/Icones/arrow-turn-180.png</file>
+        <file>Ressources/Icones/clipboard-paste.png</file>
+        <file>Ressources/Icones/document-copy.png</file>
+        <file>Ressources/Icones/eraser.png</file>
+        <file>Ressources/Icones/scissors.png</file>
+        <file alias="deconnecter.png">Ressources/Icones/plug-disconnect.png</file>
     </qresource>
 </RCC>

@@ -166,6 +166,31 @@
        <property name="margin">
         <number>0</number>
        </property>
+       <item row="0" column="1">
+        <widget class="QFrame" name="frmConversation">
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <property name="lineWidth">
+          <number>0</number>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="margin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QTextEdit" name="txtConversation">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="txtLigneConv"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item row="0" column="0">
         <widget class="QTabWidget" name="tabInfos">
          <property name="currentIndex">
@@ -197,33 +222,29 @@
              </property>
             </widget>
            </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="lblNbCaracteresStatic">
+             <property name="text">
+              <string>Nombre de caractères :</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="lblNbCaracteres">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="lblNbLignes">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QFrame" name="frmConversation">
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <property name="lineWidth">
-          <number>0</number>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <property name="margin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QTextEdit" name="txtConversation">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="txtLigneConv"/>
-          </item>
-         </layout>
         </widget>
        </item>
       </layout>
@@ -260,13 +281,11 @@
     <addaction name="actionColler"/>
     <addaction name="actionEffacer"/>
     <addaction name="separator"/>
-    <addaction name="actionS_lectionner_tout"/>
    </widget>
    <widget class="QMenu" name="menuAide">
     <property name="title">
      <string>Aide</string>
     </property>
-    <addaction name="actionPanique"/>
     <addaction name="action_propos"/>
    </widget>
    <addaction name="menuFichier"/>
@@ -274,58 +293,125 @@
    <addaction name="menuAide"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
+   <property name="iconSize">
+    <size>
+     <width>16</width>
+     <height>16</height>
+    </size>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>false</bool>
+    <bool>true</bool>
    </attribute>
+   <addaction name="actionSe_d_connecter"/>
    <addaction name="separator"/>
+   <addaction name="actionCouper"/>
+   <addaction name="actionCopier"/>
+   <addaction name="actionColler"/>
+   <addaction name="actionEffacer"/>
+   <addaction name="separator"/>
+   <addaction name="actionAnnuler"/>
+   <addaction name="actionRevenir"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_propos">
    <property name="text">
     <string>À propos</string>
    </property>
+   <property name="iconText">
+    <string>À propos</string>
+   </property>
   </action>
   <action name="actionCopier">
+   <property name="icon">
+    <iconset resource="Ressources.qrc">
+     <normaloff>:/Icones/Ressources/Icones/document-copy.png</normaloff>:/Icones/Ressources/Icones/document-copy.png</iconset>
+   </property>
    <property name="text">
     <string>Copier</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionColler">
+   <property name="icon">
+    <iconset resource="Ressources.qrc">
+     <normaloff>:/Icones/Ressources/Icones/clipboard-paste.png</normaloff>:/Icones/Ressources/Icones/clipboard-paste.png</iconset>
+   </property>
    <property name="text">
     <string>Coller</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionEffacer">
+   <property name="icon">
+    <iconset resource="Ressources.qrc">
+     <normaloff>:/Icones/Ressources/Icones/eraser.png</normaloff>:/Icones/Ressources/Icones/eraser.png</iconset>
+   </property>
    <property name="text">
     <string>Effacer</string>
    </property>
-  </action>
-  <action name="actionS_lectionner_tout">
-   <property name="text">
-    <string>Sélectionner tout</string>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionCouper">
+   <property name="icon">
+    <iconset resource="Ressources.qrc">
+     <normaloff>:/Icones/Ressources/Icones/scissors.png</normaloff>:/Icones/Ressources/Icones/scissors.png</iconset>
+   </property>
    <property name="text">
     <string>Couper</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionAnnuler">
+   <property name="icon">
+    <iconset resource="Ressources.qrc">
+     <normaloff>:/Icones/Ressources/Icones/arrow-turn-180.png</normaloff>:/Icones/Ressources/Icones/arrow-turn-180.png</iconset>
+   </property>
    <property name="text">
     <string>Annuler</string>
    </property>
-  </action>
-  <action name="actionRevenir">
-   <property name="text">
-    <string>Refaire</string>
+   <property name="shortcut">
+    <string extracomment="dfgdfg">Ctrl+Z</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
-  <action name="actionPanique">
+  <action name="actionRevenir">
+   <property name="icon">
+    <iconset resource="Ressources.qrc">
+     <normaloff>:/Icones/Ressources/Icones/arrow-turn-000-left.png</normaloff>:/Icones/Ressources/Icones/arrow-turn-000-left.png</iconset>
+   </property>
    <property name="text">
-    <string>Panique!</string>
+    <string>Revenir</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionQuitter">
@@ -334,8 +420,23 @@
    </property>
   </action>
   <action name="actionSe_d_connecter">
+   <property name="icon">
+    <iconset resource="Ressources.qrc">
+     <normaloff>:/Icones/deconnecter.png</normaloff>:/Icones/deconnecter.png</iconset>
+   </property>
    <property name="text">
     <string>Déconnecter</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionAutoCompletion">
+   <property name="text">
+    <string>AutoCompletion</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Space</string>
    </property>
   </action>
  </widget>

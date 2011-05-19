@@ -580,6 +580,7 @@ QsciCommandSet::QsciCommandSet(QsciScintilla *qs) : qsci(qs)
 
     // By default control characters don't do anything (rather than insert the
     // control character into the text).
+
     for (int k = 'A'; k <= 'Z'; ++k)
         qsci->SendScintilla(QsciScintillaBase::SCI_ASSIGNCMDKEY,
                 k + (QsciScintillaBase::SCMOD_CTRL << 16),
