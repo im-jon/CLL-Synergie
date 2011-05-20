@@ -9,7 +9,7 @@ public:
     ProjetCommande();
 
 protected:
-    QString Executer(Arguments arguments);
+    QString Executer(Arguments* arguments);
 };
 
 #endif // PROJETCOMMANDE_H

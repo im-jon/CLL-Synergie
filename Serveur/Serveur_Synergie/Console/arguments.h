@@ -9,7 +9,7 @@ class Arguments
 public:
     Arguments();
     void Ajouter(Argument* argument);
-    Argument* operator[](QString argument);
+    Argument* argument(QString argument);
     int count();
 
 private:

@@ -9,7 +9,7 @@ public:
     Parler();
 
 protected:
-    QString Executer(Arguments arguments);
+    QString Executer(Arguments* arguments);
 };
 
 #endif // PARLER_H

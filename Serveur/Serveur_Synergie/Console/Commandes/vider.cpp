@@ -8,7 +8,7 @@ Vider::Vider()
     m_Description = "Nettoie la console.";
 }
 
-QString Vider::Executer(Arguments arguments)
+QString Vider::Executer(Arguments* arguments)
 {
     Console::Instance()->Vider();
     return "";

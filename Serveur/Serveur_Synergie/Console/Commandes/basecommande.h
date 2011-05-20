@@ -17,7 +17,7 @@ public:
     int getArgsMin();
     QString getDescription();
 
-    virtual QString Executer(Arguments arguments);
+    virtual QString Executer(Arguments* arguments);
 
 protected:
     explicit BaseCommande();

@@ -9,7 +9,7 @@ void Arguments::Ajouter(Argument* argument)
     m_Arguments.append(argument);
 }
 
-Argument* Arguments::operator [](QString nom)
+Argument* Arguments::argument(QString nom)
 {
     return trouverArgument(nom);
 }

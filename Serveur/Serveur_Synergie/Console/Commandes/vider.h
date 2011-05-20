@@ -9,7 +9,7 @@ public:
     Vider();
 
 protected:
-    QString Executer(Arguments arguments);
+    QString Executer(Arguments* arguments);
 };
 
 #endif // VIDER_H

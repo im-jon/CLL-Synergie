@@ -11,7 +11,7 @@ Collegues::Collegues()
    m_Description = "Donne la liste des collègues connectés ainsi que leur IP.";
 }
 
-QString Collegues::Executer(Arguments argument)
+QString Collegues::Executer(Arguments* argument)
 {
     QString retour;
     if (Serveur::Instance()->getClients()->compte() > 0)

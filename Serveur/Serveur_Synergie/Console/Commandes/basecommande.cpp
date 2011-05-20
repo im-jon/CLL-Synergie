@@ -23,7 +23,7 @@ BaseCommande::BaseCommande()
 {
 }
 
-QString BaseCommande::Executer(Arguments arguments)
+QString BaseCommande::Executer(Arguments*arguments)
 {
     return QString::null;
 }

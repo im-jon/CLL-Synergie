@@ -54,7 +54,7 @@ void Console::Ecrire(QString ligne)
     BaseCommande* commande;
     QRegExp regex;
     QStringList parties;
-    Arguments arguments;
+    Arguments* arguments = new Arguments();
 
     nomCommande = ligne.section(' ', 0, 0);
     ligne.remove(0, nomCommande.length());
@@ -66,7 +66,7 @@ void Console::Ecrire(QString ligne)
         parties = regex.capturedTexts();
         if (!parties.at(0).isEmpty())
         {
-            arguments.Ajouter(new Argument(parties.at(1), parties.at(2)));
+            arguments->Ajouter(new Argument(parties.at(1), parties.at(2)));
         }
         ligne = parties.at(3);
     }
@@ -75,7 +75,7 @@ void Console::Ecrire(QString ligne)
     commande = m_Commandes->value(nomCommande);
     if (commande)
     {
-        if (commande->getArgsMin() <= arguments.count())
+        if (commande->getArgsMin() <= arguments->count())
         {
             reponse = commande->Executer(arguments);
         }

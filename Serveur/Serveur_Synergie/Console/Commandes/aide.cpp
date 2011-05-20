@@ -9,7 +9,7 @@ Aide::Aide()
     m_Description = "Donne la liste complète des commandes.";
 }
 
-QString Aide::Executer(Arguments arguments)
+QString Aide::Executer(Arguments* arguments)
 {
     QString retour = "Liste des commandes:";
 

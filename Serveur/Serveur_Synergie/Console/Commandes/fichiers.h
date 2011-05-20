@@ -9,7 +9,7 @@ public:
     Fichiers();
 
 protected:
-    QString Executer(Arguments arguments);
+    QString Executer(Arguments* arguments);
 };
 
 #endif // FICHIERS_H

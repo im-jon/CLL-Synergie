@@ -7,9 +7,9 @@ Parler::Parler()
     m_Description = "Envoi un message global sur le chat";
 }
 
-QString Parler::Executer(Arguments arguments)
+QString Parler::Executer(Arguments* arguments)
 {
-    Argument* messageArg = arguments["m"];
+    Argument* messageArg = arguments->argument("m");
     if (messageArg)
     {
         // À faire : Envoyer un paquet aux clients.

@@ -7,11 +7,11 @@ ProjetCommande::ProjetCommande()
     m_Description = "Administration du projet";
 }
 
-QString ProjetCommande::Executer(Arguments arguments)
+QString ProjetCommande::Executer(Arguments* arguments)
 {
     Argument* argument;
 
-    argument = arguments["c"];
+    argument = arguments->argument("c");
     if (argument)
     {
         // Change le projet

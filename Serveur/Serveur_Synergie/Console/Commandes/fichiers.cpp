@@ -12,11 +12,11 @@ Fichiers::Fichiers()
     m_Description = "Donne une liste des fichiers du projet.";
 }
 
-QString Fichiers::Executer(Arguments arguments)
+QString Fichiers::Executer(Arguments* arguments)
 {
     QString retour;
     bool ouvertSeulement = false;
-    if (arguments["o"])
+    if (arguments->argument("o"))
     {
         ouvertSeulement = true;
     }
