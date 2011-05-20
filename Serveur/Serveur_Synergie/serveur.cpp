@@ -3,6 +3,7 @@
 #include "clients.h"
 #include "Reseau/Paquets/paquetenvoicollegues.h"
 #include "Reseau/Paquets/paquetconnexioncollegue.h"
+#include "Reseau/Paquets/paquetfermetureserveur.h"
 #include <QDir>
 #include <QMapIterator>
 
@@ -40,6 +41,7 @@ bool Serveur::Demarrer()
 
 bool Serveur::Arreter()
 {
+    m_Clients->EnvoyerPaquetATous(new PaquetFermetureServeur());
     if (m_Ecouteur->isListening())
     {
         m_Ecouteur->close();
@@ -87,7 +89,7 @@ void Serveur::slNouveauClient()
     Client* client = new Client(m_Ecouteur->nextPendingConnection(), this);
     m_Clients->AjouterClient(client);
 
-    Console::Instance()->Imprimer(client->getConnexion()->getIP() + " est en ligne");
+    Console::Instance()->Imprimer(client->getConnexion()->getIP() + " est connecté au serveur");
 }
 
 // Fonction pour le Singleton.

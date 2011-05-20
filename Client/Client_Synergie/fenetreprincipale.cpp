@@ -13,6 +13,7 @@
 #include "clientsynergie.h"
 #include <QList>
 #include <../QScintilla/qscintilla/curseur.h>
+#include <QMessageBox>
 
 FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     QMainWindow(parent),
@@ -38,6 +39,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siNettoyer(int)), this,SLOT(slNettoyerFeuille(int)));
     connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siCollegueOuvertureFeuille(Collegue*, int, int)), this, SLOT(slCollegueOuvertureFeuille(Collegue*, int, int)));
     connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siCollegueFermetureFeuille(int, int)), this, SLOT(slCollegueFermetureFeuille(int, int)));
+    connect (ClientSynergie::Instance()->getDepaqueteur(), SIGNAL(siFermetureServeur()), this, SLOT(slFermetureServeur()));
 
     connect (this, SIGNAL(siInsertionTexte(int, int, QString)), ClientSynergie::Instance(), SLOT(slInsertionTexte(int, int, QString)));
     connect (this, SIGNAL(siEffacementTexte(int, int, int)), ClientSynergie::Instance(), SLOT(slEffacementTexte(int, int, int)));
@@ -54,6 +56,14 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
 FenetrePrincipale::~FenetrePrincipale()
 {
     delete ui;
+}
+
+void FenetrePrincipale::Fermer()
+{
+    ClientSynergie::Instance()->getConnexion()->Deconnecter();
+    dlgConnexion* dlg = new dlgConnexion();
+    dlg->show();
+    close();
 }
 
 void FenetrePrincipale::AjouterCollegue(Collegue* collegue)
@@ -417,10 +427,7 @@ void FenetrePrincipale::on_actionRevenir_triggered()
 
 void FenetrePrincipale::on_actionSe_d_connecter_triggered()
 {
-    ClientSynergie::Instance()->getConnexion()->Deconnecter();
-    dlgConnexion* dlg = new dlgConnexion();
-    dlg->show();
-    close();
+    Fermer();
 }
 
 void FenetrePrincipale::on_actionQuitter_triggered()
@@ -438,4 +445,10 @@ void FenetrePrincipale::on_actionAutoCompletion_triggered()
         editeur->setCallTipsVisible(1);
         editeur->callTip();
     }
+}
+
+void FenetrePrincipale::slFermetureServeur()
+{
+    QMessageBox::warning(this, "Connexion perdue", QString::fromUtf8(QString("Le serveur a été fermé").toAscii()));
+    Fermer();
 }

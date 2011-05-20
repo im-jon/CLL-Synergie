@@ -5,6 +5,7 @@
 #include "collegues.h"
 #include "demarrer.h"
 #include "fichiers.h"
+#include "parler.h"
 
 QList<BaseCommande*>* BaseCommande::ListeCommandes = new QList<BaseCommande*>;
 
@@ -15,6 +16,7 @@ void BaseCommande::InitialiserListe()
     ListeCommandes->append(new Collegues());
     ListeCommandes->append(new Demarrer());
     ListeCommandes->append(new Fichiers());
+    ListeCommandes->append(new Parler());
 }
 
 BaseCommande::BaseCommande()

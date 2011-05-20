@@ -47,7 +47,10 @@ SOURCES += main.cpp\
     curseur.cpp \
     Reseau/Paquets/paquetfermerfeuille.cpp \
     Console/argument.cpp \
-    Console/arguments.cpp
+    Console/arguments.cpp \
+    Console/Commandes/parler.cpp \
+    Console/Commandes/projetcommande.cpp \
+    Reseau/Paquets/paquetfermetureserveur.cpp
 
 HEADERS  += UI/fenetreprincipale.h \
     Console/console.h \
@@ -85,6 +88,9 @@ HEADERS  += UI/fenetreprincipale.h \
     curseur.h \
     Reseau/Paquets/paquetfermerfeuille.h \
     Console/argument.h \
-    Console/arguments.h
+    Console/arguments.h \
+    Console/Commandes/parler.h \
+    Console/Commandes/projetcommande.h \
+    Reseau/Paquets/paquetfermetureserveur.h
 
 FORMS    += UI/fenetreprincipale.ui

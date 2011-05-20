@@ -11,7 +11,6 @@ void Arguments::Ajouter(Argument* argument)
 
 Argument* Arguments::operator [](QString nom)
 {
-    qDebug() << nom;
     return trouverArgument(nom);
 }
 

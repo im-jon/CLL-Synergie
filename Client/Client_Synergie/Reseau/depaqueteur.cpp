@@ -56,6 +56,9 @@ void Depaqueteur::Interpreter(QDataStream& stream)
         case 17:
             Reception_Nettoyer(stream);
             break;
+        case 18:
+            Reception_FermetureServeur(stream);
+            break;
         case 19:
             Reception_CollegueOuvertureFeuille(stream);
             break;
@@ -227,6 +230,11 @@ void Depaqueteur::Reception_Nettoyer(QDataStream &stream)
     stream >> id;
 
     emit siNettoyer(id);
+}
+
+void Depaqueteur::Reception_FermetureServeur(QDataStream &stream)
+{
+    emit siFermetureServeur();
 }
 
 void Depaqueteur::Reception_CollegueOuvertureFeuille(QDataStream& stream)

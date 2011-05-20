@@ -18,9 +18,7 @@
     <item row="2" column="0">
      <widget class="QTextEdit" name="txtSortie">
       <property name="styleSheet">
-       <string notr="true">background-color : rgb(41, 49, 52);
-font: 9pt &quot;Monospace&quot;;
-color: rgb(224, 226, 228);</string>
+       <string notr="true">font: 9pt &quot;Monospace&quot;;</string>
       </property>
       <property name="readOnly">
        <bool>true</bool>
@@ -30,9 +28,7 @@ color: rgb(224, 226, 228);</string>
     <item row="1" column="0">
      <widget class="QLineEdit" name="txtEntree">
       <property name="styleSheet">
-       <string notr="true">background-color : rgb(41, 49, 52);
-font: 9pt &quot;Monospace&quot;;
-color: rgb(224, 226, 228);</string>
+       <string notr="true">font: 9pt &quot;Monospace&quot;;</string>
       </property>
      </widget>
     </item>
@@ -44,7 +40,7 @@ color: rgb(224, 226, 228);</string>
      <x>0</x>
      <y>0</y>
      <width>769</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

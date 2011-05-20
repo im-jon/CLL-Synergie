@@ -1,6 +1,6 @@
 #include "transfer.h"
 
-static const int TailleBloc = 512; // Octets
+static const int TailleBloc = 1024; // Octets
 
 Transfer::Transfer(Fichier* fichier, QObject *parent) :
     QObject(parent)

@@ -30,6 +30,7 @@ public:
 
 
 private:
+    void Fermer();
     void AjouterCollegue(Collegue* collegue);
     void AjouterFeuille(Feuille* feuille);
     void laverListeCollegues();
@@ -70,6 +71,8 @@ private slots:
 
     void slMessageChat(Collegue* collegue, QString message);
     void slMessageGeneral(QString message);
+
+    void slFermetureServeur();
 
     void on_actionCopier_triggered();
     void on_actionColler_triggered();

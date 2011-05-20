@@ -10,3 +10,8 @@ QString Argument::nom()
 {
     return m_Nom;
 }
+
+QString Argument::valeur()
+{
+    return m_Valeur;
+}

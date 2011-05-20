@@ -38,6 +38,8 @@ void Client::Authentifier(QString nom, QColor couleur)
     EnvoyerPaquet(new PaquetEnvoiCollegues(this));
     EnvoyerPaquet(new PaquetListeFichiers());
 
+    Console::Instance()->Imprimer(m_Nom + " est en ligne");
+
     // À faire : Envoyer les 10-15 derniers messages du chat.
 
     // Indique aux autres clients que ce client est connecté & authentifié.

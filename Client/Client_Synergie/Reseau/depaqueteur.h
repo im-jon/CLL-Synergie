@@ -24,6 +24,7 @@ private:
     void Reception_MessageChat(QDataStream& stream);
     void Reception_Verification(QDataStream& stream);
     void Reception_Nettoyer(QDataStream& stream);
+    void Reception_FermetureServeur(QDataStream& stream);
     void Reception_CollegueOuvertureFeuille(QDataStream& stream);
     void Reception_CollegueFermetureFeuille(QDataStream& stream);
 
@@ -36,6 +37,7 @@ signals:
     void siEffacementTexte(int idAuteur, int idFeuille, int position, int longeur);
     void siVerification(int id, int longueur);
     void siNettoyer(int id);
+    void siFermetureServeur();
     void siCollegueOuvertureFeuille(Collegue* collegue, int idFeuille, int position);
     void siCollegueFermetureFeuille(int idCollegue, int idFeuille);
 

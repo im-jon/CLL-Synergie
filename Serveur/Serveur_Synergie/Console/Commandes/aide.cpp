@@ -12,12 +12,24 @@ Aide::Aide()
 QString Aide::Executer(Arguments arguments)
 {
     QString retour = "Liste des commandes:";
-    BaseCommande* commande;
 
-    for (int i = 0; i < BaseCommande::ListeCommandes->length(); i++)
+    int max = -1;
+
+    BaseCommande* commande;
+    foreach (commande, *BaseCommande::ListeCommandes)
     {
-        commande = BaseCommande::ListeCommandes->at(i);
-        retour = retour % "\n" % commande->getMotsCle().first() % "    -    " % commande->getDescription();
+        int longueur = commande->getMotsCle().first().length();
+        if (longueur > max)
+        {
+            max = longueur;
+        }
+    }
+
+    foreach (commande, *BaseCommande::ListeCommandes)
+    {
+        QString mot = commande->getMotsCle().first();
+        QString vide = QString(max - mot.length(), ' ');
+        retour = retour % "\n" % mot % vide % " - " % commande->getDescription();
     }
 
     return retour;
