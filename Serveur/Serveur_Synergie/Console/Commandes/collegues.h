@@ -9,7 +9,7 @@ class Collegues : public BaseCommande
 public:
     Collegues();
 protected:
-    QString Executer(const QStringList& arguments);
+    QString Executer(Arguments arguments);
 
 };
 

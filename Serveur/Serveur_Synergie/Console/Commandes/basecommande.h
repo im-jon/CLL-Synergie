@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QStringList>
 #include <QList>
+#include "../arguments.h"
 
 class BaseCommande : public QObject
 {
@@ -16,7 +17,7 @@ public:
     int getArgsMin();
     QString getDescription();
 
-    virtual QString Executer(const QStringList &arguments);
+    virtual QString Executer(Arguments arguments);
 
 protected:
     explicit BaseCommande();

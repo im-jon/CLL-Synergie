@@ -11,7 +11,7 @@ public:
     explicit Aide();
 
 protected:
-    QString Executer(const QStringList &arguments);
+    QString Executer(Arguments arguments);
 
 signals:
 

@@ -166,3 +166,8 @@ int Fichier::nombreClients()
 {
     return m_Clients->count();
 }
+
+bool Fichier::charge()
+{
+    return m_Charge;
+}

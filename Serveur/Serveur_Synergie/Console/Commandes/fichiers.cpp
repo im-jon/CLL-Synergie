@@ -12,25 +12,33 @@ Fichiers::Fichiers()
     m_Description = "Donne une liste des fichiers du projet.";
 }
 
-QString Fichiers::Executer(const QStringList& arguments)
+QString Fichiers::Executer(Arguments arguments)
 {
     QString retour;
-    if (Serveur::Instance()->getProjet()->getFichiers()->count() > 0)
+    bool ouvertSeulement = false;
+    if (arguments["o"])
     {
-        QMapIterator<int, Fichier*> iterateur(*Serveur::Instance()->getProjet()->getFichiers());
-        retour = "Liste des fichiers du projet :";
-        while (iterateur.hasNext())
+        ouvertSeulement = true;
+    }
+
+    QMapIterator<int, Fichier*> iterateur(*Serveur::Instance()->getProjet()->getFichiers());
+    retour = "Liste des fichiers du projet :";
+    while (iterateur.hasNext())
+    {
+        iterateur.next();
+        bool visible = true;
+        if (ouvertSeulement)
         {
-            iterateur.next();
+            visible = iterateur.value()->charge();
+        }
+
+        if (visible)
+        {
             retour = retour %
                     "\n" % iterateur.value()->getChemin() %
                     " (" % QString::number(iterateur.key()) %
                     ") Clients: " % QString::number(iterateur.value()->getClients()->count());
         }
-    }
-    else
-    {
-        retour = "Il n'y à aucun fichiers dans le projet actuel";
     }
     return retour;
 }

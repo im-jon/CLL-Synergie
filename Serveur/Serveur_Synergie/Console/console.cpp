@@ -1,6 +1,7 @@
 #include "console.h"
 #include <QStringList>
 #include <QDebug>
+#include "argument.h"
 
 Console* Console::m_Instance = 0;
 
@@ -49,28 +50,44 @@ void Console::InitialiserListeCommandes()
 void Console::Ecrire(QString ligne)
 {
     QString reponse;
-    QStringList arguments = ligne.split(' ');
-    if (!arguments.isEmpty())
+    QString nomCommande;
+    BaseCommande* commande;
+    QRegExp regex;
+    QStringList parties;
+    Arguments arguments;
+
+    nomCommande = ligne.section(' ', 0, 0);
+    ligne.remove(0, nomCommande.length());
+
+    regex = QRegExp(" -(\\S*) ?(\".*\"|\\S*\\b?)(.*)");
+    do
     {
-        QString nomCommande = arguments.takeFirst();
-        nomCommande = nomCommande.toLower();
-        BaseCommande* commande = m_Commandes->value(nomCommande);
-        if (commande)
+        regex.indexIn(ligne);
+        parties = regex.capturedTexts();
+        if (!parties.at(0).isEmpty())
         {
-            if (commande->getArgsMin() <= arguments.count())
-            {
-                reponse = commande->Executer(arguments);
-            }
-            else
-            {
-                reponse = nomCommande + " : Pas assez d'arguments";
-            }
-        } else
-        {
-            reponse = nomCommande + " : Commande inconnue";
+            arguments.Ajouter(new Argument(parties.at(1), parties.at(2)));
         }
-        Imprimer(reponse);
+        ligne = parties.at(3);
     }
+    while (!ligne.isEmpty());
+
+    commande = m_Commandes->value(nomCommande);
+    if (commande)
+    {
+        if (commande->getArgsMin() <= arguments.count())
+        {
+            reponse = commande->Executer(arguments);
+        }
+        else
+        {
+            reponse = nomCommande + " : Pas assez d'arguments";
+        }
+    } else
+    {
+        reponse = nomCommande + " : Commande inconnue";
+    }
+    Imprimer(reponse);
 }
 
 void Console::Imprimer(QString ligne)

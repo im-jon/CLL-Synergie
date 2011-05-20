@@ -21,7 +21,7 @@ BaseCommande::BaseCommande()
 {
 }
 
-QString BaseCommande::Executer(const QStringList& arguments)
+QString BaseCommande::Executer(Arguments arguments)
 {
     return QString::null;
 }

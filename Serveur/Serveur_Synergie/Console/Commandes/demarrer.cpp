@@ -8,7 +8,7 @@ Demarrer::Demarrer()
     m_Description = "Démarre le serveur.";
 }
 
-QString Demarrer::Executer(const QStringList& arguments)
+QString Demarrer::Executer(Arguments arguments)
 {
 
     Serveur::Instance()->Demarrer();

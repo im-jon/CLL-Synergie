@@ -30,6 +30,7 @@ public:
     int longeur();
     int nombreClients();
     Curseur* getCurseur(Client* client);
+    bool charge();
 
 private:
     static int GenerateurID;

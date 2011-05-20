@@ -9,7 +9,7 @@ public:
     Demarrer();
 
 protected:
-    QString Executer(const QStringList& arguments);
+    QString Executer(Arguments arguments);
 };
 
 #endif // DEMARRER_H

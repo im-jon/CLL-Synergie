@@ -11,7 +11,7 @@ Collegues::Collegues()
    m_Description = "Donne la liste des collègues connectés ainsi que leur IP.";
 }
 
-QString Collegues::Executer(const QStringList& arguments)
+QString Collegues::Executer(Arguments argument)
 {
     QString retour;
     if (Serveur::Instance()->getClients()->compte() > 0)
@@ -21,7 +21,11 @@ QString Collegues::Executer(const QStringList& arguments)
         while (iterateur.hasNext())
         {
             iterateur.next();
-            retour = retour % "\n" % QString::number(iterateur.value()->getID()) % " - " % iterateur.value()->getNom() % " (" % iterateur.value()->getConnexion()->getIP() % ")";
+            retour = retour % "\n" %
+                    QString::number(iterateur.value()->getID()) %
+                    " - " %
+                    iterateur.value()->getNom() %
+                    " (" % iterateur.value()->getConnexion()->getIP() % ")";
         }
     }
     else
