@@ -9,6 +9,27 @@ collègues plutôt que sur des fonctionnalités de "développement" que l'on peu
 s'attendre à retrouver dans un environnement de développement intégré.
 
 
+== Mode d'utilisation ==
+
+* Serveur :
+    - Démarrez le serveur pour une première fois.
+    - Le serveur créera automatiquement un répertoire de projets ainsi qu'un
+      projet par défaut nommé "Projet1".
+    - Copiez les fichiers du projet sur lequel vous voulez travailler dans 
+      "Projet1".
+    - Redémarrez le serveur en lançant la commande "redémarrer" dans la console.
+    - Lancez la commande "fichiers" pour avoir la liste des fichiers du projet.
+    - Vous pouvez lancer "aide" si vous voulez la liste des autres commandes.
+
+* Client :
+    - Entrez l'adresse du serveur ainsi que le port (normalement 9001).
+    - Entrez votre nom d'usager et sélectionnez une couleur.
+    - Si tout s'est bien déroulé, vous devriez voir la liste des collègues
+      ainsi que la liste des fichiers du projet en cours dans l'onglet "Projet".
+    - Sélectionnez un fichiez que vous souhaitez modifier.
+    - Éditez ce fichier comme il vous plaira!
+
+
 == Support technique ==
 
 Si l'application client refuse de compiler ou de s'exécuter, assurez-vous que
