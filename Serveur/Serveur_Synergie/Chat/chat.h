@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QList>
+
 #include "client.h"
 #include "serveur.h"
 #include "message.h"
@@ -25,10 +26,6 @@ private:
     bool m_Actif;
     QList<Message*>* m_Messages;
     Archiveur* m_Archiveur;
-
-signals:
-
-public slots:
 
 };
 

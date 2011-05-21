@@ -1,17 +1,19 @@
+#include <QMapIterator>
+
 #include "serveur.h"
 #include "Console/console.h"
 #include "clients.h"
+
 #include "Reseau/Paquets/paquetenvoicollegues.h"
 #include "Reseau/Paquets/paquetconnexioncollegue.h"
 #include "Reseau/Paquets/paquetfermetureserveur.h"
-#include <QDir>
-#include <QMapIterator>
 
 Serveur* Serveur::m_Instance = 0;
 
 Serveur::Serveur(QObject* parent) :
     QObject(parent)
 {
+    m_Port = 9001;
     m_Chat = new Chat(this);
     m_Clients = new Clients(this);
     m_Ecouteur = new QTcpServer(this);
@@ -27,7 +29,7 @@ Serveur::Serveur(QObject* parent) :
 
 bool Serveur::Demarrer()
 {
-    if (m_Ecouteur->listen(QHostAddress::Any, 9001))
+    if (m_Ecouteur->listen(QHostAddress::Any, m_Port))
     {
         m_Verificateur->Demarrer();
         m_Chat->Demarrer();

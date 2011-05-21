@@ -32,7 +32,24 @@ void Clients::EnvoyerPaquetATous(BasePaquet* paquet, Client* exception)
         iterateur.next();
         if (iterateur.value() != exception)
         {
-            iterateur.value()->EnvoyerBytes(ba);
+            iterateur.value()->getConnexion()->EnvoyerBytes(ba);
+        }
+    }
+}
+
+void Clients::EnvoyerPaquetAListe(QList<Client *>* clients, BasePaquet* paquet, Client* exception)
+{
+    Client* client;
+    QByteArray ba;
+
+    QByteArray buffer = paquet->getBuffer();
+    memcpy(&ba, &buffer, sizeof(buffer));
+
+    foreach (client, *clients)
+    {
+        if (client != exception)
+        {
+            client->getConnexion()->EnvoyerBytes(ba);
         }
     }
 }
@@ -45,23 +62,6 @@ int Clients::compte()
 QMap<int, Client*>* Clients::getClients()
 {
     return m_Clients;
-}
-
-void Clients::EnvoyerPaquetAListe(QList<Client *>* clients, BasePaquet* paquet, Client* exception)
-{
-    Client* client;
-
-    QByteArray ba;
-    QByteArray buffer = paquet->getBuffer();
-    memcpy(&ba, &buffer, sizeof(buffer));
-
-    foreach (client, *clients)
-    {
-        if (client != exception)
-        {
-            client->EnvoyerBytes(ba);
-        }
-    }
 }
 
 void Clients::slDeconnexionClient(Client *client)

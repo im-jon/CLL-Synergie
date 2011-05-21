@@ -7,6 +7,7 @@
 PaquetEnvoiCollegues::PaquetEnvoiCollegues(Client* destinataire) :
     BasePaquet(1)
 {
+    // On soustrait 1 car on ne prends pas en compte le destinataire
     *m_Stream << Serveur::Instance()->getClients()->compte() - 1;
 
     QMapIterator<int, Client*> iterateur(*Serveur::Instance()->getClients()->getClients());

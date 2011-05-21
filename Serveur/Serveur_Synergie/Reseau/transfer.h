@@ -4,9 +4,16 @@
 #include <QObject>
 #include <QFile>
 #include <QTextStream>
+
 #include "fichier.h"
 
 class Fichier;
+
+// Un transfer est utilisé pour envoyé un fichier à un client.
+// Le serveur envoi au client le premier bloc de texte et attends
+// de recevoir une confirmation que le bloc a été reçu avant de
+// procédé au second bloc de texte. Le processus se répète jusqu'à
+// ce que tous les blocs soient envoyés.
 
 class Transfer : public QObject
 {

@@ -4,14 +4,18 @@
 #include <QObject>
 #include <QTcpServer>
 #include <QMap>
-#include "Reseau/depaqueteur.h"
-#include "Reseau/Paquets/basepaquet.h"
+
 #include "fichier.h"
 #include "projet.h"
 #include "Chat/chat.h"
 #include "verificateur.h"
+#include "Reseau/depaqueteur.h"
+#include "Reseau/Paquets/basepaquet.h"
 
 class Chat;
+
+// Cette classe utilise un Singleton, ce qui facilite son accès un peu partout
+// dans le système.
 
 class Serveur : public QObject
 {
@@ -32,15 +36,13 @@ private:
 
     static Serveur* m_Instance;
 
+    int m_Port;
     Projet* m_Projet;
     Clients* m_Clients;
     QTcpServer* m_Ecouteur;
     Depaqueteur* m_Depaqueteur;
     Chat* m_Chat;
     Verificateur* m_Verificateur;
-
-
-signals:
 
 public slots:
     void slNouveauClient();

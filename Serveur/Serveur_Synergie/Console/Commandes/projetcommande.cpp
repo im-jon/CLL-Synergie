@@ -16,4 +16,5 @@ QString ProjetCommande::Executer(Arguments* arguments)
     {
         // Change le projet
     }
+    return "";
 }

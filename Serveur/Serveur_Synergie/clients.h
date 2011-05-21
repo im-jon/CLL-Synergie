@@ -5,6 +5,8 @@
 #include <QMap>
 #include "client.h"
 
+// Cette classe sert à centraliser la gestion des clients à un niveau global.
+
 class Clients : public QObject
 {
     Q_OBJECT
@@ -20,8 +22,6 @@ public:
 
 private:
     QMap<int, Client*>* m_Clients;
-
-signals:
 
 public slots:
     void slDeconnexionClient(Client* client);

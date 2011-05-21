@@ -3,17 +3,20 @@
 
 #include <QObject>
 #include <QTcpSocket>
-#include "Reseau/Paquets/basepaquet.h"
-#include "fichier.h"
-#include "Reseau/transfer.h"
-#include "Reseau/connexion.h"
 #include <QMap>
 #include <QList>
 #include <QColor>
 
+#include "fichier.h"
+#include "Reseau/connexion.h"
+#include "Reseau/transfer.h"
+#include "Reseau/Paquets/basepaquet.h"
+
 class Transfer;
 class Fichier;
 class Connexion;
+
+// La classe 'Client' regroupe toutes les fonctions en lien avec un client.
 
 class Client : public QObject
 {
@@ -24,7 +27,6 @@ public:
     void Authentifier(QString nom, QColor couleur);
     void Deconnecter();
     void EnvoyerPaquet(BasePaquet* paquet);
-    void EnvoyerBytes(QByteArray donnees);
     void OuvrirFichier(Fichier* fichier);
     void FermerFichier(Fichier* fichier);
     void EnvoyerFichier(Fichier* fichier, bool onglet = true);
@@ -51,7 +53,8 @@ private:
     QMap<int, Transfer*>* m_Transfers;
     QList<Fichier*>* m_FichiersOuverts;
 
-    // Le nombre de mauvaises réponses est proportionnel aux chances que le client soit désynchronisé avec le serveur.
+    // Le nombre de mauvaises réponses est proportionnel aux chances que le
+    // client soit désynchronisé avec le serveur
     int m_MauvaisesReponses;
 
 signals:

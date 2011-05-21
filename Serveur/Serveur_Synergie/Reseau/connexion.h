@@ -3,16 +3,20 @@
 
 #include <QObject>
 #include <QTcpSocket>
-#include "Paquets/basepaquet.h"
+
 #include "../client.h"
+#include "Paquets/basepaquet.h"
 
 class Client;
+
+// Cette classe sert à lire et envoyer des paquets au client.
 
 class Connexion : public QObject
 {
     Q_OBJECT
 public:
     explicit Connexion(QTcpSocket* socket, Client* client);
+
     void Lire();
     void EnvoyerPaquet(BasePaquet* paquet);
     void EnvoyerBytes(QByteArray donnees);
@@ -23,9 +27,6 @@ public:
 private:
     Client* m_Client;
     QTcpSocket* m_Socket;
-
-signals:
-    void siDeconnexion();
 
 public slots:
     void slPretALire();

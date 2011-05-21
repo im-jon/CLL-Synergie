@@ -11,7 +11,7 @@ PaquetListeFichiers::PaquetListeFichiers()
     while (iterateur.hasNext())
     {
         iterateur.next();
-        *m_Stream << iterateur.key();
-        *m_Stream << iterateur.value()->getChemin();
+        *m_Stream << iterateur.key(); // ID du fichier
+        *m_Stream << iterateur.value()->getChemin(); // Chemin du fichier
     } 
 }

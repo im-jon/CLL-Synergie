@@ -29,7 +29,7 @@ void Client::EnvoyerPaquet(BasePaquet* paquet)
     m_Connexion->EnvoyerPaquet(paquet);
 }
 
-// Attention, un client connecté n'est pas nécéssairement authentifié!
+// Attention! Un client connecté n'est pas nécéssairement authentifié!
 void Client::Authentifier(QString nom, QColor couleur)
 {
     m_Nom = nom;
@@ -40,9 +40,9 @@ void Client::Authentifier(QString nom, QColor couleur)
 
     Console::Instance()->Imprimer(m_Nom + " est en ligne");
 
-    // À faire : Envoyer les 10-15 derniers messages du chat.
+    // TODO: Envoyer les 10-15 derniers messages du chat.
 
-    // Indique aux autres clients que ce client est connecté & authentifié.
+    // Indique aux autres clients que ce client est connecté & authentifié
     Serveur::Instance()->getClients()->EnvoyerPaquetATous(new PaquetConnexionCollegue(this), this);
 }
 
@@ -74,7 +74,7 @@ void Client::FermerFichier(Fichier *fichier)
     m_FichiersOuverts->removeOne(fichier);
 }
 
-// Le paramètre onglet détermine si l'on ouvre un nouvel onglet côté client.
+// Le paramètre onglet détermine si l'on ouvre un nouvel onglet du côté client
 void Client::EnvoyerFichier(Fichier* fichier, bool onglet)
 {
     Transfer* transfer = new Transfer(fichier, this);
@@ -87,11 +87,6 @@ void Client::EnvoyerFichier(Fichier* fichier, bool onglet)
         EnvoyerPaquet(new PaquetOuvertureFichier(this, fichier));
     }
     EnvoyerPaquet(new PaquetDonnees(transfer));
-}
-
-void Client::EnvoyerBytes(QByteArray donnees)
-{
-    m_Connexion->EnvoyerBytes(donnees);
 }
 
 QString Client::getNom()

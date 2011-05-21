@@ -1,5 +1,8 @@
+#include <QDir>
 #include <QDirIterator>
+
 #include "projet.h"
+#include "Console/console.h"
 
 Projet::Projet(QString nom, QObject *parent) :
     QObject(parent)
@@ -28,7 +31,9 @@ bool Projet::Ouvrir()
 {
     if (!m_Ouvert)
     {
-        // Rien qui marche la dedans...
+        // Cette partie est considérablement mal faite
+        // Pour l'instant elle produit la liste des fichiers du projet sans
+        // se préoccuper de la hierarchie du projet
         QRegExp regex(m_Chemin + "(.*)");
         QDirIterator iterateur(
                     m_Chemin,

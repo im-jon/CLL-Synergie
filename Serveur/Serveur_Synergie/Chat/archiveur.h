@@ -5,7 +5,12 @@
 #include <QDir>
 #include <QFile>
 #include <QTextStream>
+
 #include "message.h"
+
+// L'archiveur enregistre tous les messages envoyés sur le chat du serveur dans
+// un fichier nommé selon la date actuelle pour faciliter l'organisation des
+// archives.
 
 class Archiveur : public QObject
 {

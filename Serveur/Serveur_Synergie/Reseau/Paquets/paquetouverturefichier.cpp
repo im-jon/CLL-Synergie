@@ -7,6 +7,7 @@ PaquetOuvertureFichier::PaquetOuvertureFichier(Client* client, Fichier* fichier)
     : BasePaquet(10)
 {
     *m_Stream << fichier->getID();
+    // On soustrait un car on ne prends pas en compte le destinataire
     *m_Stream << fichier->getClients()->count() - 1;
 
     Client* collegue;

@@ -14,21 +14,22 @@ Connexion::Connexion(QTcpSocket* socket, Client* client) :
 
 void Connexion::Lire()
 {
-    int taille;
-    memcpy(&taille, m_Socket->read(sizeof(taille)), sizeof(taille));
-
-    QByteArray buffer;
-    QDataStream stream(&buffer, QIODevice::ReadOnly);
-
-    buffer = m_Socket->read(taille);
-
-    // On va dépaqueter le paquet que nous venons de lire.
-    Serveur::Instance()->getDepaqueteur()->Depaqueter(m_Client, stream);
-
-    // Au cas ou des données ont été reçues entre-temps, on ne vas pas attendre que slPretALire soit invoqué.
-    if (m_Socket->bytesAvailable() > 0)
+    while (m_Socket->bytesAvailable() > 0)
     {
-        Lire();
+        int taille;
+        QByteArray buffer;
+
+        // Nous utilisons la fonction 'memcpy' car il est trop tôt pour utiliser
+        // un QDataStream. Nous sommes également très limité lorsqu'il est
+        // question de convertir des bytes en entier
+        memcpy(&taille, m_Socket->read(sizeof(taille)), sizeof(taille));
+
+        QDataStream stream(&buffer, QIODevice::ReadOnly);
+
+        buffer = m_Socket->read(taille);
+
+        // Nous utilisons le dépaqueteur pour lire notre paquet
+        Serveur::Instance()->getDepaqueteur()->Depaqueter(m_Client, stream);
     }
 }
 

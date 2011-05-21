@@ -3,9 +3,11 @@
 
 #include <QObject>
 #include <QMap>
-#include <QDir>
-#include <QStringList>
+
 #include "fichier.h"
+
+// TODO: reconstruire entièrement cette classe pour permettre à l'utilisateur de
+// choisir librement le répertoire du projet.
 
 class Projet : public QObject
 {

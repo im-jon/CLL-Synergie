@@ -1,16 +1,20 @@
-#include "depaqueteur.h"
 #include <QDataStream>
+
+#include "depaqueteur.h"
+#include "serveur.h"
+#include "fichier.h"
+
 #include "Console/console.h"
+
 #include "Paquets/paquetouverturefichier.h"
 #include "Paquets/paquetdonnees.h"
 #include "Paquets/paquetinsertiontexte.h"
 #include "Paquets/paquetmessagechat.h"
-#include "serveur.h"
-#include "fichier.h"
 
 Depaqueteur::Depaqueteur(QObject* parent) :
     QObject(parent)
 {
+
 }
 
 void Depaqueteur::Depaqueter(Client* client, QDataStream& stream)
@@ -46,11 +50,13 @@ void Depaqueteur::Depaqueter(Client* client, QDataStream& stream)
             Reception_FermerFichier(client, stream);
             break;
         default:
+            // TODO: déconnecter le client si on reçoit un mauvais paquet par mesure de sécurité
             Console::Instance()->Imprimer("Réception d'un paquet inconnu #" + QString::number(id));
             break;
     }
 }
 
+// Le client veut s'authentifier
 void Depaqueteur::Reception_Authentification(Client* client, QDataStream& stream)
 {
     QString nom;
@@ -62,57 +68,83 @@ void Depaqueteur::Reception_Authentification(Client* client, QDataStream& stream
     client->Authentifier(nom, couleur);
 }
 
+
+// Le client veut insérer du texte dans un fichier
 void Depaqueteur::Reception_InsertionTexte(Client* client, QDataStream& stream)
 {
     int id;
     int position;
     QString texte;
+    Fichier* fichier;
 
     stream >> id;
     stream >> position;
     stream >> texte;
 
-    Fichier* fichier = Serveur::Instance()->getProjet()->getFichier(id);
+    fichier = Serveur::Instance()->getProjet()->getFichier(id);
     fichier->InsererTexte(texte, position, client);
 
 }
 
+// Le client veut effacer du texte dans un fichier
 void Depaqueteur::Reception_EffacementTexte(Client* client, QDataStream& stream)
 {
     int id;
     int position;
     int longeur;
+    Fichier* fichier;
 
     stream >> id;
     stream >> position;
     stream >> longeur;
 
-    Fichier* fichier = Serveur::Instance()->getProjet()->getFichier(id);
+    fichier = Serveur::Instance()->getProjet()->getFichier(id);
     fichier->EffacerTexte(position, longeur, client);
 }
 
+// Le client veut ouvrir un fichier
 void Depaqueteur::Reception_OuvrirFichier(Client* client, QDataStream& stream)
 {
     int id;
+    Fichier* fichier;
 
     stream >> id;
 
-    client->OuvrirFichier(Serveur::Instance()->getProjet()->getFichier(id));
+    fichier = Serveur::Instance()->getProjet()->getFichier(id);
+    client->OuvrirFichier(fichier);
 }
 
+// Le client ferme un fichier
+void Depaqueteur::Reception_FermerFichier(Client *client, QDataStream &stream)
+{
+    int id;
+    Fichier* fichier;
+
+    stream >> id;
+
+    fichier = Serveur::Instance()->getProjet()->getFichier(id);
+    client->FermerFichier(fichier);
+}
+
+// Le client confirme la réception d'un bloc de texte (voir 'Transfer')
 void Depaqueteur::Reception_DonneesRecues(Client* client, QDataStream& stream)
 {
     int id;
+    Transfer* transfer;
 
     stream >> id;
 
-    Transfer* transfer = client->getTransfer(id);
+    // Nous allons chercher le transfer en question. Si le dernier bloc de texte
+    // à été envoyé, la fonction retournera un pointeur nul. C'est donc ici que
+    // la boucle de transfer se termine
+    transfer = client->getTransfer(id);
     if (transfer)
     {
         client->EnvoyerPaquet(new PaquetDonnees(transfer));
     }
 }
 
+// Le client à envoyé un message sur le chat
 void Depaqueteur::Reception_MessageChat(Client *client, QDataStream &stream)
 {
     Message* message;
@@ -125,26 +157,16 @@ void Depaqueteur::Reception_MessageChat(Client *client, QDataStream &stream)
     Serveur::Instance()->getChat()->NouveauMessage(message);
 }
 
+// Le client réponds à la vérification de synchronisation (voir 'Verificateur')
 void Depaqueteur::Reception_ReponseVerification(Client *client, QDataStream &stream)
 {
     int id;
     bool reponse;
+    Fichier* fichier;
 
     stream >> id;
     stream >> reponse;
 
-    Fichier* fichier = Serveur::Instance()->getProjet()->getFichier(id);
-
-    Serveur::Instance()->getVerificateur()->ReceptionReponse(reponse, client, fichier);
-}
-
-void Depaqueteur::Reception_FermerFichier(Client *client, QDataStream &stream)
-{
-    int id;
-    Fichier* fichier;
-
-    stream >> id;
-
     fichier = Serveur::Instance()->getProjet()->getFichier(id);
-    client->FermerFichier(fichier);
+    Serveur::Instance()->getVerificateur()->ReceptionReponse(reponse, client, fichier);
 }

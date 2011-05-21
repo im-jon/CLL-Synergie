@@ -9,8 +9,10 @@ BasePaquet::BasePaquet(qint8 id)
 
 QByteArray BasePaquet::getBuffer()
 {
+    // On convertit la valeur de 'taille' en tableau de bytes et on l'insère
+    // au début du buffer
     int taille = m_Buffer.length();
-    QByteArray ba(reinterpret_cast<const char*>(&taille), sizeof(taille));
-    m_Buffer.insert(0, ba);
+    m_Buffer.prepend(reinterpret_cast<const char*>(&taille), sizeof(taille));
+
     return m_Buffer;
 }

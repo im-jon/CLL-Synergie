@@ -1,17 +1,19 @@
-#include "archiveur.h"
 #include <QDateTime>
+
+#include "archiveur.h"
 
 Archiveur::Archiveur(QObject *parent) :
     QObject(parent)
 {
     m_Actif = false;
-    m_NomFichier = QDateTime::currentDateTime().toString("dd-MM-yy");
 }
 
 void Archiveur::Demarrer()
 {
     if (!m_Actif)
     {
+        m_NomFichier = QDateTime::currentDateTime().toString("dd-MM-yy");
+
         m_Repertoire = new QDir("Archives");
         if (!m_Repertoire->exists())
         {

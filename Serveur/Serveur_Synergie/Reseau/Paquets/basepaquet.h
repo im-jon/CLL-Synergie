@@ -4,6 +4,10 @@
 #include <QByteArray>
 #include <QDataStream>
 
+// Le paquet regroupe des données que nous voulons envoyer au client. Un paquet
+// est construit dans ce format :
+// [   Taille (int)  |  ID (ubyte)  |  Données  ]
+
 class BasePaquet
 {
 public:

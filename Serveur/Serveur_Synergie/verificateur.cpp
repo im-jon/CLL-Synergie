@@ -1,9 +1,11 @@
+#include <QMapIterator>
+
 #include "verificateur.h"
-#include "fichier.h"
 #include "serveur.h"
+#include "fichier.h"
+
 #include "Reseau/Paquets/paquetverification.h"
 #include "Reseau/Paquets/paquetnettoyerfichier.h"
-#include <QMapIterator>
 
 const int Seuil = 5; // Le seuil de mauvaises réponses.
 const int Intervalle = 1000; // Fréquence des reqûetes de vérification en millisecondes.
@@ -53,6 +55,7 @@ void Verificateur::ReceptionReponse(bool reponse, Client *client, Fichier *fichi
 {
     if (reponse == true)
     {
+        // Une bonne réponse annule toutes les mauvaises réponses
         if (client->getMauvaisesReponses() > 0)
         {
             client->setMauvaisesReponses(0);

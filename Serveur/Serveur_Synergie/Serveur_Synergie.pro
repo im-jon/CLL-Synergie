@@ -50,7 +50,8 @@ SOURCES += main.cpp\
     Console/arguments.cpp \
     Console/Commandes/parler.cpp \
     Console/Commandes/projetcommande.cpp \
-    Reseau/Paquets/paquetfermetureserveur.cpp
+    Reseau/Paquets/paquetfermetureserveur.cpp \
+    Console/Commandes/redemarrer.cpp
 
 HEADERS  += UI/fenetreprincipale.h \
     Console/console.h \
@@ -91,6 +92,7 @@ HEADERS  += UI/fenetreprincipale.h \
     Console/arguments.h \
     Console/Commandes/parler.h \
     Console/Commandes/projetcommande.h \
-    Reseau/Paquets/paquetfermetureserveur.h
+    Reseau/Paquets/paquetfermetureserveur.h \
+    Console/Commandes/redemarrer.h
 
 FORMS    += UI/fenetreprincipale.ui
